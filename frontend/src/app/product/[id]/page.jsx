@@ -3,33 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { FiArrowRight } from "react-icons/fi";
+import Products from "@/data/Products"; // Importing real data
+import RelatedProducts from "@/components/RelatedProducts"; // Importing new component
+import Globe from "@/components/Globe";
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const productId = params?.id;
+  const productId = parseInt(params?.id, 10); // Convert URL string to number
 
-  // Mock data state
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Simulate an API call to fetch product details based on the ID
+  // Fetch product details from the local data file
   useEffect(() => {
-    // Replace this setTimeout with your actual fetch call later
-    // e.g., fetch(`/api/products/${productId}`).then(...)
-    setTimeout(() => {
-      setProduct({
-        id: productId,
-        name: "Chopping Boards",
-        sku: "SH-CBW-26-38",
-        specs: {
-          "Material": "Wood (FSC Certified)",
-          "Finish": "Natural Food-Safe Oil",
-          "MOQ": "20 pcs",
-        },
-        image: "/images/placeholder1.jpg", // Make sure you have a placeholder image here
-      });
-      setLoading(false);
-    }, 500);
+    const foundProduct = Products.find((p) => p._id === productId);
+    setProduct(foundProduct || null);
+    setLoading(false);
   }, [productId]);
 
   /* ================= LOADING STATE ================= */
@@ -45,7 +34,10 @@ export default function ProductDetailPage() {
   if (!product) {
     return (
       <main className="w-full bg-[#FFFDF9] min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl text-gray-600 font-bold">Product not found</h1>
+        <div className="text-center">
+          <h1 className="text-2xl text-[#645643] font-bold mb-2">Product not found</h1>
+          <p className="text-gray-500">We couldn't find the product you're looking for.</p>
+        </div>
       </main>
     );
   }
@@ -55,7 +47,7 @@ export default function ProductDetailPage() {
     <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 pb-24">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         
-        {/* Layout Grid */}
+        {/* ================= TOP PRODUCT SECTION ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           
           {/* Left Column: Product Image */}
@@ -82,7 +74,7 @@ export default function ProductDetailPage() {
 
             {/* Specifications List */}
             <div className="flex flex-col gap-6 mb-16">
-              {Object.entries(product.specs).map(([key, value]) => (
+              {product.specs && Object.entries(product.specs).map(([key, value]) => (
                 <div key={key} className="text-base md:text-lg text-gray-800 font-medium">
                   {key} : {value}
                 </div>
@@ -103,8 +95,14 @@ export default function ProductDetailPage() {
             </p>
 
           </div>
-
         </div>
+
+        {/* ================= RELATED PRODUCTS COMPONENT ================= */}
+        <RelatedProducts 
+          currentProductId={product._id} 
+          subcategorySlug={product.subcategorySlug} 
+        />
+        <Globe/>
 
       </div>
     </main>

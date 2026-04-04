@@ -35,7 +35,7 @@ const exportRegions = [
 
 const Globe = () => {
   return (
-    <section className="w-full py-20 lg:py-32 bg-[#FFFDF9]">
+    <section className="w-full pt-14 lg:pt-20 bg-[#FFFDF9]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         
         {/* Header Section */}
