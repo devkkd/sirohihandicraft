@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import {
     FiSearch,
     FiChevronDown,
-    FiChevronRight,
     FiArrowRight,
     FiMenu,
     FiX,
@@ -15,10 +14,13 @@ import Categories from "@/data/Categories";
 import SubCategories from "@/data/SubCategories";
 
 const Header = () => {
-    const [hoveredImage, setHoveredImage] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
     const [expandedCategory, setExpandedCategory] = useState(null);
+    
+    // State to track which category is hovered in the desktop dropdown
+    // Defaults to the first category (Wooden) so the right column isn't empty
+    const [activeDesktopCategory, setActiveDesktopCategory] = useState(Categories[0]?.id || 1);
 
     // Prevent scrolling when mobile menu is open
     useEffect(() => {
@@ -65,6 +67,7 @@ const Header = () => {
                 DESKTOP HEADER VIEW (Hidden on Mobile)
             ========================================= */}
             <div className="hidden lg:flex items-end text-gray-700 justify-between px-8 py-5 max-w-[1600px] mx-auto w-full gap-4 xl:gap-8">
+                
                 {/* SEARCH */}
                 <div className="flex items-center border-b border-gray-300 pb-1 w-48 xl:w-64 group focus-within:border-[#615236] transition-colors shrink-0">
                     <FiSearch className=" text-lg mr-2 group-focus-within:text-[#615236]" />
@@ -76,69 +79,74 @@ const Header = () => {
                 </div>
 
                 {/* PRODUCTS DROPDOWN */}
-                <nav className="shrink-0">
-                    <div className="relative group/main">
-                        <button className="flex items-center gap-1 text-sm uppercase text-gray-700 tracking-wide hover:text-[#615236]">
+                <nav className="shrink-0 flex h-full items-center">
+                    <div className="relative group/main h-full">
+                        {/* Dropdown Trigger */}
+                        <button className="flex items-center gap-1 text-sm uppercase text-gray-700 tracking-wide hover:text-[#615236] pb-1">
                             PRODUCTS <FiChevronDown />
                         </button>
 
-                        {/* LEVEL 1 */}
-                        <div className="absolute top-full left-0 pt-2 hidden group-hover/main:block w-56">
-                            <div className="bg-[#FFFDF9] border shadow-md rounded-2xl p-2">
-                                {Categories.map((category) => {
-                                    const relatedSubCategories = SubCategories.filter(
-                                        (sub) => sub.categoryId === category.id
-                                    );
+                        {/* MEGA MENU PANEL (Styled like image_a85ee9.png) */}
+                        <div className="absolute top-full left-[-20%] pt-6 hidden group-hover/main:block w-max z-50">
+                            {/* Invisible bridge to keep hover state active while moving mouse down */}
+                            <div className="absolute top-0 left-0 w-full h-6 bg-transparent"></div>
+                            
+                            <div className="bg-[#FFFDF9] border border-[#e0dacd] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] rounded-[2rem] p-6 flex gap-4 min-h-[100px]">
+                                
+                                {/* LEFT COLUMN: Categories */}
+                                <div className="flex flex-col w-54 pr-4 border-r border-[#e0dacd]/50 gap-2">
+                                    {Categories.map((category) => (
+                                        <Link
+                                            key={category.id}
+                                            href={`/category/${category.slug}`}
+                                            onMouseEnter={() => setActiveDesktopCategory(category.id)}
+                                            className={`px-6 py-2 text-[12px] font-medium transition-colors rounded-full capitalize ${
+                                                activeDesktopCategory === category.id
+                                                    ? "bg-[#645643] text-white"
+                                                    : "text-[#2d2926] hover:bg-[#FBF3E6]"
+                                            }`}
+                                        >
+                                            {category.title.toLowerCase()} Range
+                                        </Link>
+                                    ))}
+                                </div>
 
-                                    return (
-                                        <div key={category.id} className="relative group/sub">
-                                            {/* CATEGORY */}
+                                {/* RIGHT COLUMN: Subcategories based on active left item */}
+                                <div className="flex flex-col w-64 gap-1 pl-2">
+                                    {SubCategories.filter(sub => sub.categoryId === activeDesktopCategory).map((sub) => {
+                                        const parentCat = Categories.find(c => c.id === activeDesktopCategory);
+                                        return (
                                             <Link
-                                                href={`/category/${category.slug}`}
-                                                className="flex items-center justify-between px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#615236] hover:text-white rounded-full"
+                                                key={sub._id}
+                                                href={`/category/${parentCat?.slug}?sub=${sub.slug}`}
+                                                className="px-6 py-2 text-[12px] font-medium text-[#2d2926] transition-colors rounded-full hover:bg-[#645643] hover:text-white"
                                             >
-                                                {category.title}
-                                                <FiChevronRight />
+                                                {sub.name}
                                             </Link>
+                                        );
+                                    })}
+                                </div>
 
-                                            {/* LEVEL 2 */}
-                                            <div className="absolute top-0 left-full pl-2 hidden group-hover/sub:block w-80">
-                                                <div className="bg-[#FFFDF9] border shadow-md rounded-2xl p-4 flex flex-col">
-                                                    {relatedSubCategories.map((sub) => (
-                                                        <Link
-                                                            key={sub._id}
-                                                            href={`/category/${category.slug}?sub=${sub.slug}`}
-                                                            onMouseEnter={() => setHoveredImage(sub.image)}
-                                                            className="group/link flex items-center justify-between text-[11px] font-bold tracking-widest text-gray-700 hover:text-[#1F1951] py-3 border-b border-gray-50 last:border-0 transition-all uppercase"
-                                                        >
-                                                            <span>{sub.name}</span>
-                                                            <div className="w-0 group-hover/link:w-4 h-[1px] bg-[#1F1951] transition-all duration-300"></div>
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
                             </div>
                         </div>
                     </div>
                 </nav>
 
                 {/* OTHER LINKS */}
-                <Link href="/about" className="text-sm uppercase hover:text-[#615236]">ABOUT US</Link>
+                <Link href="/about" className="text-sm uppercase hover:text-[#615236] pb-1">ABOUT US</Link>
 
-                <Link href="/" className="flex-shrink-0">
+                {/* LOGO */}
+                <Link href="/" className="flex-shrink-0 px-4">
                     <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-14" />
                 </Link>
 
-                <Link href="/story" className="text-sm uppercase hover:text-[#615236]">OUR STORY</Link>
-                <Link href="/clients" className="text-sm uppercase hover:text-[#615236]">HAPPY CLIENTS</Link>
-                <Link href="/contact" className="text-sm uppercase hover:text-[#615236]">CONTACT US</Link>
+                <Link href="/story" className="text-sm uppercase hover:text-[#615236] pb-1">OUR STORY</Link>
+                <Link href="/clients" className="text-sm uppercase hover:text-[#615236] pb-1">HAPPY CLIENTS</Link>
+                <Link href="/contact" className="text-sm uppercase hover:text-[#615236] pb-1">CONTACT US</Link>
 
                 <Link
                     href="/request"
-                    className="flex items-center gap-1 text-sm font-bold border-b-2 border-gray-800"
+                    className="flex items-center gap-1 text-sm font-bold border-b-2 border-gray-800 pb-1"
                 >
                     REQUEST A QUOTE <FiArrowRight />
                 </Link>

@@ -35,3 +35,11 @@ body {
   background-position: center;
   background-repeat: repeat;
 }
+@keyframes rotY {
+  0% {
+    transform: rotateZ(calc(30deg * var(--count))) rotateY(0) translateY(var(--radius));
+  }
+  100% {
+    transform: rotateZ(calc(30deg * var(--count))) rotateY(360deg) translateY(var(--radius));
+  }
+}

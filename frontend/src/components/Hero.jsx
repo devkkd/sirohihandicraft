@@ -2,41 +2,46 @@
 
 import React from "react";
 import { FiArrowRight } from "react-icons/fi";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const cards = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  // CHANGED: Added pb-[350px] lg:pb-[250px] to account for the ring's radius and push the next section down safely
   return (
-    <main className="relative bg-[#FFFDF9] overflow-hidden perspective-[1000px] pt-40 lg:pt-64 pb-[150px] lg:pb-[250px]">
-      
+    <main className="relative bg-[#FFFDF9] overflow-hidden pt-40 lg:pt-64 pb-[150px] lg:pb-[250px]"
+      style={{ perspective: "1000px" }}>
+
       {/* CENTER WRAPPER */}
       <div className="relative w-full flex items-center justify-center">
 
-        {/* ================= MINIMAL KEYFRAMES ONLY ================= */}
-        <style jsx>{`
-          @keyframes rotY {
-            0% { transform: rotateZ(calc(30deg * var(--count))) rotateY(0) translateY(var(--radius)); }
-            100% { transform: rotateZ(calc(30deg * var(--count))) rotateY(360deg) translateY(var(--radius)); }
-          }
-        `}</style>
-
-        {/* ================= ROTATING RING ================= */}
+        {/* ROTATING RING */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
           {cards.map((num, i) => (
-            <div 
-              key={num} 
+            <div
+              key={num}
               className="absolute origin-center [transform-style:preserve-3d] [--radius:340px] lg:[--radius:500px]"
-              style={{ 
+              style={{
                 "--count": i,
-                animation: "rotY 20s linear infinite",
-                animationDelay: `${0.1 * i}s`
+                animation: mounted ? "rotY 8s linear infinite" : "none",
+                animationDelay: `${0.3 * i}s`,
+                transform: `translateZ(0)`,   // 👈 ADD THIS
+                willChange: "transform"       // 👈 ADD THIS
               }}
             >
               <div className="relative w-[80px] h-[120px] lg:w-[160px] lg:h-[220px] [transform-style:preserve-3d]">
-                
+
                 {/* FRONT */}
-                <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)]">
+                <div
+                  className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)]"
+                  style={{
+                    transform: "rotateZ(calc(-30deg * var(--count)))"
+                  }}
+                >
                   <img
                     src={`/images/Hero/Hero${num}.png`}
                     alt={`Hero ${num}`}
@@ -45,7 +50,12 @@ const Hero = () => {
                 </div>
 
                 {/* BACK */}
-                <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)] bg-[#615236] flex items-center justify-center [transform:rotateY(180deg)]">
+                <div
+                  className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)] bg-[#615236] flex items-center justify-center"
+                  style={{
+                    transform: "rotateY(180deg) rotateZ(calc(-30deg * var(--count)))"
+                  }}
+                >
                   <img
                     src="/images/icons/SirohiIcon.svg"
                     alt="Logo"
@@ -58,7 +68,7 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* ================= CENTER CONTENT ================= */}
+        {/* CENTER CONTENT */}
         <div className="relative z-10 flex flex-col items-center text-center max-w-4xl px-6 py-12 bg-[#FFFDF9]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none rounded-3xl">
 
           <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-[#8c8273] mb-6 uppercase">

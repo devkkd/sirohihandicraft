@@ -7,7 +7,7 @@ export default function ContactPage() {
   const [productCategory, setProductCategory] = useState("Wooden");
 
   return (
-    <main className="w-full bg-[#FFFDF9] min-h-screen pt-14 lg:pt-20 pb-24">
+    <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-14 pb-24">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         
         {/* ================= HEADER SECTION ================= */}
@@ -15,7 +15,7 @@ export default function ContactPage() {
           <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#8c8273] uppercase mb-6 block">
             CONTACT US
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-[#5c4f3d] tracking-tight mb-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#5c4f3d] tracking-tight mb-8">
             We'd Be Glad To Hear From You
           </h1>
           <div className="text-sm md:text-[15px] text-gray-700 max-w-4xl leading-relaxed font-medium flex flex-col gap-6">
