@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ConditionalHeader from "@/components/ConditionalHeader";
+import { ShopProvider } from "@/context/ShopContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,11 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />   {/* ✅ inside body */}
-        {children}
-        <Footer />
+        <ShopProvider>
+          <ConditionalHeader />
+          {children}
+          <Footer />
+        </ShopProvider>
       </body>
     </html>
   );

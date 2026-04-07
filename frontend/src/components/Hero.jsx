@@ -27,10 +27,9 @@ const Hero = () => {
               className="absolute origin-center [transform-style:preserve-3d] [--radius:340px] lg:[--radius:500px]"
               style={{
                 "--count": i,
-                animation: mounted ? "rotY 8s linear infinite" : "none",
-                animationDelay: `${0.3 * i}s`,
-                transform: `translateZ(0)`,   // 👈 ADD THIS
-                willChange: "transform"       // 👈 ADD THIS
+                animation: mounted ? `rotY 8s linear ${0.3 * i}s infinite` : "none",
+                transform: `translateZ(0)`,
+                willChange: "transform"
               }}
             >
               <div className="relative w-[80px] h-[120px] lg:w-[160px] lg:h-[220px] [transform-style:preserve-3d]">
