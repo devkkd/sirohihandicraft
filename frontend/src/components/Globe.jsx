@@ -43,7 +43,7 @@ const Globe = () => {
           <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#8c8273] uppercase mb-4 block">
             Where We Export
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#4a4238] tracking-tight">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#4a4238] tracking-tight">
             Trusted By Brands Across The Globe
           </h2>
         </div>

@@ -74,7 +74,7 @@ export default function CategoryPage() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8 flex flex-col items-center">
         
         {/* ================= HEADER SECTION ================= */}
-        <h1 className="text-4xl md:text-5xl font-bold text-[#645643] mb-6 tracking-wide uppercase text-center">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-[#645643] mb-6 tracking-wide uppercase text-center">
           {currentCategory.title}
         </h1>
 

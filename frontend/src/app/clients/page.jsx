@@ -116,10 +116,10 @@ export default function ClientsPage() {
 
                     {/* ================= HEADER SECTION ================= */}
                     <div className="flex flex-col items-center text-center mb-16 px-6 lg:px-12">
-                        <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#8c8273] uppercase mb-4 block">
+                        <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#4a4238] uppercase mb-4 block">
                             HAPPY CLIENTS
                         </span>
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#5c4f3d] tracking-tight mb-6">
+                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-6">
                             What Our Partners Say
                         </h1>
                         <p className="text-sm md:text-[15px] text-[#2d2926] font-medium max-w-2xl">

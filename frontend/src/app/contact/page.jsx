@@ -12,10 +12,10 @@ export default function ContactPage() {
         
         {/* ================= HEADER SECTION ================= */}
         <div className="flex flex-col items-center text-center mb-16 lg:mb-24">
-          <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#8c8273] uppercase mb-6 block">
+          <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#4a4238] uppercase mb-6 block">
             CONTACT US
           </span>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#5c4f3d] tracking-tight mb-8">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-8">
             We'd Be Glad To Hear From You
           </h1>
           <div className="text-sm md:text-[15px] text-gray-700 max-w-4xl leading-relaxed font-medium flex flex-col gap-6">

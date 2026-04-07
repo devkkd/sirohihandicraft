@@ -35,7 +35,7 @@ export default function StoryPage() {
           <span className="text-sm font-bold tracking-[0.15em] text-[#4a4238] uppercase mb-6">
             OUR STORY
           </span>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#5c4f3d] tracking-tight mb-10">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-10">
             Built Slowly, Built to Last
           </h1>
           <div className="flex flex-col gap-6 text-sm md:text-[15px] text-gray-800 font-medium max-w-4xl leading-relaxed">
@@ -53,7 +53,7 @@ export default function StoryPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-24 lg:mb-40">
           
           <div className="flex flex-col">
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#5c4f3d] mb-10 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-10 tracking-tight">
               Where It Started
             </h2>
             <div className="flex flex-col gap-8 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
@@ -93,7 +93,7 @@ export default function StoryPage() {
 
           {/* Text (Right - Right Aligned on Desktop) */}
           <div className="flex flex-col lg:text-right order-1 lg:order-2">
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#5c4f3d] mb-10 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-10 tracking-tight">
               Learning the Export World
             </h2>
             <div className="flex flex-col gap-8 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
@@ -117,7 +117,7 @@ export default function StoryPage() {
           
           {/* Text (Left) */}
           <div className="flex flex-col">
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#5c4f3d] mb-10 tracking-tight leading-[1.1]">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-10 tracking-tight leading-[1.1]">
               Building Our Own Export Operations
             </h2>
             <div className="flex flex-col gap-8 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
@@ -158,7 +158,7 @@ export default function StoryPage() {
 
           {/* Text (Right - Right Aligned on Desktop) */}
           <div className="flex flex-col lg:text-right order-1 lg:order-2">
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#5c4f3d] mb-10 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-10 tracking-tight">
               Two Generations
             </h2>
             <div className="flex flex-col gap-8 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
@@ -184,7 +184,7 @@ export default function StoryPage() {
             <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#8c8273] uppercase mb-4 block">
               OUR JOURNEY
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#5c4f3d] tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight">
               Built Over Two Generations of Honest Craft
             </h2>
           </div>

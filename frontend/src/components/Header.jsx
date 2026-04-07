@@ -69,7 +69,7 @@ const Header = () => {
             <div className="hidden lg:flex items-end text-gray-700 justify-between px-8 py-5 max-w-[1600px] mx-auto w-full gap-4 xl:gap-8">
                 
                 {/* SEARCH */}
-                <div className="flex items-center border-b border-gray-300 pb-1 w-48 xl:w-64 group focus-within:border-[#615236] transition-colors shrink-0">
+                <div className="flex items-center border-b border-gray-300 w-48 xl:w-64 group focus-within:border-[#615236] transition-colors shrink-0">
                     <FiSearch className=" text-lg mr-2 group-focus-within:text-[#615236]" />
                     <input
                         type="text"
@@ -82,7 +82,7 @@ const Header = () => {
                 <nav className="shrink-0 flex h-full items-center">
                     <div className="relative group/main h-full">
                         {/* Dropdown Trigger */}
-                        <button className="flex items-center gap-1 text-sm uppercase text-gray-700 tracking-wide hover:text-[#615236] pb-1">
+                        <button className="flex items-center gap-1 text-[11px] uppercase text-gray-700 tracking-wide hover:text-[#615236]">
                             PRODUCTS <FiChevronDown />
                         </button>
 
@@ -133,20 +133,20 @@ const Header = () => {
                 </nav>
 
                 {/* OTHER LINKS */}
-                <Link href="/about" className="text-sm uppercase hover:text-[#615236] pb-1">ABOUT US</Link>
+                <Link href="/about" className="text-[11px] uppercase hover:text-[#615236]">ABOUT US</Link>
 
                 {/* LOGO */}
                 <Link href="/" className="flex-shrink-0 px-4">
                     <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-14" />
                 </Link>
 
-                <Link href="/story" className="text-sm uppercase hover:text-[#615236] pb-1">OUR STORY</Link>
-                <Link href="/clients" className="text-sm uppercase hover:text-[#615236] pb-1">HAPPY CLIENTS</Link>
-                <Link href="/contact" className="text-sm uppercase hover:text-[#615236] pb-1">CONTACT US</Link>
+                <Link href="/story" className="text-[11px] uppercase hover:text-[#615236]">OUR STORY</Link>
+                <Link href="/clients" className="text-[11px] uppercase hover:text-[#615236]">HAPPY CLIENTS</Link>
+                <Link href="/contact" className="text-[11px] uppercase hover:text-[#615236]">CONTACT US</Link>
 
                 <Link
                     href="/request"
-                    className="flex items-center gap-1 text-sm font-bold border-b-2 border-gray-800 pb-1"
+                    className="flex items-center gap-1 text-[11px] font-bold border-b-2 border-gray-800"
                 >
                     REQUEST A QUOTE <FiArrowRight />
                 </Link>
@@ -262,7 +262,7 @@ const Header = () => {
                     <Link
                         href="/request"
                         onClick={closeMobileMenu}
-                        className="flex items-center justify-center gap-2 w-full bg-[#645643] text-white py-3.5 rounded-full text-xs font-bold tracking-widest hover:bg-[#4d4233] transition-colors"
+                        className="flex items-center justify-center gap-2 w-full bg-[#645643] text-white py-3.5 rounded-full text-[11px] font-bold tracking-widest hover:bg-[#4d4233] transition-colors"
                     >
                         REQUEST A QUOTE <FiArrowRight size={16} strokeWidth={2.5} />
                     </Link>

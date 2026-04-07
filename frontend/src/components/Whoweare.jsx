@@ -14,7 +14,7 @@ const Whoweare = () => {
               Who We Are
             </span>
             
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#5c4f3d] leading-[1.15] mb-8 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] leading-[1.15] mb-8 tracking-tight">
               More Than Products We Craft Value For Your Brand
             </h2>
             

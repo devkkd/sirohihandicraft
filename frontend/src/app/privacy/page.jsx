@@ -45,7 +45,7 @@ const privacyData = [
 export default function PrivacyPage() {
     return (
         <>
-            <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-1">
+            <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-14">
                 {/* Narrower max-width (1000px) for better reading experience on text pages */}
                 <div className="max-w-[1350px] mx-auto px-6 lg:px-12">
 
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
                         <span className="text-[15px] font-bold text-[#4a4238] mb-4 block">
                             Privacy Policy
                         </span>
-                        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-[#5c4f3d] tracking-tight">
+                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight">
                             Privacy Policy
                         </h1>
                     </div>

@@ -17,7 +17,7 @@ const GetInTouch = () => {
               Get in Touch
             </span>
             
-            <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-[#4a4238] leading-[1.15] mb-8 tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#4a4238] leading-[1.15] mb-8 tracking-tight">
               Let's Build Something<br className="hidden lg:block" /> Together
             </h2>
             

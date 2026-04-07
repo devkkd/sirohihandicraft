@@ -85,7 +85,7 @@ export default function FaqsPage() {
           <span className="text-[14px] md:text-[15px] font-bold text-[#4a4238] uppercase tracking-wide mb-4 block">
             FAQ's
           </span>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#645643] tracking-tight">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#645643] tracking-tight">
             Frequently Asked Questions
           </h1>
         </div>

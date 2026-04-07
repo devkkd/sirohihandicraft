@@ -114,7 +114,7 @@ export default function AboutPage() {
 
                     {/* Left Text (Column 1) */}
                     <div className="flex flex-col md:col-span-2 lg:pr-4">
-                        <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[#5c4f3d] mb-8 lg:mb-10 tracking-tight">
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-8 lg:mb-10 tracking-tight">
                             What We Do
                         </h2>
                         <div className="flex flex-col gap-6 text-[13px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
@@ -164,7 +164,7 @@ export default function AboutPage() {
       ========================================= */}
             <section className="max-w-[1400px] mx-auto px-6 lg:px-12">
                 <div className="flex flex-col items-center text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#5c4f3d] mb-6 tracking-tight">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-6 tracking-tight">
                         Our Strengths
                     </h2>
                     <p className="text-sm md:text-[15px] text-gray-700 max-w-3xl font-medium">

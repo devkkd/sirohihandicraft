@@ -45,7 +45,7 @@ const Footer = () => {
             <Link href="/contact" className="text-sm font-medium hover:text-white transition-colors">
               Contact Us
             </Link>
-            <Link href="/Privacy" className="text-sm font-medium hover:text-white transition-colors">
+            <Link href="/privacy" className="text-sm font-medium hover:text-white transition-colors">
               Privacy Policy
             </Link>
             <Link href="/terms" className="text-sm font-medium hover:text-white transition-colors">
