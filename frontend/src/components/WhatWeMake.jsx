@@ -3,12 +3,16 @@
 import React from "react";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import Categories from "@/data/Categories";
-import SubCategories from "@/data/SubCategories";
+import { useShop } from "@/context/ShopContext";
 
 const WhatWeMake = () => {
+  const { categories, subCategories } = useShop();
+  const displayCategories = categories.filter((c) =>
+    ["wooden", "marble"].includes(c.slug)
+  );
+
   return (
-    <section className="w-full py-20 bg-[#FFFDF9]">
+    <section className="w-full py-8 bg-[#FFFDF9]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         
         {/* Global Section Header */}
@@ -22,19 +26,18 @@ const WhatWeMake = () => {
         </div>
 
         {/* Map through each Main Category */}
-        {Categories.map((category, index) => {
-          // Get subcategories that belong to this category
-          const categorySubs = SubCategories.filter(
-            (sub) => sub.categoryId === category.id
-          );
+        {displayCategories.map((category, index) => {
+          const categorySubs = subCategories
+            .filter((sub) => (sub.category?._id || sub.category) === category._id)
+            .slice(0, 3);
 
           return (
             <div 
-              key={category.id} 
-              className={index !== Categories.length - 1 ? "mb-28" : ""}
+              key={category._id} 
+              className={index !== displayCategories.length - 1 ? "mb-28" : ""}
             >
               
-              {/* Category Header Row (Title Left, Desc Right) */}
+              {/* Category Header Row */}
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-10">
                 <h3 className="text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#4a4238] tracking-tight capitalize">
                   {category.title}
@@ -49,7 +52,6 @@ const WhatWeMake = () => {
                 {categorySubs.map((sub) => (
                   <div key={sub._id} className="group flex flex-col">
                     
-                    {/* Subcategory Image */}
                     <Link 
                       href={`/category/${category.slug}?sub=${sub.slug}`}
                       className="w-full aspect-[4/3] rounded-[2rem] overflow-hidden mb-5 bg-[#f5f5f5] block"
@@ -61,7 +63,6 @@ const WhatWeMake = () => {
                       />
                     </Link>
 
-                    {/* Subcategory Info Row */}
                     <div className="flex items-center justify-between px-1">
                       <Link 
                         href={`/category/${category.slug}?sub=${sub.slug}`}
@@ -82,7 +83,6 @@ const WhatWeMake = () => {
                 ))}
               </div>
 
-              {/* Bottom "See All" Link */}
               <div className="mt-16 flex items-center justify-center">
                 <Link
                   href={`/category/${category.slug}`}

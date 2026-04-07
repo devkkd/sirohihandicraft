@@ -1,36 +1,65 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
-import { useEffect, useState } from "react";
 
 const Hero = () => {
   const [mounted, setMounted] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     setMounted(true);
+
+    // Auto slider (mobile) - loops through 5 images
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 5);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
+
   const cards = Array.from({ length: 12 }, (_, i) => i + 1);
 
   return (
-    <main className="relative bg-[#FFFDF9] overflow-hidden pt-40 lg:pt-64 pb-[150px] lg:pb-[250px]"
-      style={{ perspective: "1000px" }}>
+    <main
+      className="relative bg-[#FFFDF9] overflow-hidden 
+     sm:pt-40 lg:pt-64
+     sm:pb-[150px] lg:pb-[250px]"
+      style={{ perspective: "1000px" }}
+    >
+      {/* ✅ MOBILE SLIDER ONLY */}
+      <div className="block sm:hidden w-full mb-6">
+        <div className="relative w-full h-[240px] overflow-hidden">
+          {/* Mapping through images 2 to 6 */}
+          {[3, 5, 6, 7, 8,9,10].map((num, i) => (
+            <img
+              key={num}
+              src={`/images/Hero/Hero${num}.png`}
+              alt={`Slide ${num}`}
+              className={`absolute w-full h-full object-cover transition-opacity duration-700 ${
+                currentSlide === i ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
 
       {/* CENTER WRAPPER */}
       <div className="relative w-full flex items-center justify-center">
 
-        {/* ROTATING RING */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+        {/* ❌ DESKTOP RING ONLY (UNCHANGED) */}
+        <div className="hidden sm:flex absolute inset-0 items-center justify-center pointer-events-none z-0">
           {cards.map((num, i) => (
             <div
               key={num}
               className="absolute origin-center [transform-style:preserve-3d] [--radius:340px] lg:[--radius:500px]"
               style={{
                 "--count": i,
-                animation: mounted ? "rotY 8s linear infinite" : "none",
-                animationDelay: `${0.3 * i}s`,
-                transform: `translateZ(0)`,   // 👈 ADD THIS
-                willChange: "transform"       // 👈 ADD THIS
+                animation: mounted
+                  ? `rotY 6s linear ${0.1 * i}s infinite`
+                  : "none",
+                transform: `translateZ(0)`,
+                willChange: "transform",
               }}
             >
               <div className="relative w-[80px] h-[120px] lg:w-[160px] lg:h-[220px] [transform-style:preserve-3d]">
@@ -39,7 +68,7 @@ const Hero = () => {
                 <div
                   className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)]"
                   style={{
-                    transform: "rotateZ(calc(-30deg * var(--count)))"
+                    transform: "rotateZ(calc(-30deg * var(--count)))",
                   }}
                 >
                   <img
@@ -53,7 +82,8 @@ const Hero = () => {
                 <div
                   className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)] bg-[#615236] flex items-center justify-center"
                   style={{
-                    transform: "rotateY(180deg) rotateZ(calc(-30deg * var(--count)))"
+                    transform:
+                      "rotateY(180deg) rotateZ(calc(-30deg * var(--count)))",
                   }}
                 >
                   <img
@@ -68,30 +98,32 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* CENTER CONTENT */}
-        <div className="relative z-10 flex flex-col items-center text-center max-w-4xl px-6 py-12 bg-[#FFFDF9]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none rounded-3xl">
+        {/* CONTENT (same, only slight safe scaling for mobile) */}
+        <div className="relative z-10 flex flex-col items-center text-center max-w-4xl px-4 sm:px-6 py-8 sm:py-12 bg-[#FFFDF9]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none rounded-3xl">
 
-          <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-[#8c8273] mb-6 uppercase">
+          <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-[#8c8273] mb-4 sm:mb-6 uppercase">
             Est. 1998 • Rajasthan, India
           </p>
 
-          <h1 className="text-4xl md:text-6xl lg:text-[4rem] font-extrabold text-[#5c4f3d] mb-6 leading-[1.1] tracking-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-[4rem] font-extrabold text-[#5c4f3d] mb-4 sm:mb-6 leading-[1.1] tracking-tight">
             Crafted by Hand, <br className="hidden md:block" /> Built for the World
           </h1>
 
-          <p className="text-sm md:text-[15px] text-[#6b6154] max-w-2xl mb-10 leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm md:text-[15px] text-[#6b6154] max-w-md sm:max-w-2xl mb-6 sm:mb-10 leading-relaxed font-medium">
             Manufacturer And Exporter Of Premium Wooden And Marble Home Décor And
-            Kitchenware Made For Global Brands And Retailers Across The Usa, Europe, And The Gulf.
+            Kitchenware Made For Global Brands And Retailers Across The Usa,
+            Europe, And The Gulf.
           </p>
 
-          <button className="bg-[#645643] hover:bg-[#4d4233] text-white px-8 py-3.5 rounded-full text-xs md:text-sm font-bold tracking-widest flex items-center gap-3 transition-all duration-300 shadow-xl mb-14">
+          <button className="bg-[#645643] hover:bg-[#4d4233] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold tracking-widest flex items-center gap-2 sm:gap-3 transition-all duration-300 shadow-xl mb-8 sm:mb-14">
             REQUEST A QUOTE <FiArrowRight size={16} strokeWidth={2.5} />
           </button>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-14 border-t border-[#e0dacd] pt-10 mb-10 w-full max-w-3xl">
+          {/* STATS */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-14 border-t border-[#e0dacd] pt-6 sm:pt-10 mb-6 sm:mb-10 w-full max-w-3xl">
 
-            <div className="flex flex-col items-center min-w-[120px]">
-              <span className="text-2xl md:text-4xl font-extrabold text-black mb-1">25+</span>
+            <div className="flex flex-col items-center min-w-[90px] sm:min-w-[120px]">
+              <span className="text-xl sm:text-2xl md:text-4xl font-extrabold text-black mb-1">25+</span>
               <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider">
                 Years of Craft
               </span>
@@ -99,8 +131,8 @@ const Hero = () => {
 
             <div className="hidden md:block w-px h-12 bg-[#e0dacd]" />
 
-            <div className="flex flex-col items-center min-w-[120px]">
-              <span className="text-2xl md:text-4xl font-extrabold text-black mb-1">200+</span>
+            <div className="flex flex-col items-center min-w-[90px] sm:min-w-[120px]">
+              <span className="text-xl sm:text-2xl md:text-4xl font-extrabold text-black mb-1">200+</span>
               <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider">
                 Global Clients
               </span>
@@ -108,8 +140,8 @@ const Hero = () => {
 
             <div className="hidden md:block w-px h-12 bg-[#e0dacd]" />
 
-            <div className="flex flex-col items-center min-w-[120px]">
-              <span className="text-2xl md:text-4xl font-extrabold text-black mb-1">10+</span>
+            <div className="flex flex-col items-center min-w-[90px] sm:min-w-[120px]">
+              <span className="text-xl sm:text-2xl md:text-4xl font-extrabold text-black mb-1">10+</span>
               <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider">
                 Export Markets
               </span>
@@ -117,16 +149,15 @@ const Hero = () => {
 
           </div>
 
-          <div className="mt-4">
+          <div className="mt-2 sm:mt-4">
             <img
               src="/images/icons/SirohiIcon.svg"
               alt="Leaf Icon"
-              className="w-16 md:w-20 h-auto opacity-90"
+              className="w-12 sm:w-16 md:w-20 h-auto opacity-90"
             />
           </div>
 
         </div>
-
       </div>
     </main>
   );

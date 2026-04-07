@@ -1,5 +1,6 @@
 "use client";
 
+import GetInTouch from "@/components/GetInTouch";
 import React from "react";
 
 const journeyData = [
@@ -27,6 +28,7 @@ const journeyData = [
 
 export default function StoryPage() {
   return (
+<>
     <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-14">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         
@@ -220,5 +222,7 @@ export default function StoryPage() {
 
       </div>
     </main>
+    <GetInTouch/>
+</>
   );
 }

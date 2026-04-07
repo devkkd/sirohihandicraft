@@ -95,8 +95,8 @@ const Stars = () => (
 
 // --- REUSABLE CARD COMPONENT ---
 const TestimonialCard = ({ data }) => (
-    <div className="bg-transparent border border-[#d2c4b3] rounded-[2rem] p-8 md:p-10 flex flex-col justify-between min-h-[280px] hover:shadow-md transition-shadow duration-300">
-        <p className="text-[14px] lg:text-[15px] leading-relaxed text-[#2d2926] font-medium mb-8">
+    <div className="bg-transparent border border-[#d2c4b3] rounded-[2rem] p-8 md:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[280px] hover:shadow-md transition-shadow duration-300">
+        <p className="text-[14px] lg:text-[15px] leading-relaxed text-[#2d2926] font-medium sm:mb-8">
             {data.text}
         </p>
         <div className="flex flex-col">

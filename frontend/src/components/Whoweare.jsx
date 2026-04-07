@@ -4,7 +4,7 @@ import React from "react";
 
 const Whoweare = () => {
   return (
-    <section className="w-full py-16 lg:py-24 bg-[#FFFDF9]">
+    <section className="w-full py-8 lg:py-24 bg-[#FFFDF9]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
@@ -47,7 +47,7 @@ const Whoweare = () => {
           </div>
 
           {/* ================= RIGHT COLUMN: IMAGE & FLOATING CARD ================= */}
-          <div className="relative w-full mt-8 lg:mt-0">
+          <div className="relative w-full lg:mt-0">
             {/* Main Image */}
             <div className="w-full h-[200px] md:h-[350px] lg:h-[400px] rounded-3xl overflow-hidden shadow-lg">
               <img 

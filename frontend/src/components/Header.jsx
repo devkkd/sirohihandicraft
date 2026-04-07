@@ -9,20 +9,23 @@ import {
     FiMenu,
     FiX,
 } from "react-icons/fi";
-
-import Categories from "@/data/Categories";
-import SubCategories from "@/data/SubCategories";
+import { useShop } from "@/context/ShopContext";
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
     const [expandedCategory, setExpandedCategory] = useState(null);
-    
-    // State to track which category is hovered in the desktop dropdown
-    // Defaults to the first category (Wooden) so the right column isn't empty
-    const [activeDesktopCategory, setActiveDesktopCategory] = useState(Categories[0]?.id || 1);
+    const [activeDesktopCategory, setActiveDesktopCategory] = useState(null);
 
-    // Prevent scrolling when mobile menu is open
+    const { categories, subCategories } = useShop();
+
+    useEffect(() => {
+        if (categories.length > 0 && !activeDesktopCategory) {
+            setActiveDesktopCategory(categories[0]._id);
+        }
+    }, [categories]);
+
+
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = "hidden";
@@ -41,11 +44,9 @@ const Header = () => {
     return (
         <header className="sticky top-0 w-full bg-[#FFFDF9] z-50 shadow-sm lg:shadow-none">
             
-            {/* =========================================
-                MOBILE HEADER VIEW (Hidden on Desktop)
-            ========================================= */}
+      
             <div className="flex lg:hidden items-center justify-between px-6 py-4 w-full">
-                {/* Hamburger Button */}
+           
                 <button 
                     onClick={() => setIsMobileMenuOpen(true)}
                     className="text-2xl text-gray-800 focus:outline-none"
@@ -54,18 +55,14 @@ const Header = () => {
                     <FiMenu />
                 </button>
 
-                {/* Mobile Logo */}
                 <Link href="/" className="flex-shrink-0" onClick={closeMobileMenu}>
                     <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-10 sm:h-12" />
                 </Link>
 
-                {/* Empty div to balance flex spacing (keeps logo centered) */}
+               
                 <div className="w-6"></div>
             </div>
 
-            {/* =========================================
-                DESKTOP HEADER VIEW (Hidden on Mobile)
-            ========================================= */}
             <div className="hidden lg:flex items-end text-gray-700 justify-between px-8 py-5 max-w-[1600px] mx-auto w-full gap-4 xl:gap-8">
                 
                 {/* SEARCH */}
@@ -95,13 +92,13 @@ const Header = () => {
                                 
                                 {/* LEFT COLUMN: Categories */}
                                 <div className="flex flex-col w-54 pr-4 border-r border-[#e0dacd]/50 gap-2">
-                                    {Categories.map((category) => (
+                                    {categories.map((category) => (
                                         <Link
-                                            key={category.id}
+                                            key={category._id}
                                             href={`/category/${category.slug}`}
-                                            onMouseEnter={() => setActiveDesktopCategory(category.id)}
+                                            onMouseEnter={() => setActiveDesktopCategory(category._id)}
                                             className={`px-6 py-2 text-[12px] font-medium transition-colors rounded-full capitalize ${
-                                                activeDesktopCategory === category.id
+                                                activeDesktopCategory === category._id
                                                     ? "bg-[#645643] text-white"
                                                     : "text-[#2d2926] hover:bg-[#FBF3E6]"
                                             }`}
@@ -113,8 +110,8 @@ const Header = () => {
 
                                 {/* RIGHT COLUMN: Subcategories based on active left item */}
                                 <div className="flex flex-col w-64 gap-1 pl-2">
-                                    {SubCategories.filter(sub => sub.categoryId === activeDesktopCategory).map((sub) => {
-                                        const parentCat = Categories.find(c => c.id === activeDesktopCategory);
+                                    {subCategories.filter(sub => (sub.category?._id || sub.category) === activeDesktopCategory).map((sub) => {
+                                        const parentCat = categories.find(c => c._id === activeDesktopCategory);
                                         return (
                                             <Link
                                                 key={sub._id}
@@ -152,10 +149,7 @@ const Header = () => {
                 </Link>
             </div>
 
-            {/* =========================================
-                MOBILE FULL SCREEN SLIDE-OUT MENU
-            ========================================= */}
-            {/* Dark Overlay Backdrop */}
+         
             <div 
                 className={`fixed inset-0 bg-black/60 z-[60] lg:hidden transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
                 onClick={closeMobileMenu}
@@ -206,12 +200,12 @@ const Header = () => {
                             {/* Categories Dropdown */}
                             {mobileProductsOpen && (
                                 <div className="flex flex-col mt-4 pl-4 border-l-2 border-[#e0dacd] gap-4">
-                                    {Categories.map(category => {
-                                        const relatedSubCategories = SubCategories.filter(sub => sub.categoryId === category.id);
-                                        const isCatExpanded = expandedCategory === category.id;
+                                    {categories.map(category => {
+                                        const relatedSubCategories = subCategories.filter(sub => (sub.category?._id || sub.category) === category._id);
+                                        const isCatExpanded = expandedCategory === category._id;
 
                                         return (
-                                            <div key={category.id} className="flex flex-col">
+                                            <div key={category._id} className="flex flex-col">
                                                 <div className="flex items-center justify-between">
                                                     <Link 
                                                         href={`/category/${category.slug}`} 
@@ -221,14 +215,13 @@ const Header = () => {
                                                         {category.title}
                                                     </Link>
                                                     <button 
-                                                        onClick={() => setExpandedCategory(isCatExpanded ? null : category.id)}
+                                                        onClick={() => setExpandedCategory(isCatExpanded ? null : category._id)}
                                                         className="p-1 text-gray-500"
                                                     >
                                                         <FiChevronDown className={`transition-transform duration-300 ${isCatExpanded ? 'rotate-180' : ''}`} />
                                                     </button>
                                                 </div>
 
-                                                {/* Subcategories Dropdown */}
                                                 {isCatExpanded && (
                                                     <div className="flex flex-col mt-3 pl-4 gap-3">
                                                         {relatedSubCategories.map(sub => (

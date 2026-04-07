@@ -7,7 +7,7 @@ const GetInTouch = () => {
   const [productCategory, setProductCategory] = useState("Wooden");
 
   return (
-    <section className="w-full py-20 lg:py-32 bg-[#FFFDF9]">
+    <section className="w-full py-8 lg:py-16 bg-[#FFFDF9]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-start">
           

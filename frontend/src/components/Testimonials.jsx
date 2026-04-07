@@ -83,7 +83,7 @@ const Testimonials = () => {
   );
 
   return (
-    <section className="w-full py-20 lg:py-32 bg-[#FFFDF9] overflow-hidden">
+    <section className="w-full py-8 lg:py-12 bg-[#FFFDF9] overflow-hidden">
       
       {/* Header Area */}
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mb-12 lg:mb-20 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">

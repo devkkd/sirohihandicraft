@@ -33,7 +33,7 @@ export default function ContactPage() {
         </div>
 
         {/* ================= FORM & INFO GRID ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 mb-24 lg:mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 mb-20 lg:mb-28">
           
           {/* --- LEFT: ENQUIRY FORM --- */}
           <div className="lg:col-span-7 flex flex-col">
@@ -180,43 +180,28 @@ export default function ContactPage() {
 
         </div>
 
-        {/* ================= MAPS SECTION ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          
-          {/* Map 1 */}
-          <div className="flex flex-col">
-            <h3 className="text-xl font-bold text-[#4a4238] mb-6">Address - 1st</h3>
-            <div className="w-full h-[300px] md:h-[400px] rounded-[2rem] overflow-hidden bg-gray-200 border border-[#e0dacd]">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                frameBorder="0" 
-                scrolling="no" 
-                marginHeight="0" 
-                marginWidth="0" 
-                src="https://maps.google.com/maps?q=Plot+No-37,+&+54,+Near+Canara+Bank+Near+New+Riico+Ind.+Jaipur+-+Rajasthan&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                title="Sirohi Handicraft Address 1"
-              ></iframe>
-            </div>
+        {/* ================= SINGLE MAP SECTION ================= */}
+        <div className="flex flex-col w-full">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[#4a4238] mb-8">
+            Visit our Store
+          </h2>
+          <div className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden bg-gray-200 border border-[#e0dacd] shadow-sm">
+            {/* Replace the src below with your actual Google Maps embed URL for Sirohi Handicraft */}
+            <iframe 
+              width="100%" 
+              height="100%" 
+              frameBorder="0" 
+              scrolling="no" 
+              marginHeight="0" 
+              marginWidth="0" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113946.0699052062!2d75.71960241009139!3d26.815259970929285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396dc900223ed3bb%3A0x6b6c0032e6f9fc53!2sJaipur%2C%20Rajasthan%2C%20India!5e0!3m2!1sen!2sus!4v1714400000000!5m2!1sen!2sus"
+              title="Sirohi Handicraft Location"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
-
-          {/* Map 2 */}
-          <div className="flex flex-col">
-            <h3 className="text-xl font-bold text-[#4a4238] mb-6">Address - 2nd</h3>
-            <div className="w-full h-[300px] md:h-[400px] rounded-[2rem] overflow-hidden bg-gray-200 border border-[#e0dacd]">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                frameBorder="0" 
-                scrolling="no" 
-                marginHeight="0" 
-                marginWidth="0" 
-                src="https://maps.google.com/maps?q=G188,+RIICO+Industrial+Area+EXT.+II,+Bagru+Jaipur+-+303007&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                title="Sirohi Handicraft Address 2"
-              ></iframe>
-            </div>
-          </div>
-
         </div>
 
       </div>
