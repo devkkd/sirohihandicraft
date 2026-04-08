@@ -1,5 +1,4 @@
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
-const { randomUUID } = require("crypto");
 const path = require("path");
 
 const s3 = new S3Client({
@@ -13,7 +12,10 @@ const s3 = new S3Client({
 
 const uploadToCloudflare = async (fileBuffer, mimetype, originalName) => {
   const ext = path.extname(originalName);
-  const key = `uploads/${randomUUID()}${ext}`;
+  // Preserve original filename for SKU-based auto-detection
+  // Remove spaces, keep original name structure
+  const safeName = originalName.replace(/\s+/g, "-");
+  const key = `uploads/${safeName}`;
 
   await s3.send(
     new PutObjectCommand({
