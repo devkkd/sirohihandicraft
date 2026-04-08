@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
-import { Pencil, Trash2, Plus, X, Check } from "lucide-react";
+import { Pencil, Trash2, Plus, X, Check, Search } from "lucide-react";
 
 const toSlug = (str) =>
   str.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -11,20 +11,30 @@ const empty = { title: "", description: "" };
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(empty);
   const [editId, setEditId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
 
   const fetchCategories = async () => {
     try {
       const { data } = await api.get("/api/categories");
+      setAllCategories(data.data);
       setCategories(data.data);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = (val) => {
+    setSearch(val);
+    setCategories(
+      val ? allCategories.filter((c) => c.title.toLowerCase().includes(val.toLowerCase()) || c.slug.includes(val.toLowerCase())) : allCategories
+    );
   };
 
   useEffect(() => { fetchCategories(); }, []);
@@ -68,16 +78,19 @@ export default function CategoriesPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-[#3b2f1e]">Categories</h1>
-          <p className="text-[10px] tracking-widest text-[#9e8f7e] uppercase mt-0.5">
-            {categories.length} total
-          </p>
+          <p className="text-[10px] tracking-widest text-[#9e8f7e] uppercase mt-0.5">{allCategories.length} total</p>
         </div>
-        <button
-          onClick={openAdd}
-          className="flex items-center gap-2 bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-xl transition-colors"
-        >
+        <button onClick={openAdd} className="flex items-center gap-2 bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-xl transition-colors">
           <Plus size={14} /> Add Category
         </button>
+      </div>
+
+      {/* Search */}
+      <div className="relative mb-5">
+        <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#c4b9ac]" />
+        <input value={search} onChange={(e) => handleSearch(e.target.value)}
+          placeholder="Search categories..."
+          className="w-full sm:w-72 pl-9 pr-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] placeholder-[#c4b9ac] outline-none focus:border-[#645643] focus:ring-2 focus:ring-[#64564320] transition-all" />
       </div>
 
       {/* Table */}

@@ -44,6 +44,8 @@ app.use("/api/upload", require("./src/routes/uploadRoutes"));
 app.use("/api/categories", require("./src/routes/categoryRoutes"));
 app.use("/api/subcategories", require("./src/routes/subCategoryRoutes"));
 app.use("/api/products", require("./src/routes/productRoutes"));
+app.use("/api/inquiries", require("./src/routes/inquiryRoutes"));
+app.use("/api/customer-inquiries", require("./src/routes/customerInquiryRoutes"));
 
 app.use((req, res, next) => {
   const error = new Error(`Route not found: ${req.originalUrl}`);

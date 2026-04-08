@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Tag, Layers, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, Tag, Layers, LogOut, MessageSquare, Users } from "lucide-react";
 import { apiClient } from "@/lib/apiClient";
 
 const navItems = [
@@ -11,6 +11,8 @@ const navItems = [
   { label: "Products", href: "/admin/dashboard/products", icon: Package },
   { label: "Categories", href: "/admin/dashboard/categories", icon: Tag },
   { label: "Sub Categories", href: "/admin/dashboard/subcategories", icon: Layers },
+  { label: "Inquiries", href: "/admin/dashboard/inquiries", icon: MessageSquare },
+  { label: "Customer Inquiries", href: "/admin/dashboard/customer-inquiries", icon: Users },
 ];
 
 export default function AdminSidebar({ onClose }) {

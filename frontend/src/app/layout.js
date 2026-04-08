@@ -1,8 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
+ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/Footer";
 import ConditionalHeader from "@/components/ConditionalHeader";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import { ShopProvider } from "@/context/ShopContext";
+import { CartProvider } from "@/context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +28,11 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <ShopProvider>
-          <ConditionalHeader />
-          {children}
-          <Footer />
+          <CartProvider>
+            <ConditionalHeader />
+            {children}
+            <ConditionalFooter />
+          </CartProvider>
         </ShopProvider>
       </body>
     </html>

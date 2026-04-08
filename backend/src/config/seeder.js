@@ -68,8 +68,12 @@ const seedDB = async () => {
     subCatMap[sub.slug] = sub._id;
   });
 
+  const toSlug = (str) =>
+    str.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
   const productsToInsert = productsData.map((p) => ({
     name: p.name,
+    slug: toSlug(p.name),
     sku: p.sku,
     image: p.image,
     category: categoryMap[p.categorySlug],

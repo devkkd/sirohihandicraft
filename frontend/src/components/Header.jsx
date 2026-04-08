@@ -9,6 +9,8 @@ import {
     FiMenu,
     FiX,
 } from "react-icons/fi";
+import { useCart } from "@/context/CartContext";
+import { FiShoppingBag } from "react-icons/fi";
 import { useShop } from "@/context/ShopContext";
 
 const Header = () => {
@@ -18,6 +20,7 @@ const Header = () => {
     const [activeDesktopCategory, setActiveDesktopCategory] = useState(null);
 
     const { categories, subCategories } = useShop();
+    const { totalItems } = useCart();
 
     useEffect(() => {
         if (categories.length > 0 && !activeDesktopCategory) {
@@ -137,16 +140,26 @@ const Header = () => {
                     <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-14" />
                 </Link>
 
-                <Link href="/story" className="text-[11px] uppercase hover:text-[#615236]">OUR STORY</Link>
-                <Link href="/clients" className="text-[11px] uppercase hover:text-[#615236]">HAPPY CLIENTS</Link>
-                <Link href="/contact" className="text-[11px] uppercase hover:text-[#615236]">CONTACT US</Link>
-
-                <Link
+                <Link href="/story" className="text-sm uppercase hover:text-[#615236] pb-1">OUR STORY</Link>
+                <Link href="/clients" className="text-sm uppercase hover:text-[#615236] pb-1">HAPPY CLIENTS</Link>
+                <Link href="/contact" className="text-sm uppercase hover:text-[#615236] pb-1">CONTACT US</Link>
+                {/* Cart Icon */}
+                <Link href="/cart" className="relative shrink-0 pb-1">
+                    <FiShoppingBag className="text-xl text-gray-700 hover:text-[#615236] transition-colors" />
+                    {totalItems > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-[#645643] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                            {totalItems}
+                        </span>
+                    )}
+                </Link>
+                {/* <Link
                     href="/request"
                     className="flex items-center gap-1 text-[11px] font-bold border-b-2 border-gray-800"
                 >
                     REQUEST A QUOTE <FiArrowRight />
-                </Link>
+                </Link> */}
+
+                
             </div>
 
          

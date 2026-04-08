@@ -2,85 +2,88 @@
 
 import React from "react";
 import Link from "next/link";
+import { useShop } from "@/context/ShopContext";
 
 const Footer = () => {
+  const { categories, subCategories } = useShop();
+
   return (
-    <footer className="w-full bg-[#615236] text-[#e0dacd] pt-3 lg:pt-6 pb-3 lg:pb-6">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col items-center">
-        
-        {/* ================= TOP CENTER: Logo & Tagline ================= */}
-        <div className="flex flex-col items-center text-center mb-4">
-          <Link href="/" className="mb-2">
-            <img 
-              src="/images/logo/sirohiWhite.svg" 
-              alt="Sirohi Handicraft Logo" 
-              className="h-16 md:h-20 w-auto"
-            />
-          </Link>
-          <p className="text-[13px] md:text-[15px] leading-relaxed font-medium">
-            Manufacturer and exporter of wooden and marble home décor and kitchenware. Crafted in Rajasthan, delivered to the world.
-          </p>
-        </div>
+    <footer className="w-full bg-[#645643] text-[#e0dacd]" style={{ fontFamily: "'MonaSans', Arial, sans-serif" }}>
 
-        {/* ================= MIDDLE CENTER: Links ================= */}
-        <div className="flex flex-wrap justify-center gap-16 md:gap-32 mb-5 lg:mb-5 w-full pt-5 border-t border-[#7a6b52] ">
-          
-          {/* Company Links */}
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h4 className="text-white font-extrabold tracking-widest uppercase text-xs mb-1">
-              Company
-            </h4>
-            <Link href="/about" className="text-sm font-medium hover:text-white transition-colors">
-              About Us
-            </Link>
-            <Link href="/story" className="text-sm font-medium hover:text-white transition-colors">
-              Our Story
-            </Link>
-            <Link href="/clients" className="text-sm font-medium hover:text-white transition-colors">
-              Happy Clients
-            </Link>
-            <Link href="/faqs" className="text-sm font-medium hover:text-white transition-colors">
-              FAQ's
-            </Link>
-            <Link href="/contact" className="text-sm font-medium hover:text-white transition-colors">
-              Contact Us
-            </Link>
-            <Link href="/privacy" className="text-sm font-medium hover:text-white transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="text-sm font-medium hover:text-white transition-colors">
-              Terms of Service
-            </Link>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h4 className="text-white font-extrabold tracking-widest uppercase text-xs mb-1">
-              Social
-            </h4>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white transition-colors">
-              Facebook
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white transition-colors">
-              Instagram
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white transition-colors">
-              YouTube
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-white transition-colors">
-              Pinterest
-            </a>
-          </div>
-
-        </div>
-
-        {/* ================= BOTTOM BAR ================= */}
-        <div className="w-full pt-5 border-t border-[#7a6b52] flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium">
-          <p>© 2026 Sirohi Handicraft. All rights reserved.</p>
-          <p>Crafted By : Kontent Kraft Digital</p>
-        </div>
-
+      {/* Top: Logo + Tagline */}
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-8 flex flex-col items-center text-center border-b border-[#7a6b52]">
+        <Link href="/">
+          <img src="/images/logo/sirohiWhite.svg" alt="Sirohi Handicraft" className="h-16 w-auto mb-4" />
+        </Link>
+        <p className="text-xs text-[#c4b9ac] max-w-xl leading-relaxed">
+          Manufacturer and exporter of wooden and marble home decor and kitchenware. Crafted in Rajasthan, delivered to the world.
+        </p>
       </div>
+
+      {/* Middle: Dynamic subcategory columns + Company + Social */}
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-10 border-b border-[#7a6b52]">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+
+          {/* Dynamic subcategory columns per category */}
+          {categories.map((cat) => {
+            const subs = subCategories.filter(
+              (s) => (s.category?._id || s.category) === cat._id
+            );
+            return subs.map((sub) => (
+              <div key={sub._id} className="flex flex-col gap-2">
+                <Link
+                  href={`/category/${cat.slug}?sub=${sub.slug}`}
+                  className="text-[11px] font-bold text-white tracking-wide hover:text-[#e0dacd] transition-colors leading-tight"
+                >
+                  {sub.name}
+                </Link>
+              </div>
+            ));
+          })}
+
+          {/* Company */}
+          <div className="flex flex-col gap-2">
+            <h4 className="text-[11px] font-bold text-white tracking-wide">Company</h4>
+            {[
+              { label: "About Us", href: "/about" },
+              { label: "Our Story", href: "/story" },
+              { label: "Happy Clients", href: "/clients" },
+              { label: "FAQ's", href: "/faqs" },
+              { label: "Contact Us", href: "/contact" },
+              { label: "Privacy Policy", href: "/privacy" },
+              { label: "Terms of Service", href: "/terms" },
+            ].map(({ label, href }) => (
+              <Link key={href} href={href} className="text-xs text-[#c4b9ac] hover:text-white transition-colors">
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Social */}
+          <div className="flex flex-col gap-2">
+            <h4 className="text-[11px] font-bold text-white tracking-wide">Social</h4>
+            {[
+              { label: "Facebook", href: "#" },
+              { label: "Instagram", href: "#" },
+              { label: "YouTube", href: "#" },
+              { label: "Pinterest", href: "#" },
+            ].map(({ label, href }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="text-xs text-[#c4b9ac] hover:text-white transition-colors">
+                {label}
+              </a>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[#c4b9ac]">
+        <p>© {new Date().getFullYear()} Sirohi Handicrafted. All rights reserved.</p>
+        <p>Crafted By : Kontent Kraft Digital</p>
+      </div>
+
     </footer>
   );
 };

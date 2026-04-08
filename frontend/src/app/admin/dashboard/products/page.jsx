@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
-import { Plus, Pencil, Trash2, X, Check, ImageIcon } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Check, ImageIcon, Search } from "lucide-react";
 import { ThumbnailUpload, GalleryUpload } from "@/components/admin/ImageUpload";
 
 const toSlug = (str) =>
@@ -37,12 +37,19 @@ export default function ProductsPage() {
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState({});
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [subCategoryFilter, setSubCategoryFilter] = useState("");
+  const [filterSubs, setFilterSubs] = useState([]); // subcategories for filter dropdown
 
   const set = (key, val) => setForm((prev) => ({ ...prev, [key]: val }));
 
-  const fetchProducts = async (p = 1) => {
+  const fetchProducts = async (p = 1, s = search, cat = categoryFilter, sub = subCategoryFilter) => {
     try {
-      const { data } = await api.get(`/api/products?page=${p}&limit=10`);
+      const searchQ = s ? `&search=${s}` : "";
+      const catQ = cat ? `&category=${cat}` : "";
+      const subQ = sub ? `&subCategory=${sub}` : "";
+      const { data } = await api.get(`/api/products?page=${p}&limit=10${searchQ}${catQ}${subQ}`);
       setProducts(data.data);
       setPagination(data.pagination);
     } finally {
@@ -114,6 +121,38 @@ export default function ProductsPage() {
         <button onClick={openAdd} className="flex items-center gap-2 bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-xl transition-colors">
           <Plus size={14} /> Add Product
         </button>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-5">
+        <div className="relative flex-1">
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#c4b9ac]" />
+          <input value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); fetchProducts(1, e.target.value, categoryFilter, subCategoryFilter); }}
+            placeholder="Search products..."
+            className="w-full pl-9 pr-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] placeholder-[#c4b9ac] outline-none focus:border-[#645643] focus:ring-2 focus:ring-[#64564320] transition-all" />
+        </div>
+        <select value={categoryFilter} onChange={(e) => {
+          const val = e.target.value;
+          setCategoryFilter(val);
+          setSubCategoryFilter("");
+          setFilterSubs(val ? subCategories.filter((s) => (s.category?._id || s.category) === val) : []);
+          setPage(1);
+          fetchProducts(1, search, val, "");
+        }}
+          className="px-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] outline-none focus:border-[#645643] transition-all">
+          <option value="">All Categories</option>
+          {categories.map((c) => <option key={c._id} value={c._id}>{c.title}</option>)}
+        </select>
+        <select value={subCategoryFilter} onChange={(e) => {
+          setSubCategoryFilter(e.target.value);
+          setPage(1);
+          fetchProducts(1, search, categoryFilter, e.target.value);
+        }}
+          disabled={!categoryFilter}
+          className="px-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] outline-none focus:border-[#645643] transition-all disabled:opacity-50">
+          <option value="">All Sub Categories</option>
+          {filterSubs.map((s) => <option key={s._id} value={s._id}>{s.name}</option>)}
+        </select>
       </div>
 
       {/* Table */}

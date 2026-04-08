@@ -33,6 +33,24 @@ const getProducts = async (req, res, next) => {
   }
 };
 
+const getProductBySlug = async (req, res, next) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug })
+      .populate("category", "title slug")
+      .populate("subCategory", "name slug")
+      .lean();
+
+    if (!product) {
+      const err = new Error("Product not found");
+      err.statusCode = 404;
+      return next(err);
+    }
+    res.status(200).json({ success: true, data: product });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getProductById = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id)
@@ -135,6 +153,7 @@ const deleteProduct = async (req, res, next) => {
 module.exports = {
   getProducts,
   getProductById,
+  getProductBySlug,
   getProductsByCategorySlug,
   createProduct,
   updateProduct,

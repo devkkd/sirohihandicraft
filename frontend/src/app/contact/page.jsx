@@ -1,10 +1,39 @@
 "use client";
 
 import React, { useState } from "react";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiCheck } from "react-icons/fi";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const inputCls = "bg-transparent border-b border-[#d2c4b3] py-2 text-sm text-[#4a4238] focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400";
 
 export default function ContactPage() {
   const [productCategory, setProductCategory] = useState("Wooden");
+  const [form, setForm] = useState({ fullName: "", companyName: "", email: "", country: "", phone: "", productsSKUs: "", orderQuantity: "", additionalRequirements: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const set = (k, v) => setForm((p) => ({ ...p, [k]: v }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError("");
+    try {
+      const res = await fetch(`${API_URL}/api/customer-inquiries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, productCategory }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Submission failed");
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-14 pb-24">
@@ -45,82 +74,74 @@ export default function ContactPage() {
               The More Detail You Can Share About Your Requirements, The More Useful Our Response Will Be.
             </p>
 
-            <form className="flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-col">
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center py-16 gap-6 text-center">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                    <FiCheck size={28} className="text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-extrabold text-[#4a4238]">Thank You!</h3>
+                  <p className="text-sm text-[#6b6154]">We've received your enquiry and will respond within 24–48 business hours.</p>
+                </div>
+              ) : (<>
+              {error && <p className="text-red-500 text-sm mb-6">{error}</p>}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                
-                {/* Form Left Column */}
                 <div className="flex flex-col gap-10">
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-semibold text-[#4a4238]">Full Name</label>
-                    <input type="text" placeholder="Enter Full Name" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <label className="text-sm font-semibold text-[#4a4238]">Full Name *</label>
+                    <input type="text" value={form.fullName} onChange={(e) => set("fullName", e.target.value)} placeholder="Enter Full Name" required className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-[#4a4238]">Company Name</label>
-                    <input type="text" placeholder="Enter Company Name" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <input type="text" value={form.companyName} onChange={(e) => set("companyName", e.target.value)} placeholder="Enter Company Name" className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-semibold text-[#4a4238]">Email Address</label>
-                    <input type="email" placeholder="Enter Email Address" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <label className="text-sm font-semibold text-[#4a4238]">Email Address *</label>
+                    <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="Enter Email Address" required className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-[#4a4238]">Country</label>
-                    <input type="text" placeholder="Enter Country" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <input type="text" value={form.country} onChange={(e) => set("country", e.target.value)} placeholder="Enter Country" className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-semibold text-[#4a4238]">Phone / WhatsApp Number</label>
-                    <input type="text" placeholder="Enter Phone / WhatsApp Number" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <label className="text-sm font-semibold text-[#4a4238]">Phone / WhatsApp Number *</label>
+                    <input type="text" value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="Enter Phone / WhatsApp Number" required className={inputCls} />
                   </div>
                 </div>
-
-                {/* Form Right Column */}
                 <div className="flex flex-col gap-10">
                   <div className="flex flex-col gap-4">
                     <label className="text-sm font-semibold text-[#4a4238]">Product Category</label>
                     <div className="flex gap-4">
-                      <button 
-                        type="button" 
-                        onClick={() => setProductCategory("Wooden")}
-                        className={`px-8 py-2.5 rounded-full text-[13px] font-bold transition-all duration-300 ${productCategory === "Wooden" ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}
-                      >
-                        Wooden
-                      </button>
-                      <button 
-                        type="button" 
-                        onClick={() => setProductCategory("Marble")}
-                        className={`px-8 py-2.5 rounded-full text-[13px] font-bold transition-all duration-300 ${productCategory === "Marble" ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}
-                      >
-                        Marble
-                      </button>
+                      {["Wooden", "Marble"].map((cat) => (
+                        <button key={cat} type="button" onClick={() => setProductCategory(cat)}
+                          className={`px-8 py-2.5 rounded-full text-[13px] font-bold transition-all duration-300 ${productCategory === cat ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}>
+                          {cat}
+                        </button>
+                      ))}
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 mt-1.5">
                     <label className="text-sm font-semibold text-[#4a4238]">Products / SKUs</label>
-                    <input type="text" placeholder="SH-CBW-26-38" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <input type="text" value={form.productsSKUs} onChange={(e) => set("productsSKUs", e.target.value)} placeholder="SH-CBW-26-38" className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-[#4a4238]">Order Quantity</label>
-                    <input type="text" placeholder="Enter Order Quantity" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <input type="text" value={form.orderQuantity} onChange={(e) => set("orderQuantity", e.target.value)} placeholder="Enter Order Quantity" className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-[#4a4238]">Additional Requirements</label>
-                    <input type="text" placeholder="Enter Additional Requirements" className="bg-transparent border-b border-[#d2c4b3] py-2 text-sm focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400" />
+                    <input type="text" value={form.additionalRequirements} onChange={(e) => set("additionalRequirements", e.target.value)} placeholder="Enter Additional Requirements" className={inputCls} />
                   </div>
                 </div>
-
               </div>
-
-              {/* Submit */}
               <div className="mt-14">
-                <p className="text-[13px] text-gray-800 font-medium mb-6">
-                  'We respond within 24 - 48 business hours.'
-                </p>
-                <button 
-                  type="submit"
-                  className="bg-[#AFA99E] hover:bg-[#9a9489] text-white px-8 py-3.5 rounded-full text-xs font-bold tracking-widest flex items-center justify-center gap-2 transition-colors w-max"
-                >
-                  SEND ENQUIRY <FiArrowRight size={16} strokeWidth={2.5} />
+                <p className="text-[13px] text-gray-800 font-medium mb-6">'We respond within 24 - 48 business hours.'</p>
+                <button type="submit" disabled={submitting}
+                  className="bg-[#AFA99E] hover:bg-[#9a9489] text-white px-8 py-3.5 rounded-full text-xs font-bold tracking-widest flex items-center justify-center gap-2 transition-colors w-max disabled:opacity-60">
+                  {submitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <>SEND ENQUIRY <FiArrowRight size={16} strokeWidth={2.5} /></>}
                 </button>
               </div>
+              </>)}
             </form>
           </div>
 

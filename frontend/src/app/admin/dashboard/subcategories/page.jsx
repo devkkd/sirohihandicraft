@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
-import { Pencil, Trash2, Plus, X, Check } from "lucide-react";
+import { Pencil, Trash2, Plus, X, Check, Search } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
 
 const toSlug = (str) =>
@@ -12,6 +12,7 @@ const empty = { name: "", category: "", image: "" };
 
 export default function SubCategoriesPage() {
   const [subCategories, setSubCategories] = useState([]);
+  const [allSubCategories, setAllSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -19,6 +20,8 @@ export default function SubCategoriesPage() {
   const [editId, setEditId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   const fetchAll = async () => {
     try {
@@ -26,11 +29,19 @@ export default function SubCategoriesPage() {
         api.get("/api/subcategories"),
         api.get("/api/categories"),
       ]);
+      setAllSubCategories(subRes.data.data);
       setSubCategories(subRes.data.data);
       setCategories(catRes.data.data);
     } finally {
       setLoading(false);
     }
+  };
+
+  const applyFilter = (s = search, cat = categoryFilter) => {
+    let filtered = allSubCategories;
+    if (s) filtered = filtered.filter((sub) => sub.name.toLowerCase().includes(s.toLowerCase()));
+    if (cat) filtered = filtered.filter((sub) => (sub.category?._id || sub.category) === cat);
+    setSubCategories(filtered);
   };
 
   useEffect(() => { fetchAll(); }, []);
@@ -79,20 +90,29 @@ export default function SubCategoriesPage() {
 
   return (
     <div style={{ fontFamily: "'MonaSans', Arial, sans-serif" }}>
-      {/* Page Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-semibold text-[#3b2f1e]">Sub Categories</h1>
-          <p className="text-[10px] tracking-widest text-[#9e8f7e] uppercase mt-0.5">
-            {subCategories.length} total
-          </p>
+          <p className="text-[10px] tracking-widest text-[#9e8f7e] uppercase mt-0.5">{allSubCategories.length} total</p>
         </div>
-        <button
-          onClick={openAdd}
-          className="flex items-center gap-2 bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-xl transition-colors"
-        >
+        <button onClick={openAdd} className="flex items-center gap-2 bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-xl transition-colors">
           <Plus size={14} /> Add Sub Category
         </button>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-5">
+        <div className="relative flex-1">
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#c4b9ac]" />
+          <input value={search} onChange={(e) => { setSearch(e.target.value); applyFilter(e.target.value, categoryFilter); }}
+            placeholder="Search subcategories..."
+            className="w-full pl-9 pr-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] placeholder-[#c4b9ac] outline-none focus:border-[#645643] focus:ring-2 focus:ring-[#64564320] transition-all" />
+        </div>
+        <select value={categoryFilter} onChange={(e) => { setCategoryFilter(e.target.value); applyFilter(search, e.target.value); }}
+          className="px-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] outline-none focus:border-[#645643] transition-all">
+          <option value="">All Categories</option>
+          {categories.map((c) => <option key={c._id} value={c._id}>{c.title}</option>)}
+        </select>
       </div>
 
       {/* Table */}
