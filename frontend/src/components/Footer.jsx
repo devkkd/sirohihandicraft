@@ -11,18 +11,18 @@ const Footer = () => {
     <footer className="w-full bg-[#645643] text-[#e0dacd]" style={{ fontFamily: "'MonaSans', Arial, sans-serif" }}>
 
       {/* Top: Logo + Tagline */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-8 flex flex-col items-center text-center border-b border-[#7a6b52]">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 py-6 lg:py-6 flex flex-col items-center text-center border-b border-[#7a6b52]">
         <Link href="/">
           <img src="/images/logo/sirohiWhite.svg" alt="Sirohi Handicraft" className="h-16 w-auto mb-4" />
         </Link>
-        <p className="text-xs text-[#c4b9ac] max-w-xl leading-relaxed">
+        <p className="text-xs text-[#c4b9ac] max-w-3xl leading-relaxed">
           Manufacturer and exporter of wooden and marble home decor and kitchenware. Crafted in Rajasthan, delivered to the world.
         </p>
       </div>
 
       {/* Middle: Categories with subcategories + Company + Social */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-10 border-b border-[#7a6b52]">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
+      <div className="mx-auto px-4 lg:px-6 py-6 lg:py-6 border-b  border-[#7a6b52]">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
 
           {/* Dynamic: one column per category with its subcategories */}
           {categories.map((cat) => {
@@ -30,7 +30,7 @@ const Footer = () => {
               (s) => (s.category?._id || s.category) === cat._id
             );
             return (
-              <div key={cat._id} className="flex flex-col gap-3">
+              <div key={cat._id} className="flex flex-col items-center gap-3">
                 <Link
                   href={`/category/${cat.slug}`}
                   className="text-[11px] font-bold text-white tracking-widest uppercase hover:text-[#e0dacd] transition-colors"
@@ -42,7 +42,7 @@ const Footer = () => {
                     <Link
                       key={sub._id}
                       href={`/category/${cat.slug}?sub=${sub.slug}`}
-                      className="text-xs text-[#c4b9ac] hover:text-white transition-colors leading-relaxed"
+                      className="text-xs text-[#c4b9ac] hover:text-white transition-colors leading-relaxed text-center"
                     >
                       {sub.name}
                     </Link>
@@ -53,7 +53,7 @@ const Footer = () => {
           })}
 
           {/* Company */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center">
             <h4 className="text-[11px] font-bold text-white tracking-widest uppercase">Company</h4>
             <div className="flex flex-col gap-2">
               {[
@@ -65,7 +65,7 @@ const Footer = () => {
                 { label: "Privacy Policy", href: "/privacy" },
                 { label: "Terms of Service", href: "/terms" },
               ].map(({ label, href }) => (
-                <Link key={href} href={href} className="text-xs text-[#c4b9ac] hover:text-white transition-colors">
+                <Link key={href} href={href} className="text-xs text-[#c4b9ac] hover:text-white transition-colors text-center">
                   {label}
                 </Link>
               ))}
@@ -73,7 +73,7 @@ const Footer = () => {
           </div>
 
           {/* Social */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center">
             <h4 className="text-[11px] font-bold text-white tracking-widest uppercase">Social</h4>
             <div className="flex flex-col gap-2">
               {[
@@ -83,7 +83,7 @@ const Footer = () => {
                 { label: "Pinterest", href: "#" },
               ].map(({ label, href }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-[#c4b9ac] hover:text-white transition-colors">
+                  className="text-xs text-[#c4b9ac] hover:text-white transition-colors text-center">
                   {label}
                 </a>
               ))}
@@ -94,7 +94,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[#c4b9ac]">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 py-6 lg:py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[#c4b9ac]">
         <p>© {new Date().getFullYear()} Sirohi Handicrafted. All rights reserved.</p>
         <p>Crafted By : Kontent Kraft Digital</p>
       </div>
