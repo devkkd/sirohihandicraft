@@ -10,7 +10,12 @@ const getProducts = async (req, res, next) => {
     const filter = {};
     if (req.query.category) filter.category = req.query.category;
     if (req.query.subCategory) filter.subCategory = req.query.subCategory;
-    if (req.query.search) filter.$text = { $search: req.query.search };
+    if (req.query.search) {
+      filter.$or = [
+        { name: { $regex: req.query.search, $options: "i" } },
+        { sku: { $regex: req.query.search, $options: "i" } },
+      ];
+    }
 
     const [products, total] = await Promise.all([
       Product.find(filter)

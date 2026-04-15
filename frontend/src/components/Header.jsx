@@ -22,6 +22,36 @@ const Header = () => {
     const { categories, subCategories } = useShop();
     const { totalItems } = useCart();
 
+    // Search state
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [showResults, setShowResults] = useState(false);
+    const searchRef = React.useRef(null);
+
+    // Debounced search
+    useEffect(() => {
+        if (!searchQuery.trim()) { setSearchResults([]); setShowResults(false); return; }
+        const timer = setTimeout(async () => {
+            setSearchLoading(true);
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/products?search=${encodeURIComponent(searchQuery)}&limit=6`);
+                const data = await res.json();
+                setSearchResults(data.data || []);
+                setShowResults(true);
+            } catch { setSearchResults([]); }
+            finally { setSearchLoading(false); }
+        }, 350);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
+    // Close on outside click
+    useEffect(() => {
+        const handler = (e) => { if (searchRef.current && !searchRef.current.contains(e.target)) setShowResults(false); };
+        document.addEventListener("mousedown", handler);
+        return () => document.removeEventListener("mousedown", handler);
+    }, []);
+
     useEffect(() => {
         if (categories.length > 0 && !activeDesktopCategory) {
             setActiveDesktopCategory(categories[0]._id);
@@ -69,13 +99,67 @@ const Header = () => {
             <div className="hidden lg:flex items-end text-gray-700 justify-between px-8 py-5 max-w-[1600px] mx-auto w-full gap-4 xl:gap-8">
                 
                 {/* SEARCH */}
-                <div className="flex items-center border-b border-gray-300 w-48 xl:w-64 group focus-within:border-[#615236] transition-colors shrink-0">
-                    <FiSearch className=" text-lg mr-2 group-focus-within:text-[#615236]" />
+                <div ref={searchRef} className="relative flex items-center border-b border-gray-300 w-48 xl:w-64 group focus-within:border-[#615236] transition-colors shrink-0">
+                    <FiSearch className="text-lg mr-2 group-focus-within:text-[#615236] shrink-0" />
                     <input
                         type="text"
                         placeholder="SEARCH"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onFocus={() => searchResults.length > 0 && setShowResults(true)}
                         className="bg-transparent w-full outline-none text-sm placeholder-gray-400 text-gray-800"
                     />
+
+                    {/* Dropdown results */}
+                    {showResults && (
+                        <div className="absolute top-full left-0 mt-4 w-80 bg-[#FFFDF9] border border-[#e0dacd] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                            {searchLoading ? (
+                                <div className="flex items-center justify-center py-8">
+                                    <div className="w-5 h-5 border-2 border-[#645643] border-t-transparent rounded-full animate-spin" />
+                                </div>
+                            ) : searchResults.length === 0 ? (
+                                <div className="flex flex-col items-center py-8 gap-2">
+                                    <FiSearch className="text-2xl text-[#d2c4b3]" />
+                                    <p className="text-xs text-[#9e8f7e] tracking-wide">No products found</p>
+                                </div>
+                            ) : (
+                                <>
+                                    <p className="text-[9px] font-bold tracking-[0.2em] text-[#9e8f7e] uppercase px-4 pt-4 pb-2">
+                                        {searchResults.length} result{searchResults.length !== 1 ? "s" : ""}
+                                    </p>
+                                    <div className="flex flex-col pb-2">
+                                        {searchResults.map((product) => (
+                                            <Link key={product._id} href={`/product/${product.slug}`}
+                                                onClick={() => { setShowResults(false); setSearchQuery(""); }}
+                                                className="flex items-center gap-3 px-4 py-3 hover:bg-[#f5f0ea] transition-colors group">
+                                                <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#f0ebe3] shrink-0">
+                                                    {product.thumbnail ? (
+                                                        <img src={product.thumbnail} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center">
+                                                            <FiSearch className="text-[#c4b9ac] text-sm" />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-sm font-semibold text-[#2d2926] truncate leading-tight">{product.name}</p>
+                                                    <div className="flex items-center gap-2 mt-0.5">
+                                                        <span className="text-[10px] text-[#9e8f7e] font-mono">{product.sku}</span>
+                                                        {product.category?.title && (
+                                                            <span className="text-[9px] bg-[#f0ebe3] text-[#615236] px-2 py-0.5 rounded-full font-medium">
+                                                                {product.category.title}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <FiArrowRight className="text-[#c4b9ac] text-sm shrink-0 group-hover:text-[#645643] transition-colors" />
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* PRODUCTS DROPDOWN */}
