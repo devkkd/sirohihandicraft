@@ -120,6 +120,11 @@ const bulkUploadProducts = async (req, res, next) => {
         moq: String(row.moq || row.MOQ || "100 pcs").trim(),
       };
 
+      // Warn if subcategory not found but don't skip
+      if (subCategorySlug && !subMap[subCategorySlug]) {
+        results.errors.push(`Row ${rowNum} (${sku}): SubCategory "${subCategorySlug}" not found - product saved without subcategory`);
+      }
+
       try {
         await Product.findOneAndUpdate(
           { sku: product.sku },

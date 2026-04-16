@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FiArrowRight, FiCheck } from "react-icons/fi";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 const inputCls = "bg-transparent border-b border-[#d2c4b3] py-2 text-sm text-[#4a4238] focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400";
 
 export default function ContactPage() {

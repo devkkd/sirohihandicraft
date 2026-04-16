@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 
 const makeRequest = (endpoint, options = {}) =>
   fetch(`${BASE_URL}${endpoint}`, {

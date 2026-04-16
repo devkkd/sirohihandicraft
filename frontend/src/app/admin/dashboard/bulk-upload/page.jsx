@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import api from "@/lib/axios";
 import { Upload, Download, CheckCircle, XCircle, AlertCircle, FileSpreadsheet, ImageIcon, Copy, Check, FolderOpen } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 
 export default function BulkUploadPage() {
   // Excel upload state
@@ -261,13 +261,18 @@ export default function BulkUploadPage() {
                 </div>
               )}
               {result.results?.errors?.length > 0 && (
-                <div className="flex flex-col gap-1 max-h-32 overflow-y-auto">
+                <div className="flex flex-col gap-2">
                   <p className="text-[10px] font-bold tracking-widest text-[#9e8f7e] uppercase flex items-center gap-1">
-                    <AlertCircle size={10} /> Errors
+                    <AlertCircle size={10} /> {result.results.errors.length} Warning{result.results.errors.length !== 1 ? "s" : ""}
                   </p>
-                  {result.results.errors.map((e, i) => (
-                    <p key={i} className="text-xs text-red-500 font-mono">{e}</p>
-                  ))}
+                  <div className="max-h-48 overflow-y-auto flex flex-col gap-1.5 border border-[#f0ebe3] rounded-xl p-3">
+                    {result.results.errors.map((e, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs">
+                        <span className="text-[#c4b9ac] font-mono shrink-0">{String(i + 1).padStart(2, "0")}.</span>
+                        <span className={e.includes("not found - product saved") ? "text-yellow-600" : "text-red-500"}>{e}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

@@ -35,7 +35,7 @@ const Header = () => {
         const timer = setTimeout(async () => {
             setSearchLoading(true);
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/products?search=${encodeURIComponent(searchQuery)}&limit=6`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com"}/api/products?search=${encodeURIComponent(searchQuery)}&limit=6`);
                 const data = await res.json();
                 setSearchResults(data.data || []);
                 setShowResults(true);

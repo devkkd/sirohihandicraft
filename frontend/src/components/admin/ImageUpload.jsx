@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { X, ImageIcon } from "lucide-react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 
 async function uploadFile(file) {
   const formData = new FormData();

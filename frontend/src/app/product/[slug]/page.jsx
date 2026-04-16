@@ -8,7 +8,7 @@ import RelatedProducts from "@/components/RelatedProducts";
 import Globe from "@/components/Globe";
 import { useCart } from "@/context/CartContext";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 
 export default function ProductDetailPage() {
   const params = useParams();

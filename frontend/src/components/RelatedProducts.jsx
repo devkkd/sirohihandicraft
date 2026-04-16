@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 
 const RelatedProducts = ({ currentProductId, subCategoryId }) => {
   const [related, setRelated] = useState([]);

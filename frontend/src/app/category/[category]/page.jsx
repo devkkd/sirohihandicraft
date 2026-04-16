@@ -6,7 +6,7 @@ import { useShop } from "@/context/ShopContext";
 import ProductCard from "@/components/ProductCard";
 import { FiArrowRight } from "react-icons/fi";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com";
 const LIMIT = 20;
 
 export default function CategoryPage() {
