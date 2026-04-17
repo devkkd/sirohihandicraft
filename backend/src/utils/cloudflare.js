@@ -15,7 +15,7 @@ const uploadToCloudflare = async (fileBuffer, mimetype, originalName) => {
   // Preserve original filename for SKU-based auto-detection
   // Remove spaces, keep original name structure
   const safeName = originalName.replace(/\s+/g, "-");
-  const key = `uploads/${safeName}`;
+  const key = safeName;
 
   await s3.send(
     new PutObjectCommand({

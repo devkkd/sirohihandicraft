@@ -7,9 +7,7 @@ import { useShop } from "@/context/ShopContext";
 
 const WhatWeMake = () => {
   const { categories, subCategories } = useShop();
-  const displayCategories = categories.filter((c) =>
-    ["wooden", "marble"].includes(c.slug)
-  );
+  const displayCategories = categories.slice(0, 4);
 
   return (
     <section className="w-full py-8 bg-[#FFFDF9]">

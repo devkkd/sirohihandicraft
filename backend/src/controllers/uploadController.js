@@ -8,6 +8,13 @@ const uploadImage = async (req, res, next) => {
       return next(err);
     }
 
+    console.log("Upload attempt:", req.file.originalname, req.file.size, "bytes");
+    console.log("R2 config:", {
+      accountId: process.env.CLOUDFLARE_R2_ACCOUNT_ID?.substring(0, 8) + "...",
+      bucket: process.env.CLOUDFLARE_R2_BUCKET_NAME,
+      publicUrl: process.env.CLOUDFLARE_R2_PUBLIC_URL,
+    });
+
     const url = await uploadToCloudflare(
       req.file.buffer,
       req.file.mimetype,

@@ -1,4 +1,5 @@
 const CustomerInquiry = require("../models/CustomerInquiry");
+const { sendCustomerInquiryEmail } = require("../utils/email");
 
 // POST /api/customer-inquiries  (public)
 const createCustomerInquiry = async (req, res, next) => {
@@ -10,6 +11,10 @@ const createCustomerInquiry = async (req, res, next) => {
       return next(err);
     }
     const inquiry = await CustomerInquiry.create(req.body);
+
+    // Email notification (non-blocking)
+    sendCustomerInquiryEmail(inquiry).catch(() => {});
+
     res.status(201).json({ success: true, data: inquiry });
   } catch (error) {
     next(error);

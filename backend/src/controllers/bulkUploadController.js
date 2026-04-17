@@ -6,27 +6,29 @@ const SubCategory = require("../models/SubCategory");
 
 const IMAGE_BASE_URL = process.env.CLOUDFLARE_R2_IMAGE_BASE_URL;
 
-const getAutoThumbnail = (sku) => `${IMAGE_BASE_URL}/${sku}.png`;
-const getGalleryUrl = (sku, index) => `${IMAGE_BASE_URL}/${sku}-${index}.png`;
-
-// Check if a URL actually exists (HEAD request)
-const urlExists = async (url) => {
-  try {
-    const res = await axios.head(url, { timeout: 3000 });
-    return res.status === 200;
-  } catch {
-    return false;
-  }
+// Try multiple extensions - parallel for speed
+const findImageUrl = async (baseName) => {
+  const extensions = [".jpg", ".jpeg", ".png", ".webp", ".JPG", ".JPEG", ".PNG"];
+  // Try all in parallel, return first found
+  const results = await Promise.allSettled(
+    extensions.map(async (ext) => {
+      const url = `${IMAGE_BASE_URL}/${baseName}${ext}`;
+      const res = await axios.head(url, { timeout: 5000 });
+      if (res.status === 200) return url;
+      throw new Error("not found");
+    })
+  );
+  const found = results.find((r) => r.status === "fulfilled");
+  return found ? found.value : null;
 };
 
-// Auto-detect gallery images: [SKU]-1.png, [SKU]-2.png ... up to maxCheck
+// Auto-detect gallery images: [SKU]-1, [SKU]-2 ... up to maxCheck
 const autoDetectGallery = async (sku, maxCheck = 5) => {
   const gallery = [];
   for (let i = 1; i <= maxCheck; i++) {
-    const url = getGalleryUrl(sku, i);
-    const exists = await urlExists(url);
-    if (exists) gallery.push(url);
-    else break; // stop at first missing (sequential naming assumed)
+    const url = await findImageUrl(`${sku}-${i}`);
+    if (url) gallery.push(url);
+    else break;
   }
   return gallery;
 };
@@ -67,12 +69,17 @@ const bulkUploadProducts = async (req, res, next) => {
       const rowNum = i + 2;
 
       const sku = String(row.sku || row.SKU || "").trim().toUpperCase();
-      const name = String(row.name || row.Name || "").trim();
+      let name = String(row.name || row.Name || "").trim();
 
-      if (!sku || !name) {
-        results.errors.push(`Row ${rowNum}: Missing name or SKU`);
+      if (!sku) {
+        results.errors.push(`Row ${rowNum}: Missing SKU - skipped`);
         results.skipped++;
         continue;
+      }
+
+      // Name empty hai to SKU ko name ke roop mein use karo
+      if (!name) {
+        name = sku;
       }
 
       const categorySlug = String(row.category || row.Category || "").trim().toLowerCase();
@@ -87,7 +94,11 @@ const bulkUploadProducts = async (req, res, next) => {
 
       // --- Thumbnail ---
       const rawThumbnail = String(row.thumbnail || row.Thumbnail || row.image || row.Image || "").trim();
-      const thumbnail = rawThumbnail || getAutoThumbnail(sku);
+      let thumbnail = rawThumbnail;
+      if (!thumbnail) {
+        // Auto-detect: try jpg, jpeg, png, webp
+        thumbnail = await findImageUrl(sku) || `${IMAGE_BASE_URL}/${sku}.jpg`;
+      }
 
       // --- Gallery ---
       let gallery = [];
@@ -151,28 +162,36 @@ const bulkUploadProducts = async (req, res, next) => {
 // GET /api/bulk-upload/template
 const downloadTemplate = (req, res) => {
   const headers = ["name", "sku", "category", "subcategory", "material", "finish", "moq", "description", "thumbnail", "gallery"];
-  const sampleRow = [
-    "Acacia Chopping Board",
-    "SH-CBW-26-01",
-    "wooden",
-    "kitchenware-serveware",
-    "Acacia Wood",
-    "Natural Oil",
-    "100 pcs",
-    "Product description here",
-    "",  // blank = auto from SKU
-    "",  // blank = auto detect gallery
+  const sampleRows = [
+    ["Acacia Chopping Board", "SH-CBW-26-01", "wooden", "kitchenware-serveware", "Acacia Wood", "Natural Oil", "100 pcs", "Description here", "", ""],
+    ["Classic Salad Bowl", "SH-BLW-26-04", "wooden", "bowls", "Mango Wood", "Matte Varnish", "50 pcs", "", "", ""],
+    ["White Marble Tray", "SH-MTR-44-01", "marble", "marble-kitchen-collection", "White Marble", "Honed", "25 pcs", "", "", ""],
   ];
 
-  const ws = XLSX.utils.aoa_to_sheet([headers, sampleRow]);
+  const refHeaders = ["category_slug", "subcategory_slug", "subcategory_name"];
+  const refRows = [
+    ["wooden", "kitchenware-serveware", "Kitchenware & Serveware"],
+    ["wooden", "kitchen-accessories-utility", "Kitchen Accessories & Utility"],
+    ["wooden", "home-d-cor-accessories", "Home Décor & Accessories"],
+    ["wooden", "furniture-lifestyle", "Furniture & Lifestyle"],
+    ["wooden", "bowls", "Bowls"],
+    ["wooden", "other", "Other"],
+    ["marble", "marble-bathroom-collection", "Marble Bathroom Collection"],
+    ["marble", "marble-kitchen-collection", "Marble Kitchen Collection"],
+    ["marble", "marble-home-kitchen-accessories", "Marble Home & Kitchen Accessories"],
+  ];
 
-  // Column widths
+  const ws = XLSX.utils.aoa_to_sheet([headers, ...sampleRows]);
   ws["!cols"] = headers.map(() => ({ wch: 25 }));
+
+  const wsRef = XLSX.utils.aoa_to_sheet([refHeaders, ...refRows]);
+  wsRef["!cols"] = [{ wch: 20 }, { wch: 35 }, { wch: 35 }];
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Products");
-  const buffer = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
+  XLSX.utils.book_append_sheet(wb, wsRef, "Slugs Reference");
 
+  const buffer = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
   res.setHeader("Content-Disposition", "attachment; filename=product-template.xlsx");
   res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
   res.send(buffer);

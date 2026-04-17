@@ -1,4 +1,5 @@
 const Inquiry = require("../models/Inquiry");
+const { sendProductInquiryEmail } = require("../utils/email");
 
 // POST /api/inquiries  (public - cart se submit)
 const createInquiry = async (req, res, next) => {
@@ -18,6 +19,10 @@ const createInquiry = async (req, res, next) => {
     }
 
     const inquiry = await Inquiry.create({ name, email, phone, company, message, products });
+
+    // Email notification (non-blocking)
+    sendProductInquiryEmail(inquiry).catch(() => {});
+
     res.status(201).json({ success: true, data: inquiry });
   } catch (error) {
     next(error);

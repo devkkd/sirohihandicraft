@@ -19,7 +19,7 @@ export default function CategoryPage() {
 
   const { categories, subCategories, loading: contextLoading } = useShop();
 
-  const [activeSub, setActiveSub] = useState("all");
+  const [activeSub, setActiveSub] = useState(subSlug || "all");
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -31,18 +31,23 @@ export default function CategoryPage() {
     ? subCategories.filter((s) => (s.category?._id || s.category) === currentCategory._id)
     : [];
 
+  // Sync activeSub with URL - but only after subcategories are loaded
   useEffect(() => {
+    if (relatedSubcategories.length === 0) return;
     if (subSlug) {
       const exists = relatedSubcategories.find((s) => s.slug === subSlug);
-      if (exists) setActiveSub(subSlug);
+      setActiveSub(exists ? subSlug : "all");
     } else {
       setActiveSub("all");
     }
   }, [subSlug, relatedSubcategories.length]);
 
-  // Reset and fetch fresh when tab changes
+  // Fetch products - depends on currentCategory AND activeSub being in sync
   useEffect(() => {
     if (!currentCategory?._id) return;
+    // Wait for subcategories to load before fetching with subCategory filter
+    if (subSlug && relatedSubcategories.length === 0) return;
+
     setProducts([]);
     setPage(1);
     setHasMore(false);
@@ -59,7 +64,7 @@ export default function CategoryPage() {
       })
       .catch(() => setProducts([]))
       .finally(() => setProductsLoading(false));
-  }, [currentCategory?._id, activeSub]);
+  }, [currentCategory?._id, activeSub, relatedSubcategories.length]);
 
   const loadMore = async () => {
     if (loadingMore || !currentCategory?._id) return;
@@ -160,9 +165,9 @@ export default function CategoryPage() {
             {/* Load More */}
             {hasMore && (
               <div className="mt-16 flex flex-col items-center gap-3">
-                <p className="text-xs text-[#9e8f7e] tracking-widest uppercase">
+                {/* <p className="text-xs text-[#9e8f7e] tracking-widest uppercase">
                   Showing {products.length} products
-                </p>
+                </p> */}
                 <button onClick={loadMore} disabled={loadingMore}
                   className="flex items-center gap-2 bg-[#645643] hover:bg-[#4d4233] text-white px-10 py-4 rounded-full text-xs font-bold tracking-widest uppercase transition-colors disabled:opacity-60">
                   {loadingMore
