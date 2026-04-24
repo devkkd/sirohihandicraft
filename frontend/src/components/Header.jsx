@@ -215,7 +215,7 @@ const Header = () => {
                         </div>
                     </div>
                 </nav>
-
+  <Link href="/collections" className="text-[11px] uppercase hover:text-[#615236]">ALL COLLECTIONS</Link>
                 {/* OTHER LINKS */}
                 <Link href="/about" className="text-[11px] uppercase hover:text-[#615236]">ABOUT US</Link>
 
@@ -224,9 +224,11 @@ const Header = () => {
                     <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-14" />
                 </Link>
 
-                <Link href="/story" className="text-sm uppercase hover:text-[#615236] pb-1">OUR STORY</Link>
-                <Link href="/clients" className="text-sm uppercase hover:text-[#615236] pb-1">HAPPY CLIENTS</Link>
-                <Link href="/contact" className="text-sm uppercase hover:text-[#615236] pb-1">CONTACT US</Link>
+                <Link href="/story" className="text-[11px] uppercase hover:text-[#615236]">OUR STORY</Link>
+                <Link href="/clients" className="text-[11px] uppercase hover:text-[#615236]">HAPPY CLIENTS</Link>
+              
+                <Link href="/certificates" className="text-[11px] uppercase hover:text-[#615236]">CERTIFICATES</Link>
+                <Link href="/contact" className="text-[11px] uppercase hover:text-[#615236]">CONTACT US</Link>
                 {/* Cart Icon */}
                 <Link href="/cart" className="relative shrink-0 pb-1">
                     <FiShoppingBag className="text-xl text-gray-700 hover:text-[#615236] transition-colors" />
@@ -343,6 +345,8 @@ const Header = () => {
                         <Link href="/about" onClick={closeMobileMenu}>ABOUT US</Link>
                         <Link href="/story" onClick={closeMobileMenu}>OUR STORY</Link>
                         <Link href="/clients" onClick={closeMobileMenu}>HAPPY CLIENTS</Link>
+                        <Link href="/collections" onClick={closeMobileMenu}>ALL COLLECTIONS</Link>
+                        <Link href="/certificates" onClick={closeMobileMenu}>CERTIFICATES</Link>
                         <Link href="/contact" onClick={closeMobileMenu}>CONTACT US</Link>
                     </nav>
                 </div>

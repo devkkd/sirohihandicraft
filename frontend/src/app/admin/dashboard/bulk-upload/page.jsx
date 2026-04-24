@@ -20,6 +20,30 @@ export default function BulkUploadPage() {
   const [copiedUrl, setCopiedUrl] = useState(null);
   const imgRef = useRef();
 
+  // Catalog upload state
+  const [catalogImages, setCatalogImages] = useState([]);
+  const [catalogUploading, setCatalogUploading] = useState(false);
+  const [catalogResult, setCatalogResult] = useState(null);
+  const catalogRef = useRef();
+
+  const handleCatalogUpload = async () => {
+    if (!catalogImages.length) return;
+    setCatalogUploading(true); setCatalogResult(null);
+    try {
+      const formData = new FormData();
+      catalogImages.forEach((img) => formData.append("images", img));
+      const { data } = await api.post("/api/bulk-upload/catalog", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setCatalogResult(data);
+      setCatalogImages([]);
+    } catch (err) {
+      setCatalogResult({ success: false, message: err.response?.data?.message || "Upload failed", uploaded: [], failed: [] });
+    } finally {
+      setCatalogUploading(false);
+    }
+  };
+
   const handleDownloadTemplate = async () => {
     const res = await fetch(`${API_URL}/api/bulk-upload/template`, { credentials: "include" });
     const blob = await res.blob();
@@ -178,6 +202,82 @@ export default function BulkUploadPage() {
                   </div>
                 ))}
               </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* ===== SECTION 3: CATALOG IMAGES ===== */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-sm font-bold text-[#3b2f1e] tracking-wide uppercase">Step 3 — Upload Catalog Images</h2>
+        <p className="text-xs text-[#9e8f7e]">Select 00.jpg to 116.jpg — automatically uploaded to R2 and saved to Collections page in order.</p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-[#FFFDF9] border border-[#e8e0d5] rounded-2xl p-6 flex flex-col gap-4">
+          <div className="bg-[#f5f0ea] rounded-xl p-4 text-xs text-[#615236] leading-relaxed">
+            <p className="font-bold mb-1">Image naming format:</p>
+            <p className="font-mono">00.jpg, 01.jpg, 02.jpg ... 116.jpg</p>
+            <p className="mt-2 text-[#9e8f7e]">Order is auto-detected from filename number.</p>
+          </div>
+
+          <button type="button"
+            onClick={() => {
+              const input = document.createElement("input");
+              input.type = "file"; input.multiple = true; input.accept = "image/*";
+              input.webkitdirectory = true;
+              input.onchange = (e) => setCatalogImages(Array.from(e.target.files || []));
+              input.click();
+            }}
+            className="w-full h-28 border-2 border-dashed border-[#ddd5c8] rounded-xl flex flex-col items-center justify-center gap-2 hover:border-[#645643] hover:bg-[#faf7f3] transition-all cursor-pointer">
+            <FolderOpen size={20} className="text-[#c4b9ac]" />
+            <p className="text-xs text-[#9e8f7e]">Select Catalog Folder</p>
+            <p className="text-[10px] text-[#c4b9ac]">All images (00.jpg - 116.jpg)</p>
+          </button>
+
+          {catalogImages.length > 0 && (
+            <div className="bg-[#f5f0ea] rounded-xl px-4 py-3 flex items-center justify-between">
+              <p className="text-sm text-[#3b2f1e] font-semibold">{catalogImages.length} images selected</p>
+              <button onClick={() => setCatalogImages([])} className="text-xs text-[#9e8f7e] hover:text-red-500">Clear</button>
+            </div>
+          )}
+
+          <button onClick={handleCatalogUpload} disabled={!catalogImages.length || catalogUploading}
+            className="w-full bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase py-3.5 rounded-xl transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+            {catalogUploading
+              ? <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Uploading to Catalog...</>
+              : <><Upload size={14} /> Upload Catalog Images</>}
+          </button>
+        </div>
+
+        {/* Result */}
+        <div className="bg-[#FFFDF9] border border-[#e8e0d5] rounded-2xl p-6 flex flex-col gap-3">
+          {!catalogResult ? (
+            <div className="flex flex-col items-center justify-center h-full gap-2 text-center py-8">
+              <ImageIcon size={28} className="text-[#e8e0d5]" />
+              <p className="text-xs text-[#c4b9ac]">Upload result will appear here</p>
+              <p className="text-[10px] text-[#c4b9ac]">Images will be saved to Collections page automatically</p>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-2">
+                {catalogResult.success
+                  ? <CheckCircle size={16} className="text-green-600 shrink-0" />
+                  : <XCircle size={16} className="text-red-500 shrink-0" />}
+                <p className="text-sm font-semibold text-[#3b2f1e]">{catalogResult.message}</p>
+              </div>
+              {catalogResult.uploaded?.length > 0 && (
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-green-50 rounded-xl px-4 py-3 text-center">
+                    <p className="text-xl font-bold text-green-600">{catalogResult.uploaded.length}</p>
+                    <p className="text-[10px] text-green-500 uppercase tracking-widest">Saved to Catalog</p>
+                  </div>
+                  <div className="bg-red-50 rounded-xl px-4 py-3 text-center">
+                    <p className="text-xl font-bold text-red-500">{catalogResult.failed?.length || 0}</p>
+                    <p className="text-[10px] text-red-400 uppercase tracking-widest">Failed</p>
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>

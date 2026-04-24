@@ -58,6 +58,7 @@ app.use("/api/products", require("./src/routes/productRoutes"));
 app.use("/api/inquiries", require("./src/routes/inquiryRoutes"));
 app.use("/api/customer-inquiries", require("./src/routes/customerInquiryRoutes"));
 app.use("/api/bulk-upload", require("./src/routes/bulkUploadRoutes"));
+app.use("/api/catalog", require("./src/routes/catalogRoutes"));
 
 app.use((req, res, next) => {
   const error = new Error(`Route not found: ${req.originalUrl}`);

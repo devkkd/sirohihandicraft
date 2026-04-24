@@ -127,23 +127,26 @@ export default function ClientsPage() {
                         </p>
                     </div>
 
-                    {/* ================= EDGE-TO-EDGE IMAGE ROW ================= */}
-                    <div className="w-full h-[200px] sm:h-[300px] lg:h-[400px] flex mb-20 lg:mb-32 overflow-hidden">
-                        <div className="flex-1 overflow-hidden">
-                            <img src="/images/clients/client1.jpg" alt="Sirohi Client 1" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex-1 overflow-hidden">
-                            <img src="/images/clients/client2.jpg" alt="Sirohi Client 2" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex-1 overflow-hidden">
-                            <img src="/images/clients/client3.jpg" alt="Sirohi Client 3" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex-1 overflow-hidden">
-                            <img src="/images/clients/client4.jpg" alt="Sirohi Client 4" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex-1 overflow-hidden">
-                            <img src="/images/clients/client5.jpg" alt="Sirohi Client 5" className="w-full h-full object-cover" />
-                        </div>
+                    {/* ================= EDGE-TO-EDGE IMAGE MARQUEE ================= */}
+                    <div className="w-full h-[200px] sm:h-[300px] lg:h-[400px] mb-20 lg:mb-32 overflow-hidden">
+                      <div className="flex w-max h-full animate-marquee">
+                        {[
+                          "/images/clients/client1.jpg",
+                          "/images/clients/client2.jpg",
+                          "/images/clients/client3.jpg",
+                          "/images/clients/client4.jpg",
+                          "/images/clients/client5.jpg",
+                          "/images/clients/client1.jpg",
+                          "/images/clients/client2.jpg",
+                          "/images/clients/client3.jpg",
+                          "/images/clients/client4.jpg",
+                          "/images/clients/client5.jpg",
+                        ].map((src, i) => (
+                          <div key={i} className="h-full w-[300px] sm:w-[400px] lg:w-[500px] shrink-0 overflow-hidden">
+                            <img src={src} alt={`Client ${i + 1}`} className="w-full h-full object-cover" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     {/* ================= TESTIMONIALS GRID ================= */}

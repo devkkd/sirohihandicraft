@@ -87,21 +87,24 @@ export default function AboutPage() {
             </section>
 
             {/* =========================================
-          SECTION 2: IMAGE COLLAGE
+          SECTION 2: IMAGE MARQUEE
       ========================================= */}
             <section className="w-full mb-12 lg:mb-16 overflow-hidden">
-                {/* Using standard images in a row layout mimicking the photo */}
-                <div className="flex flex-col md:flex-row h-[200px] md:h-[350px] lg:h-[400px] w-full">
-                    <div className="flex-1 overflow-hidden">
-                        <img src="/images/about/about1.jpg" alt="Sirohi Factory Details" className="w-full h-full object-cover object-top " />
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                        <img src="/images/about/about2.jpg" alt="Sirohi Workspace" className="w-full h-full object-cover object-top " />
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                        <img src="/images/about/about3.jpg" alt="Sirohi Product Display" className="w-full h-full object-cover object-top " />
-                    </div>
-                </div>
+              <div className="flex w-max animate-marquee">
+                {/* Images duplicated for seamless loop */}
+                {[
+                  "/images/about/about1.jpg",
+                  "/images/about/about2.jpg",
+                  "/images/about/about3.jpg",
+                  "/images/about/about1.jpg",
+                  "/images/about/about2.jpg",
+                  "/images/about/about3.jpg",
+                ].map((src, i) => (
+                  <div key={i} className="h-[250px] md:h-[380px] lg:h-[450px] w-[400px] md:w-[600px] lg:w-[750px] shrink-0 overflow-hidden">
+                    <img src={src} alt={`Sirohi ${i}`} className="w-full h-full object-cover object-center" />
+                  </div>
+                ))}
+              </div>
             </section>
 
 

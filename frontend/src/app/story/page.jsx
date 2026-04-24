@@ -91,7 +91,9 @@ export default function StoryPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-24 lg:mb-40">
           
           {/* Image Placeholder (Left) */}
-          <div className="w-full aspect-[4/3] lg:aspect-square bg-[#595246] rounded-md order-2 lg:order-1 h-[250px] lg:h-[500px]"></div>
+          <div className="w-full rounded-md order-2 lg:order-1 h-[250px] lg:h-[400px] overflow-hidden">
+          <img src="/images/story/Mask group (15).png" className="w-full h-full object-cover" />
+          </div>
 
           {/* Text (Right - Right Aligned on Desktop) */}
           <div className="flex flex-col lg:text-right order-1 lg:order-2">
@@ -122,7 +124,7 @@ export default function StoryPage() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] mb-10 tracking-tight leading-[1.1]">
               Building Our Own Export Operations
             </h2>
-            <div className="flex flex-col gap-8 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
+            <div className="flex flex-col gap-5 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
               <p>
                 Moving from supplier to exporter was the most important step in our history. It meant taking on more responsibility, more risk, and more of the relationship with the buyer. We approached it the same way we'd approached everything else carefully.
               </p>
@@ -139,7 +141,9 @@ export default function StoryPage() {
           </div>
 
           {/* Image Placeholder (Right) */}
-          <div className="w-full aspect-[4/3] lg:aspect-[4/5] h-[250px] lg:h-[500px] bg-[#595246] rounded-md"></div>
+          <div className="w-full rounded-md order-2 lg:order-1 h-[250px] lg:h-[400px] overflow-hidden">
+          <img src="/images/story/Mask group (16).png" className="w-full h-full object-cover" />
+          </div>
 
         </div>
 
@@ -153,10 +157,12 @@ export default function StoryPage() {
 
 
         {/* ================= TWO GENERATIONS ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-32 lg:mb-48">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-28">
           
           {/* Image Placeholder (Left) */}
-          <div className="w-full aspect-[4/3] lg:aspect-square bg-[#595246] rounded-md order-2 lg:order-1 h-[250px] lg:h-[500px]"></div>
+          <div className="w-full rounded-md order-2 lg:order-1 h-[250px] lg:h-[400px] overflow-hidden">
+          <img src="/images/story/both.jpeg" className="w-full h-full object-cover" />
+          </div>
 
           {/* Text (Right - Right Aligned on Desktop) */}
           <div className="flex flex-col lg:text-right order-1 lg:order-2">
@@ -165,19 +171,73 @@ export default function StoryPage() {
             </h2>
             <div className="flex flex-col gap-8 text-[14px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
               <p>
-                The most significant development in our recent history has been the involvement of the second generation in the business. That transition brought something valuable: a combination of craft knowledge that only comes from growing up around this work, and a direct understanding of modern international markets.
+                The most meaningful chapter in our journey began when the second generation stepped into the business — not as an heir, but as a partner. What followed wasn't a handover. It was a merging of two different kinds of knowledge, each one incomplete without the other.
               </p>
               <p>
-                The first generation built the craft foundation the relationships with artisans, the understanding of materials, the discipline around quality. The second generation brought a sharper eye on product design, an understanding of how international buyers discover and evaluate suppliers, and the energy to push the business into new product categories.
+                The first generation brought something that cannot be taught in a classroom: decades of hands-on craft, deep relationships with artisans, an instinct for material quality, and the patience that comes from building something slowly and honestly. The second generation brought a different lens — an understanding of how global buyers think, how design trends move, how digital tools can open new markets, and how to position a traditional craft business for the world it operates in today.
               </p>
               <p>
-                Between the two, we cover ground that most businesses of our size can't. We can talk about grain direction and finishing techniques with the same fluency that we talk about lead times and export compliance.
+                Together, we speak two languages fluently — the language of the workshop and the language of the marketplace. That combination is rare at our scale, and it is the foundation of everything we offer our clients: products rooted in genuine craft, delivered with the professionalism of a modern export operation.
               </p>
             </div>
           </div>
 
         </div>
 
+        {/* ================= FOUNDERS SECTION ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mb-28">
+
+          {/* Founder 1 - Father */}
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
+            <div className="w-40 h-48 sm:w-64 sm:h-[25rem] rounded-2xl overflow-hidden shrink-0 bg-[#f0ebe3]">
+              <img src="/images/story/father.jpeg" alt="Founder Father"
+                className="w-full h-full object-cover object-top" />
+            </div>
+            <div className="flex flex-col justify-between h-full">
+              <div className="flex flex-col gap-4 text-[10px] md:text-[12px] text-gray-800 leading-relaxed font-medium">
+                <p>
+                  I started this business with very little — a small workshop, a handful of artisans I trusted, and a belief that if you made something honestly, the right buyers would find you. That belief has never changed.
+                </p>
+                <p>
+                  The early years were about mastering the craft. I spent more time on the workshop floor than anywhere else, learning the materials, understanding what quality truly meant, and building relationships with artisans who are still with us today. Those relationships are not transactional — they are the backbone of everything we produce.
+                </p>
+                <p>
+                  What I am most proud of is not the growth in numbers, but the reputation we built along the way. Buyers who came to us fifteen years ago still come to us today — not because we are the cheapest option, but because we have never let them down. That trust is the most valuable thing I have built in my life.
+                </p>
+              </div>
+              <div className="mt-5">
+                <p className="text-base font-bold text-[#3b2f1e]">Mr. Sarwan Sirohi</p>
+                <p className="text-sm text-[#9e8f7e]">Founder · Father</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Founder 2 - Son */}
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
+            <div className="w-40 h-48 sm:w-64 sm:h-[25rem]  rounded-2xl overflow-hidden shrink-0 bg-[#f0ebe3]">
+              <img src="/images/story/son.jpeg" alt="Founder Son"
+                className="w-full h-full object-cover object-top" />
+            </div>
+            <div className="flex flex-col justify-between h-full">
+              <div className="flex flex-col gap-4 text-[10px] md:text-[12px] text-gray-800 leading-relaxed font-medium">
+                <p>
+                  Growing up around this business, I understood early on that the craft itself was never the problem — the challenge was connecting it to the right buyers in the right markets. That became my focus when I joined full-time.
+                </p>
+                <p>
+                  I brought a sharper approach to product development, export documentation, and how we present ourselves to international clients. I studied how buyers in the USA, Europe, and the Gulf evaluate suppliers — what they look for beyond the product itself — and rebuilt our processes around those expectations.
+                </p>
+                <p>
+                  But the most important thing I learned came from my father: never compromise on what you put your name on. Every new category we've entered, every new market we've approached, that principle has been the filter. Growth matters — but not at the cost of the reputation we spent twenty-five years building.
+                </p>
+              </div>
+              <div className="mt-5">
+                <p className="text-base font-bold text-[#3b2f1e]">Mr. Pankaj Sirohi</p>
+                <p className="text-sm text-[#9e8f7e]">Founder · Son</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
 
         {/* ================= OUR JOURNEY TIMELINE ================= */}
         <div className="border-t border-[#e0dacd] pt-20 lg:pt-32">
