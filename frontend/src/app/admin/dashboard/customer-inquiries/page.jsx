@@ -12,10 +12,10 @@ const statusColors = {
 const statusLabel = { new: "New", "in-progress": "In Progress", resolved: "Resolved" };
 
 const categoryColors = {
-  Wooden: "bg-[#f0ebe3] text-[#615236]",
-  Marble: "bg-slate-50 text-slate-600",
-  Both: "bg-purple-50 text-purple-600",
-  Other: "bg-gray-50 text-gray-600",
+  "Wooden": "bg-[#f0ebe3] text-[#615236]",
+  "Marble": "bg-slate-50 text-slate-600",
+  "Terracotta": "bg-orange-50 text-orange-600",
+  "Paper Mache": "bg-purple-50 text-purple-600",
 };
 
 export default function CustomerInquiriesPage() {
@@ -91,8 +91,8 @@ export default function CustomerInquiriesPage() {
           <option value="">All Categories</option>
           <option value="Wooden">Wooden</option>
           <option value="Marble">Marble</option>
-          <option value="Both">Both</option>
-          <option value="Other">Other</option>
+          <option value="Terracotta">Terracotta</option>
+          <option value="Paper Mache">Paper Mache</option>
         </select>
         <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); fetchInquiries(1, search, e.target.value, categoryFilter); }}
           className="px-4 py-2.5 text-sm border border-[#ddd5c8] rounded-xl bg-white text-[#3b2f1e] outline-none focus:border-[#645643] transition-all">

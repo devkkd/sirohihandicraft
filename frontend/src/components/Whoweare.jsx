@@ -1,8 +1,23 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+const images = [
+  "/images/about/about1.jpg",
+  "/images/about/about2.jpg",
+  "/images/about/about3.jpg",
+];
 
 const Whoweare = () => {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="w-full py-8 lg:py-24 bg-[#FFFDF9]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -48,13 +63,20 @@ const Whoweare = () => {
 
           {/* ================= RIGHT COLUMN: IMAGE & FLOATING CARD ================= */}
           <div className="relative w-full lg:mt-0">
-            {/* Main Image */}
-            <div className="w-full h-[200px] md:h-[350px] lg:h-[400px] rounded-3xl overflow-hidden shadow-lg">
-              <img 
-                src="/images/home/homeA1.png" 
-                alt="Sirohi Handicraft Exhibition Stand" 
-                className="w-full h-full object-cover object-center"
-              />
+            {/* Main Image - crossfade slideshow */}
+            <div className="w-full h-[200px] md:h-[350px] lg:h-[400px] rounded-3xl overflow-hidden shadow-lg relative">
+              {images.map((src, i) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt="Sirohi Handicraft"
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out"
+                  style={{ opacity: i === current ? 1 : 0 }}
+                />
+              ))}
+              {/* Seamless warm shade — always present, never moves */}
+              <div className="absolute inset-0 pointer-events-none"
+                style={{ background: "linear-gradient(180deg, rgba(97,82,54,0.08) 0%, rgba(97,82,54,0.28) 100%)" }} />
             </div>
 
             {/* Floating Stats Card */}

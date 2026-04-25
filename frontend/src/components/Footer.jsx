@@ -78,8 +78,8 @@ const Footer = () => {
         </div>
         {/* All categories - 4 columns with dividers */}
         <div className="max-w-[1400px] mx-auto border-b border-[#7a6b52]">
-          <div className="grid grid-cols-2 md:grid-cols-2 divide-x divide-y divide-[#7a6b52]">
-            {categories.map((cat) => {
+          <div className="grid grid-cols-2 md:grid-cols-2 divide-y divide-[#7a6b52]">
+            {categories.map((cat, idx) => {
               const subs = subCategories.filter(
                 (s) => (s.category?._id || s.category) === cat._id
               );
@@ -87,7 +87,7 @@ const Footer = () => {
               const col1 = subs.slice(0, mid);
               const col2 = subs.slice(mid);
               return (
-                <div key={cat._id} className="px-6 py-8 flex flex-col items-center">
+                <div key={cat._id} className={`px-6 py-8 flex flex-col items-center ${idx % 2 === 0 ? "border-r border-[#7a6b52]" : ""}`}>
                   <Link href={`/category/${cat.slug}`}
                     className="text-[11px] font-bold tracking-[0.2em] text-white uppercase mb-5 block text-center py-2 px-6 w-full transition-colors">
                     {cat.title}
@@ -121,7 +121,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#c4b9ac]">
           <p>© {new Date().getFullYear()} Sirohi Handicrafted. All rights reserved.</p>
-          <p>Crafted By : Kontent Kraft Digital</p>
+          <p>Crafted and Powered by :<Link href="https://www.kontentkraftdigital.com" target="_blank"> Kontent Kraft Digital </Link></p>
         </div>
       </div>
 
