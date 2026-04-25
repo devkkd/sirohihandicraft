@@ -155,8 +155,8 @@ export default function ContactPage() {
               
               <div className="p-8 lg:p-10 border-b border-[#e0dacd]">
                 <h4 className="text-sm font-bold text-[#8c8273] mb-4">Email</h4>
-                <a href="mailto:pankaj@sirohihandicraft.com" className="text-xl md:text-[22px] font-bold text-[#4a4238] hover:text-[#645643] transition-colors block mb-2">
-                   pankaj@sirohihandicraft.com
+                <a href="mailto:sirohihandicraft@gmail.com" className="text-xl md:text-[22px] font-bold text-[#4a4238] hover:text-[#645643] transition-colors block mb-2">
+                  sirohihandicraft@gmail.com
                 </a>
                 <p className="text-sm text-gray-700 font-medium">Best for detailed enquiries, product lists, or sharing references</p>
               </div>

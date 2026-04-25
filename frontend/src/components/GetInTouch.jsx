@@ -55,7 +55,7 @@ const GetInTouch = () => {
             </p>
             <div className="flex flex-col gap-6 text-sm md:text-[15px] text-gray-800">
               <p><span className="font-extrabold text-[#2d2926]">Location:</span> Jaipur, Rajasthan, India</p>
-              <p><span className="font-extrabold text-[#2d2926]">Email:</span>  pankaj@sirohihandicraft.com</p>
+              <p><span className="font-extrabold text-[#2d2926]">Email:</span> sirohihandicraft@gmail.com</p>
               <p className="leading-relaxed"><span className="font-extrabold text-[#2d2926]">Export Markets:</span> USA · UK · Europe · UAE · Qatar · Kuwait · Australia · Canada</p>
               <p><span className="font-extrabold text-[#2d2926]">Certifications:</span> Sedex Semeta · FSC Certified</p>
             </div>
