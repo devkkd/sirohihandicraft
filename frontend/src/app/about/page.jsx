@@ -19,7 +19,7 @@ export default function AboutPage() {
                         About Us
                     </span>
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#645643] tracking-tight mb-8">
-                        SIROHI HANDICRAFTED
+                        SIROHI HANDICRAFT 
                     </h1>
                     <p className="text-sm md:text-[15px] text-gray-800 font-medium mb-8">
                         Manufacturer & Exporter · Est. 1998 · Rajasthan, India

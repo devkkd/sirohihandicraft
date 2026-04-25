@@ -8,7 +8,7 @@ const termsData = [
     {
         id: 1,
         title: "1. Use of This Website",
-        content: "By accessing the Sirohi Handicrafted website, you agree to these terms. The content on this site is for general information and trade enquiry purposes only. All product images and descriptions are indicative — actual products may vary slightly due to the handcrafted nature of our work.",
+        content: "By accessing the Sirohi Handicraft website, you agree to these terms. The content on this site is for general information and trade enquiry purposes only. All product images and descriptions are indicative — actual products may vary slightly due to the handcrafted nature of our work.",
     },
     {
         id: 2,

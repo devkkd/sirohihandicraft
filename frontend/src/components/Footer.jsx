@@ -25,7 +25,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4">
  <div className="flex flex-col gap-2 px-8 py-8 items-center">
               <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Contact</p>
-              <p className="text-xs text-[#e0dacd]">info@sirohihandicrafted.com</p>
+              <p className="text-xs text-[#e0dacd]">pankaj@sirohihandicraft.com</p>
               <p className="text-xs text-[#e0dacd]">+91-9352606586</p>
               <p className="text-xs text-[#e0dacd]">Jaipur, Rajasthan, India</p>
             </div>
@@ -120,7 +120,7 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#c4b9ac]">
-          <p>© {new Date().getFullYear()} Sirohi Handicrafted. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Sirohi Handicraft. All rights reserved.</p>
           <p>Crafted and Powered by :<Link href="https://www.kontentkraftdigital.com" target="_blank"> Kontent Kraft Digital </Link></p>
         </div>
       </div>
