@@ -51,7 +51,7 @@ const certificates = [
 export default function CertificatesPage() {
   return (
     <main className="w-full bg-[#FFFDF9] min-h-screen py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
+      <div className="max-w-8xl mx-auto px-6 lg:px-12">
         
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-24">

@@ -112,7 +112,7 @@ export default function ContactPage() {
                   <div className="flex flex-col gap-4">
                     <label className="text-sm font-semibold text-[#4a4238]">Product Category</label>
                     <div className="flex gap-4">
-                      {["Wooden", "Marble"].map((cat) => (
+                      {["Wooden", "Marble","Terracotta","Paper Mache"].map((cat) => (
                         <button key={cat} type="button" onClick={() => setProductCategory(cat)}
                           className={`px-8 py-2.5 rounded-full text-[13px] font-bold transition-all duration-300 ${productCategory === cat ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}>
                           {cat}
