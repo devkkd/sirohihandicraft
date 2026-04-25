@@ -60,10 +60,10 @@ const Footer = () => {
             <div className="flex flex-col gap-2 px-8 py-8 items-center">
               <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Social</p>
               {[
-                { label: "Facebook", href: "#" },
-                { label: "Instagram", href: "#" },
-                { label: "YouTube", href: "#" },
-                { label: "Pinterest", href: "#" },
+                { label: "Facebook", href: "https://www.facebook.com/share/1CpriuL9cZ/" },
+                { label: "Instagram", href: "https://www.instagram.com/sirohi_handicrafts?igsh=NzVucjJhaXVsOHJn" },
+                { label: "YouTube", href: "https://www.youtube.com/channel/UCRowGArCH02tTjO_C-_9GiA" },
+                // { label: "Pinterest", href: "#" },
               ].map(({ label, href }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer"
                   className="text-xs text-[#e0dacd] hover:text-white transition-colors">
