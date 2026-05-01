@@ -24,26 +24,39 @@ const Header = () => {
 
     // Search state
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState({ categories: [], subCategories: [], products: [] });
     const [searchLoading, setSearchLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const searchRef = React.useRef(null);
 
-    // Debounced search
+    // Debounced search — categories & subcategories from context (client-side), products from API
     useEffect(() => {
-        if (!searchQuery.trim()) { setSearchResults([]); setShowResults(false); return; }
+        const q = searchQuery.trim().toLowerCase();
+        if (!q) { setSearchResults({ categories: [], subCategories: [], products: [] }); setShowResults(false); return; }
+
+        // Instant client-side match for categories & subcategories
+        const matchedCats = categories.filter(c => c.title?.toLowerCase().includes(q)).slice(0, 3);
+        const matchedSubs = subCategories.filter(s => s.name?.toLowerCase().includes(q)).slice(0, 4);
+
+        setSearchResults(prev => ({ ...prev, categories: matchedCats, subCategories: matchedSubs }));
+        setShowResults(true);
+
+        // Debounced API call for products (name + SKU)
         const timer = setTimeout(async () => {
             setSearchLoading(true);
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com"}/api/products?search=${encodeURIComponent(searchQuery)}&limit=6`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-backend.onrender.com"}/api/products?search=${encodeURIComponent(searchQuery.trim())}&limit=5`);
                 const data = await res.json();
-                setSearchResults(data.data || []);
+                setSearchResults(prev => ({ ...prev, products: data.data || [] }));
                 setShowResults(true);
-            } catch { setSearchResults([]); }
+            } catch { setSearchResults(prev => ({ ...prev, products: [] })); }
             finally { setSearchLoading(false); }
         }, 350);
         return () => clearTimeout(timer);
-    }, [searchQuery]);
+    }, [searchQuery, categories, subCategories]);
+
+    const hasResults = searchResults.categories.length > 0 || searchResults.subCategories.length > 0 || searchResults.products.length > 0;
+    const totalCount = searchResults.categories.length + searchResults.subCategories.length + searchResults.products.length;
 
     // Close on outside click
     useEffect(() => {
@@ -96,67 +109,124 @@ const Header = () => {
                 <div className="w-6"></div>
             </div>
 
-            <div className="hidden lg:flex items-end text-gray-700 justify-between px-8 py-5 max-w-[1600px] mx-auto w-full gap-4 xl:gap-8">
+            <div className="hidden lg:flex items-end text-gray-700 justify-between px-6 py-5 max-w-[1600px] mx-auto w-full gap-2 xl:gap-4">
                 
                 {/* SEARCH */}
-                <div ref={searchRef} className="relative flex items-center border-b border-gray-300 w-48 xl:w-64 group focus-within:border-[#615236] transition-colors shrink-0">
+                <div ref={searchRef} className="relative flex items-center border-b border-gray-300 w-36 xl:w-44 group focus-within:border-[#615236] transition-colors shrink-0">
                     <FiSearch className="text-lg mr-2 group-focus-within:text-[#615236] shrink-0" />
                     <input
                         type="text"
                         placeholder="SEARCH"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        onFocus={() => searchResults.length > 0 && setShowResults(true)}
+                        onFocus={() => hasResults && setShowResults(true)}
                         className="bg-transparent w-full outline-none text-sm placeholder-gray-400 text-gray-800"
                     />
 
                     {/* Dropdown results */}
                     {showResults && (
-                        <div className="absolute top-full left-0 mt-4 w-80 bg-[#FFFDF9] border border-[#e0dacd] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
-                            {searchLoading ? (
-                                <div className="flex items-center justify-center py-8">
-                                    <div className="w-5 h-5 border-2 border-[#645643] border-t-transparent rounded-full animate-spin" />
-                                </div>
-                            ) : searchResults.length === 0 ? (
+                        <div className="absolute top-full left-0 mt-4 w-[420px] bg-[#FFFDF9] border border-[#e0dacd] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                            {!hasResults && !searchLoading ? (
                                 <div className="flex flex-col items-center py-8 gap-2">
                                     <FiSearch className="text-2xl text-[#d2c4b3]" />
-                                    <p className="text-xs text-[#9e8f7e] tracking-wide">No products found</p>
+                                    <p className="text-xs text-[#9e8f7e] tracking-wide">No results found</p>
                                 </div>
                             ) : (
-                                <>
-                                    <p className="text-[9px] font-bold tracking-[0.2em] text-[#9e8f7e] uppercase px-4 pt-4 pb-2">
-                                        {searchResults.length} result{searchResults.length !== 1 ? "s" : ""}
-                                    </p>
-                                    <div className="flex flex-col pb-2">
-                                        {searchResults.map((product) => (
-                                            <Link key={product._id} href={`/product/${product.slug}`}
-                                                onClick={() => { setShowResults(false); setSearchQuery(""); }}
-                                                className="flex items-center gap-3 px-4 py-3 hover:bg-[#f5f0ea] transition-colors group">
-                                                <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#f0ebe3] shrink-0">
-                                                    {product.thumbnail ? (
-                                                        <img src={product.thumbnail} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                                    ) : (
-                                                        <div className="w-full h-full flex items-center justify-center">
-                                                            <FiSearch className="text-[#c4b9ac] text-sm" />
+                                <div className="flex flex-col max-h-[480px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+
+                                    {/* Categories */}
+                                    {searchResults.categories.length > 0 && (
+                                        <div className="px-4 pt-4 pb-2">
+                                            <p className="text-[9px] font-bold tracking-[0.2em] text-[#9e8f7e] uppercase mb-2">Category</p>
+                                            {searchResults.categories.map((cat) => (
+                                                <Link key={cat._id} href={`/category/${cat.slug}`}
+                                                    onClick={() => { setShowResults(false); setSearchQuery(""); }}
+                                                    className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#f5f0ea] transition-colors group">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#645643] shrink-0" />
+                                                        <span className="text-sm font-medium text-[#2d2926]">{cat.title}</span>
+                                                    </div>
+                                                    <span className="text-[9px] bg-[#f0ebe3] text-[#615236] px-2 py-0.5 rounded-full font-bold tracking-wide uppercase">Category</span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* Subcategories */}
+                                    {searchResults.subCategories.length > 0 && (
+                                        <div className={`px-4 pb-2 ${searchResults.categories.length > 0 ? "pt-1 border-t border-[#f0ebe3]" : "pt-4"}`}>
+                                            <p className="text-[9px] font-bold tracking-[0.2em] text-[#9e8f7e] uppercase mb-2">Subcategory</p>
+                                            {searchResults.subCategories.map((sub) => {
+                                                const parentCat = categories.find(c => c._id === (sub.category?._id || sub.category));
+                                                return (
+                                                    <Link key={sub._id}
+                                                        href={parentCat ? `/category/${parentCat.slug}?sub=${sub.slug}` : "#"}
+                                                        onClick={() => { setShowResults(false); setSearchQuery(""); }}
+                                                        className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#f5f0ea] transition-colors group">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#a39789] shrink-0" />
+                                                            <span className="text-sm font-medium text-[#2d2926]">{sub.name}</span>
                                                         </div>
-                                                    )}
-                                                </div>
-                                                <div className="min-w-0 flex-1">
-                                                    <p className="text-sm font-semibold text-[#2d2926] truncate leading-tight">{product.name}</p>
-                                                    <div className="flex items-center gap-2 mt-0.5">
-                                                        <span className="text-[10px] text-[#9e8f7e] font-mono">{product.sku}</span>
-                                                        {product.category?.title && (
-                                                            <span className="text-[9px] bg-[#f0ebe3] text-[#615236] px-2 py-0.5 rounded-full font-medium">
-                                                                {product.category.title}
+                                                        {parentCat && (
+                                                            <span className="text-[9px] bg-[#f0ebe3] text-[#615236] px-2 py-0.5 rounded-full font-medium tracking-wide">
+                                                                {parentCat.title}
                                                             </span>
                                                         )}
-                                                    </div>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+
+                                    {/* Products */}
+                                    {(searchResults.products.length > 0 || searchLoading) && (
+                                        <div className={`px-4 pb-3 ${(searchResults.categories.length > 0 || searchResults.subCategories.length > 0) ? "pt-1 border-t border-[#f0ebe3]" : "pt-4"}`}>
+                                            <p className="text-[9px] font-bold tracking-[0.2em] text-[#9e8f7e] uppercase mb-2">Products</p>
+                                            {searchLoading ? (
+                                                <div className="flex items-center justify-center py-4">
+                                                    <div className="w-4 h-4 border-2 border-[#645643] border-t-transparent rounded-full animate-spin" />
                                                 </div>
-                                                <FiArrowRight className="text-[#c4b9ac] text-sm shrink-0 group-hover:text-[#645643] transition-colors" />
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </>
+                                            ) : (
+                                                searchResults.products.map((product) => (
+                                                    <Link key={product._id} href={`/product/${product.slug}`}
+                                                        onClick={() => { setShowResults(false); setSearchQuery(""); }}
+                                                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#f5f0ea] transition-colors group">
+                                                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#f0ebe3] shrink-0">
+                                                            {product.thumbnail ? (
+                                                                <img src={product.thumbnail} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                                            ) : (
+                                                                <div className="w-full h-full flex items-center justify-center">
+                                                                    <FiSearch className="text-[#c4b9ac] text-xs" />
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <div className="min-w-0 flex-1">
+                                                            <p className="text-sm font-medium text-[#2d2926] truncate leading-tight">{product.name}</p>
+                                                            <div className="flex items-center gap-2 mt-0.5">
+                                                                <span className="text-[10px] text-[#9e8f7e] font-mono">{product.sku}</span>
+                                                                {product.subCategory?.name && (
+                                                                    <span className="text-[9px] bg-[#f0ebe3] text-[#615236] px-2 py-0.5 rounded-full font-medium">
+                                                                        {product.subCategory.name}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <FiArrowRight className="text-[#c4b9ac] text-sm shrink-0 group-hover:text-[#645643] transition-colors" />
+                                                    </Link>
+                                                ))
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Footer count */}
+                                    {hasResults && !searchLoading && (
+                                        <div className="px-4 py-2.5 border-t border-[#f0ebe3] bg-[#faf7f3]">
+                                            <p className="text-[9px] text-[#9e8f7e] tracking-wide text-center">
+                                                {totalCount} result{totalCount !== 1 ? "s" : ""} for "{searchQuery}"
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
                             )}
                         </div>
                     )}
@@ -166,7 +236,7 @@ const Header = () => {
                 <nav className="shrink-0 flex h-full items-center">
                     <div className="relative group/main h-full">
                         {/* Dropdown Trigger */}
-                        <button className="flex items-center gap-1 text-[11px] uppercase text-gray-700 tracking-wide hover:text-[#615236]">
+                        <button className="flex items-center gap-1 text-[12px] uppercase text-gray-700 tracking-wide hover:text-[#615236] whitespace-nowrap">
                             PRODUCTS <FiChevronDown />
                         </button>
 
@@ -215,20 +285,21 @@ const Header = () => {
                         </div>
                     </div>
                 </nav>
-  <Link href="/collections" className="text-[11px] uppercase hover:text-[#615236]">ALL COLLECTIONS</Link>
+  <Link href="/collections" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">ALL COLLECTIONS</Link>
                 {/* OTHER LINKS */}
-                <Link href="/about" className="text-[11px] uppercase hover:text-[#615236]">ABOUT US</Link>
+                <Link href="/about" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">ABOUT US</Link>
+                <Link href="/vintage" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">VINTAGE</Link>
 
                 {/* LOGO */}
-                <Link href="/" className="flex-shrink-0 px-4">
-                    <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-14" />
+                <Link href="/" className="flex-shrink-0 px-2">
+                    <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-12" />
                 </Link>
 
-                <Link href="/story" className="text-[11px] uppercase hover:text-[#615236]">OUR STORY</Link>
-                <Link href="/clients" className="text-[11px] uppercase hover:text-[#615236]">HAPPY CLIENTS</Link>
+                <Link href="/story" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">OUR STORY</Link>
+                <Link href="/clients" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">HAPPY CLIENTS</Link>
               
-                <Link href="/certificates" className="text-[11px] uppercase hover:text-[#615236]">CERTIFICATES</Link>
-                <Link href="/contact" className="text-[11px] uppercase hover:text-[#615236]">CONTACT US</Link>
+                <Link href="/certificates" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">CERTIFICATES</Link>
+                <Link href="/contact" className="text-[12px] uppercase hover:text-[#615236] whitespace-nowrap">CONTACT US</Link>
                 {/* Cart Icon */}
                 <Link href="/cart" className="relative shrink-0 pb-1">
                     <FiShoppingBag className="text-xl text-gray-700 hover:text-[#615236] transition-colors" />
@@ -343,6 +414,7 @@ const Header = () => {
                         </div>
 
                         <Link href="/about" onClick={closeMobileMenu}>ABOUT US</Link>
+                        <Link href="/vintage" onClick={closeMobileMenu}>VINTAGE</Link>
                         <Link href="/story" onClick={closeMobileMenu}>OUR STORY</Link>
                         <Link href="/clients" onClick={closeMobileMenu}>HAPPY CLIENTS</Link>
                         <Link href="/collections" onClick={closeMobileMenu}>ALL COLLECTIONS</Link>

@@ -12,8 +12,8 @@ const generateRefreshToken = (adminId) =>
 
 const cookieOptions = (maxAgeMs) => ({
   httpOnly: true,
-  secure: true, // always true - both Vercel and Render use HTTPS
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // none for cross-site
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   maxAge: maxAgeMs,
 });
 

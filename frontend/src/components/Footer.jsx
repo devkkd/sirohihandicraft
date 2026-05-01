@@ -78,7 +78,7 @@ const Footer = () => {
         </div>
         {/* All categories - 4 columns with dividers */}
         <div className="max-w-[1400px] mx-auto border-b border-[#7a6b52]">
-          <div className="grid grid-cols-2 md:grid-cols-2 divide-y divide-[#7a6b52]">
+          <div className="grid grid-cols-1 md:grid-cols-2 divide-y divide-[#7a6b52]">
             {categories.map((cat, idx) => {
               const subs = subCategories.filter(
                 (s) => (s.category?._id || s.category) === cat._id

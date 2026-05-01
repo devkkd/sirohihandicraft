@@ -34,16 +34,16 @@ export default function AboutPage() {
                     {/* Left Column: Text Paragraphs */}
                     <div className="flex flex-col gap-8 text-[12px] lg:text-[15px] text-gray-800 leading-relaxed font-medium pr-0 lg:pr-8">
                         <p>
-                            We Are Based In Jaipur Rajasthan A Region With A Long Tradition Of Skilled Artisan Work.
+                           We are based in Jaipur, a region known for its strong tradition of craftsmanship.
                         </p>
                         <p>
-                            Since 1998, We Have Been Developing Products That Bring Together Natural Materials, Thoughtful Design, And The Kind Of Craftsmanship That Holds Up Under The Scrutiny Of International Buyers.
+                           Since 1998, we have been manufacturing and exporting wooden and marble products for international markets. Our focus is simple—consistent quality, clean finishing, and reliable execution.
                         </p>
                         <p>
-                            Our Work Sits At The Meeting Point Of Two Things That Are Difficult To Get Right At The Same Time: Consistent Quality And Genuine Craft.
+                           We understand what global buyers expect, and we work accordingly—clear communication, timely delivery, and products that match approvals.
                         </p>
                         <p>
-                            We Have Spent Over Two Decades Getting That Balance Right, And It Shows In The Relationships We Have Built With Clients Across The Usa, Uk, Europe, And The Middle East Region.
+                           Over the years, we have built long-term relationships with buyers across the USA, UK, Europe, and the Middle East by doing one thing right—delivering what we commit.
                         </p>
                     </div>
 
@@ -122,20 +122,16 @@ export default function AboutPage() {
                         </h2>
                         <div className="flex flex-col gap-6 text-[13px] md:text-[15px] text-gray-800 leading-relaxed font-medium">
                             <p>
-                                We manufacture and export two core material ranges wooden and marble
-                                across a broad set of product categories including kitchenware, serveware,
-                                home décor, bathroom accessories, and lifestyle pieces.
+                               We manufacture and export wooden and marble products across categories including kitchenware, serveware, home décor, bathroom accessories, and lifestyle pieces.
                             </p>
                             <p>
-                                Every product we make is built for export.
+                               Everything we produce is built for export. That means consistent sizing, clean finishing, secure packaging, and documentation that ensures smooth customs clearance.
                             </p>
                             <p>
-                                That means consistent dimensions, reliable finishing, appropriate
-                                packaging, and paperwork that clears customs without issues.
+                              With experience since 1998, we understand what global buyers expect—not just in product quality, but in execution, communication, and reliability.
                             </p>
                             <p>
-                                We work with brands who need their supplier to understand not just how to
-                                make a product, but how to get it there in perfect condition.
+                              Our role is simple—to deliver products that reach you exactly as approved, without surprises.
                             </p>
                         </div>
                     </div>
