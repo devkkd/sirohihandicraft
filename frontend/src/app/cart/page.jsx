@@ -181,7 +181,7 @@ export default function CartPage() {
               <button type="submit" disabled={submitting}
                 className="w-full bg-[#645643] hover:bg-[#4d4233] text-white text-xs font-bold tracking-widest uppercase py-4 rounded-xl transition-colors disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
                 {submitting
-                  ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ? <div className="w-4 h-4 border-2 bg-[#645643] hover:bg-[#4d4233] border-white border-t-transparent rounded-full animate-spin" />
                   : <><FiArrowRight size={14} /> SEND ENQUIRY</>}
               </button>
             </form>

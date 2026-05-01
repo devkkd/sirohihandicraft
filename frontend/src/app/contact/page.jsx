@@ -137,7 +137,7 @@ export default function ContactPage() {
               <div className="mt-14">
                 <p className="text-[13px] text-gray-800 font-medium mb-6">'We respond within 24 - 48 business hours.'</p>
                 <button type="submit" disabled={submitting}
-                  className="bg-[#AFA99E] hover:bg-[#9a9489] text-white px-8 py-3.5 rounded-full text-xs font-bold tracking-widest flex items-center justify-center gap-2 transition-colors w-max disabled:opacity-60">
+                  className="bg-[#645643] hover:bg-[#4d4233] text-white px-8 py-3.5 rounded-full text-xs font-bold tracking-widest flex items-center justify-center gap-2 transition-colors w-max disabled:opacity-60">
                   {submitting ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <>SEND ENQUIRY <FiArrowRight size={16} strokeWidth={2.5} /></>}
                 </button>
               </div>

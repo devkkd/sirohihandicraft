@@ -12,10 +12,10 @@ const statusColors = {
 const statusLabel = { new: "New", "in-progress": "In Progress", resolved: "Resolved" };
 
 const categoryColors = {
-  "Wooden": "bg-[#f0ebe3] text-[#615236]",
-  "Marble": "bg-slate-50 text-slate-600",
-  "Terracotta": "bg-orange-50 text-orange-600",
-  "Paper Mache": "bg-purple-50 text-purple-600",
+  "Wooden Range": "bg-[#f0ebe3] text-[#615236]",
+  "Marble Range": "bg-slate-50 text-slate-600",
+  "Terracotta Range": "bg-orange-50 text-orange-600",
+  "Paper Mache Range": "bg-purple-50 text-purple-600",
 };
 
 export default function CustomerInquiriesPage() {

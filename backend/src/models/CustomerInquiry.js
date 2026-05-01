@@ -7,7 +7,7 @@ const customerInquirySchema = new mongoose.Schema(
     email: { type: String, required: true, trim: true, lowercase: true },
     country: { type: String, trim: true, default: "" },
     phone: { type: String, required: true, trim: true },
-    productCategory: { type: String, enum: ["Wooden", "Marble", "Terracotta", "Paper Mache"], default: "Wooden" },
+    productCategory: { type: String, enum: ["Wooden Range", "Marble Range", "Terracotta Range", "Paper Mache Range"], default: "Wooden Range" },
     productsSKUs: { type: String, trim: true, default: "" },
     orderQuantity: { type: String, trim: true, default: "" },
     additionalRequirements: { type: String, trim: true, default: "" },
