@@ -7,7 +7,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-bac
 const inputCls = "bg-transparent border-b border-[#d2c4b3] py-2 text-sm text-[#4a4238] focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-gray-400";
 
 export default function ContactPage() {
-  const [productCategory, setProductCategory] = useState("Wooden");
+  const [productCategory, setProductCategory] = useState("Wooden Range");
   const [form, setForm] = useState({ fullName: "", companyName: "", email: "", country: "", phone: "", productsSKUs: "", orderQuantity: "", additionalRequirements: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -52,7 +52,7 @@ export default function ContactPage() {
               Whether You're A Buyer Looking To Place An Order, A Brand Exploring A New Product Range, Or A Retailer Wanting To Discuss Samples Our Team Is Ready To Help.
             </p>
             <p>
-              We Work With Clients Across The Usa, Uk, Europe, The Gulf Region, Australia, And Canada. Every Enquiry Is Taken Seriously And Handled Personally Not By An Automated System.
+              We Work With Clients Across The Usa, Uk, Europe, The Middle East Region, Australia, And Canada. Every Enquiry Is Taken Seriously And Handled Personally Not By An Automated System.
             </p>
             <p>
               Use The Form Below, Or Reach Us Directly Through Any Of The Channels Listed. <br className="hidden md:block" />
@@ -111,10 +111,10 @@ export default function ContactPage() {
                 <div className="flex flex-col gap-10">
                   <div className="flex flex-col gap-4">
                     <label className="text-sm font-semibold text-[#4a4238]">Product Category</label>
-                    <div className="flex gap-4">
-                      {["Wooden", "Marble","Terracotta","Paper Mache"].map((cat) => (
+                    <div className="flex flex-wrap gap-3">
+                      {["Wooden Range", "Marble Range", "Terracotta Range", "Paper Mache Range"].map((cat) => (
                         <button key={cat} type="button" onClick={() => setProductCategory(cat)}
-                          className={`px-8 py-2.5 rounded-full text-[13px] font-bold transition-all duration-300 ${productCategory === cat ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}>
+                          className={`px-5 py-2.5 rounded-full text-[12px] font-bold transition-all duration-300 ${productCategory === cat ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}>
                           {cat}
                         </button>
                       ))}
@@ -155,8 +155,8 @@ export default function ContactPage() {
               
               <div className="p-8 lg:p-10 border-b border-[#e0dacd]">
                 <h4 className="text-sm font-bold text-[#8c8273] mb-4">Email</h4>
-                <a href="mailto:sirohihandicraft@gmail.com" className="text-xl md:text-[22px] font-bold text-[#4a4238] hover:text-[#645643] transition-colors block mb-2">
-                  sirohihandicraft@gmail.com
+                <a href="mailto:pankaj@sirohihandicraft.com" className="text-xl md:text-[22px] font-bold text-[#4a4238] hover:text-[#645643] transition-colors block mb-2">
+                 pankaj@sirohihandicraft.com
                 </a>
                 <p className="text-sm text-gray-700 font-medium">Best for detailed enquiries, product lists, or sharing references</p>
               </div>
@@ -170,7 +170,7 @@ export default function ContactPage() {
               </div>
 
               <div className="p-8 lg:p-10 border-b border-[#e0dacd]">
-                <h4 className="text-sm font-bold text-[#8c8273] mb-4">Address - 1st</h4>
+                <h4 className="text-sm font-bold text-[#8c8273] mb-4">Unit 1</h4>
                 <h3 className="text-[17px] font-bold text-[#4a4238] mb-2">Sirohi Handicraft</h3>
                 <p className="text-sm text-gray-700 font-medium leading-relaxed">
                   Plot No-37, & 54, Near Canara Bank Near New Riico Ind. Jaipur - Rajasthan
@@ -178,7 +178,7 @@ export default function ContactPage() {
               </div>
 
               <div className="p-8 lg:p-10 border-b border-[#e0dacd]">
-                <h4 className="text-sm font-bold text-[#8c8273] mb-4">Address - 2nd</h4>
+                <h4 className="text-sm font-bold text-[#8c8273] mb-4">Unit 2</h4>
                 <p className="text-sm text-gray-700 font-medium leading-relaxed">
                   G188, RIICO Industrial Area EXT. II, Bagru Jaipur - 303007 Rajasthan
                 </p>
@@ -192,7 +192,7 @@ export default function ContactPage() {
 
               <div className="p-8 lg:p-10">
                 <h4 className="text-sm font-bold text-[#8c8273] mb-4">Certifications</h4>
-                <h3 className="text-[17px] font-bold text-[#4a4238] mb-2">Sedex Semeta · FSC Certified</h3>
+                <h3 className="text-[17px] font-bold text-[#4a4238] mb-2">Sedex Smeta · FSC Certified</h3>
                 <p className="text-sm text-gray-700 font-medium">Documentation available on request for compliance purposes</p>
               </div>
 

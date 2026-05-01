@@ -14,7 +14,7 @@ const journeyData = [
   },
   {
     title: "Growth - Own Export Operations",
-    desc: "With Time And Confidence, We Took The Next Step And Launched Our Own Export Operations - Serving Clients In The Usa, Europe, And The Gulf As A Direct Manufacturer And Exporter.",
+    desc: "With Time And Confidence, We Took The Next Step And Launched Our Own Export Operations - Serving Clients In The Usa, Europe, And The Middle East As A Direct Manufacturer And Exporter.",
   },
   {
     title: "Two Generations - Tradition Meets Market",
@@ -224,7 +224,7 @@ export default function StoryPage() {
                   Growing up around this business, I understood early on that the craft itself was never the problem — the challenge was connecting it to the right buyers in the right markets. That became my focus when I joined full-time.
                 </p>
                 <p>
-                  I brought a sharper approach to product development, export documentation, and how we present ourselves to international clients. I studied how buyers in the USA, Europe, and the Gulf evaluate suppliers — what they look for beyond the product itself — and rebuilt our processes around those expectations.
+                  I brought a sharper approach to product development, export documentation, and how we present ourselves to international clients. I studied how buyers in the USA, Europe, and the Middle East evaluate suppliers — what they look for beyond the product itself — and rebuilt our processes around those expectations.
                 </p>
                 <p>
                   But the most important thing I learned came from my father: never compromise on what you put your name on. Every new category we've entered, every new market we've approached, that principle has been the filter. Growth matters — but not at the cost of the reputation we spent twenty-five years building.

@@ -100,7 +100,7 @@ export default function ProductDetailPage() {
 
           {/* Right: Details */}
           <div className="flex flex-col py-4 lg:py-8">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-[#4a4238] mb-3 tracking-tight">
+            <h1 className="text-4xl md:text-4xl font-extrabold text-[#4a4238] mb-3 tracking-tight">
               {product.name}
             </h1>
             <p className="text-sm font-mono text-gray-500 mb-1">{product.sku}</p>

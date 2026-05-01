@@ -25,12 +25,12 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4">
  <div className="flex flex-col gap-2 px-8 py-8 items-center">
               <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Contact</p>
-              <p className="text-xs text-[#e0dacd]">sirohihandicraft@gmail.com</p>
+              <p className="text-xs text-[#e0dacd]">pankaj@sirohihandicraft.com</p>
               <p className="text-xs text-[#e0dacd]">+91-9352606586</p>
               <p className="text-xs text-[#e0dacd]">Jaipur, Rajasthan, India</p>
             </div>
-            <div className="flex flex-col gap-2 px-8 py-8 items-center">
-              <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Company</p>
+            <div className="flex flex-col gap-2 px-8 py-8 items-center uppercase">
+              <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF]  mb-2">Company</p>
               {[
                 { label: "About Us", href: "/about" },
                 { label: "Our Story", href: "/story" },
@@ -45,8 +45,8 @@ const Footer = () => {
               ))}
             </div>
 
-            <div className="flex flex-col gap-2 px-8 py-8 items-center">
-              <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Legal</p>
+            <div className="flex flex-col gap-2 px-8 py-8 items-center uppercase">
+              <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF]  mb-2">Legal</p>
               {[
                 { label: "Privacy Policy", href: "/privacy" },
                 { label: "Terms of Service", href: "/terms" },
@@ -57,8 +57,8 @@ const Footer = () => {
               ))}
             </div>
 
-            <div className="flex flex-col gap-2 px-8 py-8 items-center">
-              <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Social</p>
+            <div className="flex flex-col gap-2 px-8 py-8 items-center uppercase">
+              <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF]  mb-2">Social</p>
               {[
                 { label: "Facebook", href: "https://www.facebook.com/share/1CpriuL9cZ/" },
                 { label: "Instagram", href: "https://www.instagram.com/sirohi_handicrafts?igsh=NzVucjJhaXVsOHJn" },

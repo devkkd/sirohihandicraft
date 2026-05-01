@@ -45,7 +45,7 @@ const Whoweare = () => {
                 precision, consistency, and attention to detail.
               </p>
               <p>
-                Working across the USA, Europe and the Gulf region, we've built our approach
+                Working across the USA, Europe and the Middle East region, we've built our approach
                 around long-term partnerships, transparent communication, and on-time delivery.
               </p>
             </div>
@@ -53,7 +53,7 @@ const Whoweare = () => {
             {/* Certification Pills */}
             <div className="flex flex-wrap items-center gap-4">
               <div className="bg-[#FBF3E6] text-gray-800 px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide flex items-center gap-2">
-                <span>✓</span> SEDEX SEMETA
+                <span>✓</span> SEDEX SMETA
               </div>
               <div className="bg-[#FBF3E6] text-gray-800 px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide flex items-center gap-2">
                 <span>✓</span> FSC CERTIFIED

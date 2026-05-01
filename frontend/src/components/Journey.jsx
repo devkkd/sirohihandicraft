@@ -13,7 +13,7 @@ const journeyData = [
   },
   {
     title: "Growth - Own Export Operations",
-    desc: "With Time And Confidence, We Took The Next Step And Launched Our Own Export Operations - Serving Clients In The Usa, Europe, And The Gulf As A Direct Manufacturer And Exporter.",
+    desc: "With Time And Confidence, We Took The Next Step And Launched Our Own Export Operations - Serving Clients In The Usa, Europe, And The Middle East As A Direct Manufacturer And Exporter.",
   },
   {
     title: "Two Generations - Tradition Meets Market",

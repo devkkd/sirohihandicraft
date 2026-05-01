@@ -43,7 +43,7 @@ export default function AboutPage() {
                             Our Work Sits At The Meeting Point Of Two Things That Are Difficult To Get Right At The Same Time: Consistent Quality And Genuine Craft.
                         </p>
                         <p>
-                            We Have Spent Over Two Decades Getting That Balance Right, And It Shows In The Relationships We Have Built With Clients Across The Usa, Uk, Europe, And The Gulf Region.
+                            We Have Spent Over Two Decades Getting That Balance Right, And It Shows In The Relationships We Have Built With Clients Across The Usa, Uk, Europe, And The Middle East Region.
                         </p>
                     </div>
 

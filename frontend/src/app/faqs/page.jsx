@@ -33,7 +33,7 @@ const faqData = [
       },
       {
         q: "What certifications does Sirohi Handicraft hold?",
-        a: "We hold Sedex Semeta certification for ethical trade and supply chain compliance, and FSC certification for responsible wood sourcing.",
+        a: "We hold Sedex Smeta certification for ethical trade and supply chain compliance, and FSC certification for responsible wood sourcing.",
       },
       {
         q: "How do you ensure quality consistency in bulk production?",

@@ -21,7 +21,7 @@ const exportRegions = [
     id: 3,
     image: "/images/home/maps3.svg",
     flag: "🇦🇪",
-    title: "Gulf Region",
+    title: "Middle East Region",
     desc: "UAE, Qatar, Kuwait - Luxury Gifting And Retail",
   },
   {

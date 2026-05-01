@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
 
       {/* IMAGE */}
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="w-full aspect-square bg-[#f5f5f5] mb-5 overflow-hidden">
+        <div className="w-full aspect-square bg-[#f5f5f5] mb-3 md:mb-5 overflow-hidden">
           <img
             src={imageUrl}
             alt={productName}
@@ -35,29 +35,29 @@ const ProductCard = ({ product }) => {
 
       {/* INFO - flex-1 so it pushes button to bottom */}
       <div className="flex flex-col flex-1 px-1">
-        <div className=" items-start justify-between mb-4 flex-1">
+        <div className="items-start justify-between mb-2 md:mb-4 flex-1">
           <Link href={`/product/${product.slug}`}>
-            <h3 className="text-[#4a4238] text-lg md:text-xl font-bold leading-tight pr-4 hover:text-[#615236] transition-colors">
+            <h3 className="text-[#4a4238] text-sm md:text-md font-bold leading-tight pr-2 hover:text-[#615236] transition-colors line-clamp-2">
               {productName}
             </h3>
           </Link>
-          <span className="text-gray-800 text-sm md:text-base whitespace-nowrap pt-1">
+          <span className="text-gray-500 text-[9px] md:text-[13px] whitespace-nowrap pt-0.5 block">
             {productSku}
           </span>
         </div>
 
         {/* BUTTON always at bottom */}
-        <div>
+        <div className="mt-2 md:mt-3">
           <button
             onClick={handleAdd}
             disabled={isInCart}
-            className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold tracking-wide transition-colors duration-300 ${
+            className={`flex items-center gap-1.5 px-3 py-2 md:px-6 md:py-3 rounded-full text-[10px] md:text-xs font-semibold tracking-wide transition-colors duration-300 whitespace-nowrap ${
               isInCart
                 ? "bg-[#f0ebe3] text-[#645643] cursor-default"
                 : "bg-[#645643] hover:bg-[#4d4233] text-white"
             }`}
           >
-            {isInCart ? <><FiCheck size={14} /> ADDED TO ENQUIRY</> : <>ADD TO ENQUIRY <FiArrowRight size={14} strokeWidth={2.5} /></>}
+            {isInCart ? <><FiCheck size={12} /> ADDED</> : <>ADD TO ENQUIRY <FiArrowRight size={12} strokeWidth={2.5} /></>}
           </button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -19,6 +20,11 @@ const Hero = () => {
   }, []);
 
   const cards = Array.from({ length: 12 }, (_, i) => i + 1);
+  // Back images: Hero13–Hero23 (.jpg), cycle if needed
+  const backImages = Array.from({ length: 12 }, (_, i) => {
+    const n = 13 + (i % 11); // 13..23
+    return `/images/Hero/Hero${n}.jpg`;
+  });
 
   return (
     <main
@@ -80,16 +86,16 @@ const Hero = () => {
 
                 {/* BACK */}
                 <div
-                  className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)] bg-[#615236] flex items-center justify-center"
+                  className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-[2rem] overflow-hidden shadow-[0_15px_35px_-10px_rgba(0,0,0,0.15)]"
                   style={{
                     transform:
                       "rotateY(180deg) rotateZ(calc(-30deg * var(--count)))",
                   }}
                 >
                   <img
-                    src="/images/icons/SirohiIcon.svg"
-                    alt="Logo"
-                    className="w-12 h-12 opacity-50 filter invert"
+                    src={backImages[i]}
+                    alt={`Hero Back ${i + 13}`}
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
@@ -112,13 +118,13 @@ const Hero = () => {
           <p className="text-xs sm:text-sm md:text-[15px] text-[#6b6154] max-w-md sm:max-w-2xl mb-6 sm:mb-10 leading-relaxed font-medium">
             Manufacturer And Exporter Of Premium Wooden And Marble Home Décor And
             Kitchenware Made For Global Brands And Retailers Across The Usa,
-            Europe, And The Gulf.
+            Europe, And The Middle East.
           </p>
-
+          <Link href="/contact">
           <button className="bg-[#645643] hover:bg-[#4d4233] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold tracking-widest flex items-center gap-2 sm:gap-3 transition-all duration-300 shadow-xl mb-8 sm:mb-14">
             REQUEST A QUOTE <FiArrowRight size={16} strokeWidth={2.5} />
           </button>
-
+          </Link>
           {/* STATS */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-14 border-t border-[#e0dacd] pt-6 sm:pt-10 mb-6 sm:mb-10 w-full max-w-3xl">
 
