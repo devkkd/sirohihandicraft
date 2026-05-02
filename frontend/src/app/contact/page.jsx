@@ -163,8 +163,8 @@ export default function ContactPage() {
 
               <div className="p-8 lg:p-10 border-b border-[#e0dacd]">
                 <h4 className="text-sm font-bold text-[#8c8273] mb-4">WhatsApp</h4>
-                <a href="tel:+919352606586" className="text-xl md:text-[22px] font-bold text-[#4a4238] hover:text-[#645643] transition-colors block mb-2">
-                  +91-9352606586
+                <a href="tel:+919784891669" className="text-xl md:text-[22px] font-bold text-[#4a4238] hover:text-[#645643] transition-colors block mb-2">
+                  +91-9784891669
                 </a>
                 <p className="text-sm text-gray-700 font-medium">Best for quick questions, sample follow-ups, or photo sharing</p>
               </div>

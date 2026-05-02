@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Footer from "./Footer";
 
-const WHATSAPP_NUMBER = "919352606586";
+const WHATSAPP_NUMBER = "919784891669";
 const WHATSAPP_MESSAGE = "Hi, I'm interested in your products. Can you help me?";
 
 export default function ConditionalFooter() {

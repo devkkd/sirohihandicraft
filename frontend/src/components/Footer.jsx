@@ -26,7 +26,7 @@ const Footer = () => {
  <div className="flex flex-col gap-2 px-8 py-8 items-center">
               <p className="text-[10px] font-bold tracking-[0.2em] text-[#FFFFFF] uppercase mb-2">Contact</p>
               <p className="text-xs text-[#e0dacd]">pankaj@sirohihandicraft.com</p>
-              <p className="text-xs text-[#e0dacd]">+91-9352606586</p>
+              <p className="text-xs text-[#e0dacd]">+91-9784891669</p>
               <p className="text-xs text-[#e0dacd]">Jaipur, Rajasthan, India</p>
             </div>
             <div className="flex flex-col gap-2 px-8 py-8 items-center uppercase">
