@@ -8,7 +8,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sirohihandicraft-bac
 const inputCls = "bg-transparent border-b border-[#d2c4b3] py-2 text-sm text-[#4a4238] focus:outline-none focus:border-[#4a4238] transition-colors placeholder:text-[#b5a898] placeholder:font-light";
 
 const GetInTouch = () => {
-  const [productCategory, setProductCategory] = useState("Wooden");
+  const [productCategory, setProductCategory] = useState("Wooden Range");
   const [form, setForm] = useState({ fullName: "", companyName: "", email: "", country: "", phone: "", productsSKUs: "", orderQuantity: "", additionalRequirements: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -112,7 +112,7 @@ const GetInTouch = () => {
                       <div className="flex flex-col gap-4">
                         <label className="text-sm font-semibold text-[#4a4238]">Product Category</label>
                         <div className="flex flex-wrap gap-3">
-                          {["Wooden", "Marble", "Terracotta", "Paper Mache"].map((cat) => (
+                          {["Wooden Range", "Marble Range", "Terracotta Range", "Paper Mache Range"].map((cat) => (
                             <button key={cat} type="button" onClick={() => setProductCategory(cat)}
                               className={`px-8 py-2.5 rounded-full text-[13px] font-bold transition-all duration-300 ${productCategory === cat ? "bg-[#645643] text-white" : "bg-[#bbaea0] text-white/90 hover:bg-[#a39789]"}`}>
                               {cat}
