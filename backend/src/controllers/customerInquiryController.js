@@ -13,7 +13,7 @@ const createCustomerInquiry = async (req, res, next) => {
     const inquiry = await CustomerInquiry.create(req.body);
 
     // Email notification (non-blocking)
-    sendCustomerInquiryEmail(inquiry).catch(() => {});
+    sendCustomerInquiryEmail(inquiry).catch((err) => console.error("Customer inquiry email failed:", err.message));
 
     res.status(201).json({ success: true, data: inquiry });
   } catch (error) {
