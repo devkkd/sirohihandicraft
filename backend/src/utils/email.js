@@ -1,45 +1,35 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  family: 4, // force IPv4
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Verify SMTP connection on startup
-transporter.verify((err) => {
-  if (err) console.error("❌ SMTP connection failed:", err.message);
-  else console.log("✅ SMTP ready — emails will be sent via", process.env.EMAIL_USER);
-});
+const FROM = process.env.EMAIL_FROM || "Sirohi Handicraft <onboarding@resend.dev>";
+const ADMIN = process.env.ADMIN_EMAIL;
 
-// Send to admin
+// ─── Send to admin ────────────────────────────────────────────────────────────
 const sendToAdmin = async ({ subject, html }) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.warn("Email credentials not set, skipping email.");
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("RESEND_API_KEY not set, skipping email.");
     return;
   }
-  await transporter.sendMail({
-    from: `"Sirohi Handicraft" <${process.env.EMAIL_FROM}>`,
-    to: process.env.ADMIN_EMAIL,
+  const { error } = await resend.emails.send({
+    from: FROM,
+    to: ADMIN,
     subject,
     html,
   });
+  if (error) throw new Error(error.message);
 };
 
-// Send auto-reply to customer
+// ─── Auto-reply to customer ───────────────────────────────────────────────────
 const sendToCustomer = async ({ to, subject, html }) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return;
-  await transporter.sendMail({
-    from: `"Sirohi Handicraft" <${process.env.EMAIL_FROM}>`,
+  if (!process.env.RESEND_API_KEY) return;
+  const { error } = await resend.emails.send({
+    from: FROM,
     to,
     subject,
     html,
   });
+  if (error) console.error("Customer reply failed:", error.message);
 };
 
 // ─── Product Inquiry (cart) ───────────────────────────────────────────────────
@@ -52,7 +42,6 @@ const sendProductInquiryEmail = async (inquiry) => {
     </tr>`)
     .join("") || "";
 
-  // Notify admin
   await sendToAdmin({
     subject: `New Product Inquiry from ${inquiry.name}`,
     html: `
@@ -79,7 +68,6 @@ const sendProductInquiryEmail = async (inquiry) => {
     `,
   });
 
-  // Auto-reply to customer
   if (inquiry.email) {
     await sendToCustomer({
       to: inquiry.email,
@@ -91,7 +79,7 @@ const sendProductInquiryEmail = async (inquiry) => {
             We've received your product enquiry and our team will get back to you within <strong>24–48 business hours</strong>.
           </p>
           <p style="color:#6b6154;font-size:14px;line-height:1.6;margin-bottom:24px;">
-            If you have any urgent questions, feel free to reach us directly at <a href="mailto:pankaj@sirohihandicraft.com" style="color:#645643;">pankaj@sirohihandicraft.com</a> or WhatsApp us at <strong>+91-9352606586</strong>.
+            For urgent queries, reach us at <a href="mailto:pankaj@sirohihandicraft.com" style="color:#645643;">pankaj@sirohihandicraft.com</a> or WhatsApp <strong>+91-9352606586</strong>.
           </p>
           <p style="color:#9e8f7e;font-size:12px;">— Team Sirohi Handicraft, Jaipur, Rajasthan</p>
         </div>
@@ -100,9 +88,8 @@ const sendProductInquiryEmail = async (inquiry) => {
   }
 };
 
-// ─── Customer Inquiry (contact / GetInTouch form) ─────────────────────────────
+// ─── Customer Inquiry (contact / GetInTouch) ──────────────────────────────────
 const sendCustomerInquiryEmail = async (inquiry) => {
-  // Notify admin
   await sendToAdmin({
     subject: `New Customer Inquiry from ${inquiry.fullName}`,
     html: `
@@ -124,7 +111,6 @@ const sendCustomerInquiryEmail = async (inquiry) => {
     `,
   });
 
-  // Auto-reply to customer
   if (inquiry.email) {
     await sendToCustomer({
       to: inquiry.email,
