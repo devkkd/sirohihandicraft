@@ -207,7 +207,7 @@ export default function StoryPage() {
               </div>
               <div className="mt-5">
                 <p className="text-base font-bold text-[#3b2f1e]">Mr. Sarwan Sirohi</p>
-                <p className="text-sm text-[#9e8f7e]">Founder · Father</p>
+                <p className="text-sm text-[#9e8f7e]">Generation 1st</p>
               </div>
             </div>
           </div>
@@ -232,7 +232,7 @@ export default function StoryPage() {
               </div>
               <div className="mt-5">
                 <p className="text-base font-bold text-[#3b2f1e]">Mr. Pankaj Sirohi</p>
-                <p className="text-sm text-[#9e8f7e]">Founder · Son</p>
+                <p className="text-sm text-[#9e8f7e]">Generation 2nd</p>
               </div>
             </div>
           </div>

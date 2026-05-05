@@ -112,17 +112,16 @@ const Hero = () => {
           </p>
 
           <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-[4rem] font-extrabold text-[#5c4f3d] mb-4 sm:mb-6 leading-[1.1] tracking-tight">
-            Crafted by Hand, <br className="hidden md:block" /> Built for the World
+           Built for Bulk , <br className="hidden md:block" /> Trusted by Buyers
           </h1>
 
           <p className="text-xs sm:text-sm md:text-[15px] text-[#6b6154] max-w-md sm:max-w-2xl mb-6 sm:mb-10 leading-relaxed font-medium">
-            Manufacturer And Exporter Of Premium Wooden And Marble Home Décor And
-            Kitchenware Made For Global Brands And Retailers Across The Usa,
-            Europe, And The Middle East.
+          We are a manufacturing-based company specializing in handcrafted wooden and marble products. With years of experience and a skilled workforce, we supply high-quality products to international buyers across multiple markets.
+Our focus is on consistency, scalability, and long-term partnerships. Supplying bulk orders to global buyers with consistent quality, competitive pricing, and customization support.
           </p>
           <Link href="/contact">
           <button className="bg-[#645643] hover:bg-[#4d4233] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold tracking-widest flex items-center gap-2 sm:gap-3 transition-all duration-300 shadow-xl mb-8 sm:mb-14">
-            REQUEST A QUOTE <FiArrowRight size={16} strokeWidth={2.5} />
+            GET QUOTE <FiArrowRight size={16} strokeWidth={2.5} />
           </button>
           </Link>
           {/* STATS */}
