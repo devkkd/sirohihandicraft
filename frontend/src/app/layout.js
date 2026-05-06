@@ -1,4 +1,5 @@
  import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import ConditionalHeader from "@/components/ConditionalHeader";
 import ConditionalFooter from "@/components/ConditionalFooter";
@@ -21,6 +22,9 @@ export const metadata = {
   icons: {
     icon: "/favicon.png",
   },
+  verification: {
+    google: "4Gk4jJ0QcJVd8H1hbp4wqVQMB8v97-rTtaOEo3LObFs",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -29,6 +33,20 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-F5SWCBB6YB"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-F5SWCBB6YB');
+          `}
+        </Script>
+      </head>
       <body className="min-h-full flex flex-col">
         <ShopProvider>
           <CartProvider>
