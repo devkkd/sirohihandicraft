@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { FiArrowRight, FiCheck, FiShoppingBag } from "react-icons/fi";
+import { FiArrowRight, FiCheck, FiShoppingBag, FiTrash2 } from "react-icons/fi"; // Added FiTrash2
 import Link from "next/link";
 import RelatedProducts from "@/components/RelatedProducts";
 import Globe from "@/components/Globe";
@@ -19,7 +19,8 @@ export default function ProductDetailPage() {
   const [activeImage, setActiveImage] = useState(null);
   const [added, setAdded] = useState(false);
 
-  const { addToCart, items } = useCart();
+  // 1. Destructured removeFromCart from context
+  const { addToCart, removeFromCart, items } = useCart();
 
   useEffect(() => {
     if (!productSlug) return;
@@ -35,11 +36,17 @@ export default function ProductDetailPage() {
 
   const isInCart = items.some((i) => i._id === product?._id);
 
-  const handleAddToCart = () => {
+  // 2. Updated handler to toggle Add/Remove
+  const handleCartAction = () => {
     if (!product) return;
-    addToCart(product);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+    
+    if (isInCart) {
+      removeFromCart(product._id);
+    } else {
+      addToCart(product);
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    }
   };
 
   if (loading) {
@@ -123,14 +130,16 @@ export default function ProductDetailPage() {
             )}
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <button onClick={handleAddToCart}
+              {/* 3. Updated Button */}
+              <button onClick={handleCartAction}
                 className={`flex items-center justify-center gap-2 px-8 py-4 rounded-full text-xs font-bold tracking-widest transition-all ${
-                  isInCart ? "bg-[#f0ebe3] text-[#645643] cursor-default" : "bg-[#645643] hover:bg-[#4d4233] text-white"
+                  isInCart ? "bg-[#f0ebe3] hover:bg-[#e6ddcf] text-[#645643]" : "bg-[#645643] hover:bg-[#4d4233] text-white"
                 }`}
-                disabled={isInCart}>
-                {isInCart ? <><FiCheck size={16} /> ADDED TO ENQUIRY</> : <><FiShoppingBag size={16} /> ADD TO ENQUIRY</>}
+              >
+                {isInCart ? <><FiTrash2 size={16} /> REMOVE FROM ENQUIRY</> : <><FiShoppingBag size={16} /> ADD TO ENQUIRY</>}
               </button>
 
+              {/* View Enquiry button remains alongside so they can still go straight to cart! */}
               {isInCart && (
                 <Link href="/cart"
                   className="flex items-center justify-center gap-2 px-8 py-4 rounded-full text-xs font-bold tracking-widest bg-[#645643] hover:bg-[#4d4233] text-white transition-all">

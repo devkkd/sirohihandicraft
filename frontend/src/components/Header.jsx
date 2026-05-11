@@ -28,6 +28,7 @@ const Header = () => {
     const [searchLoading, setSearchLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const searchRef = React.useRef(null);
+    const mobileSearchRef = React.useRef(null); // Added ref for mobile search
 
     // Debounced search — categories & subcategories from context (client-side), products from API
     useEffect(() => {
@@ -58,9 +59,14 @@ const Header = () => {
     const hasResults = searchResults.categories.length > 0 || searchResults.subCategories.length > 0 || searchResults.products.length > 0;
     const totalCount = searchResults.categories.length + searchResults.subCategories.length + searchResults.products.length;
 
-    // Close on outside click
+    // Close on outside click (for both desktop and mobile search dropdowns)
     useEffect(() => {
-        const handler = (e) => { if (searchRef.current && !searchRef.current.contains(e.target)) setShowResults(false); };
+        const handler = (e) => { 
+            if (searchRef.current && !searchRef.current.contains(e.target) && 
+                (!mobileSearchRef.current || !mobileSearchRef.current.contains(e.target))) {
+                setShowResults(false); 
+            }
+        };
         document.addEventListener("mousedown", handler);
         return () => document.removeEventListener("mousedown", handler);
     }, []);
@@ -85,12 +91,15 @@ const Header = () => {
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
+        // Clear search when closing menu
+        setSearchQuery("");
+        setShowResults(false);
     };
 
     return (
         <header className="sticky top-0 w-full bg-[#FFFDF9] z-50 shadow-sm lg:shadow-none">
             
-      
+            {/* MOBILE HEADER BAR */}
             <div className="flex lg:hidden items-center justify-between px-6 py-4 w-full">
            
                 <button 
@@ -105,10 +114,18 @@ const Header = () => {
                     <img src="/images/logo/sirohiLogo.svg" alt="Sirohi Logo" className="h-10 sm:h-12" />
                 </Link>
 
-               
-                <div className="w-6"></div>
+                {/* 1. Added Cart to Mobile */}
+                <Link href="/cart" className="relative shrink-0 text-xl text-gray-800" onClick={closeMobileMenu}>
+                    <FiShoppingBag />
+                    {totalItems > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-[#645643] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                            {totalItems}
+                        </span>
+                    )}
+                </Link>
             </div>
 
+            {/* DESKTOP HEADER BAR */}
             <div className="hidden lg:flex items-end text-gray-700 justify-between px-6 py-5 max-w-[1600px] mx-auto w-full gap-2 xl:gap-4">
                 
                 {/* SEARCH */}
@@ -240,7 +257,7 @@ const Header = () => {
                             PRODUCTS <FiChevronDown />
                         </button>
 
-                        {/* MEGA MENU PANEL (Styled like image_a85ee9.png) */}
+                        {/* MEGA MENU PANEL */}
                         <div className="absolute top-full left-[-20%] pt-6 hidden group-hover/main:block w-max z-50">
                             {/* Invisible bridge to keep hover state active while moving mouse down */}
                             <div className="absolute top-0 left-0 w-full h-6 bg-transparent"></div>
@@ -309,13 +326,6 @@ const Header = () => {
                         </span>
                     )}
                 </Link>
-                {/* <Link
-                    href="/request"
-                    className="flex items-center gap-1 text-[11px] font-bold border-b-2 border-gray-800"
-                >
-                    REQUEST A QUOTE <FiArrowRight />
-                </Link> */}
-
                 
             </div>
 
@@ -343,18 +353,95 @@ const Header = () => {
                 {/* Drawer Content (Scrollable) */}
                 <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-6">
                     
-                    {/* Mobile Search */}
-                    <div className="flex items-center border-b border-gray-300 pb-2 mb-2 focus-within:border-[#615236] transition-colors">
-                        <FiSearch className="text-xl mr-3 text-gray-500" />
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            className="bg-transparent w-full outline-none text-base placeholder-gray-400 text-gray-800"
-                        />
+                    {/* 3. Mobile Search (Now fully functional with dropdown logic) */}
+                    <div ref={mobileSearchRef} className="relative w-full">
+                        <div className="flex items-center border-b border-gray-300 pb-2 focus-within:border-[#615236] transition-colors">
+                            <FiSearch className="text-xl mr-3 text-gray-500" />
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onFocus={() => hasResults && setShowResults(true)}
+                                className="bg-transparent w-full outline-none text-base placeholder-gray-400 text-gray-800"
+                            />
+                        </div>
+
+                        {/* Mobile Search Dropdown results */}
+                        {showResults && (
+                            <div className="absolute top-full left-0 mt-2 w-full bg-[#FFFDF9] border border-[#e0dacd] rounded-xl shadow-lg z-50 overflow-hidden">
+                                {!hasResults && !searchLoading ? (
+                                    <div className="flex flex-col items-center py-6 gap-2">
+                                        <FiSearch className="text-xl text-[#d2c4b3]" />
+                                        <p className="text-xs text-[#9e8f7e]">No results found</p>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col max-h-[350px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                                        
+                                        {/* Categories */}
+                                        {searchResults.categories.length > 0 && (
+                                            <div className="px-3 pt-3 pb-1">
+                                                <p className="text-[10px] font-bold text-[#9e8f7e] uppercase mb-1">Category</p>
+                                                {searchResults.categories.map((cat) => (
+                                                    <Link key={cat._id} href={`/category/${cat.slug}`}
+                                                        onClick={() => { setShowResults(false); setSearchQuery(""); closeMobileMenu(); }}
+                                                        className="flex items-center justify-between px-2 py-2 rounded-lg hover:bg-[#f5f0ea]">
+                                                        <span className="text-sm text-[#2d2926]">{cat.title}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Subcategories */}
+                                        {searchResults.subCategories.length > 0 && (
+                                            <div className={`px-3 pb-1 ${searchResults.categories.length > 0 ? "pt-1 border-t border-[#f0ebe3]" : "pt-3"}`}>
+                                                <p className="text-[10px] font-bold text-[#9e8f7e] uppercase mb-1">Subcategory</p>
+                                                {searchResults.subCategories.map((sub) => {
+                                                    const parentCat = categories.find(c => c._id === (sub.category?._id || sub.category));
+                                                    return (
+                                                        <Link key={sub._id}
+                                                            href={parentCat ? `/category/${parentCat.slug}?sub=${sub.slug}` : "#"}
+                                                            onClick={() => { setShowResults(false); setSearchQuery(""); closeMobileMenu(); }}
+                                                            className="flex items-center justify-between px-2 py-2 rounded-lg hover:bg-[#f5f0ea]">
+                                                            <span className="text-sm text-[#2d2926]">{sub.name}</span>
+                                                        </Link>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+
+                                        {/* Products */}
+                                        {(searchResults.products.length > 0 || searchLoading) && (
+                                            <div className={`px-3 pb-2 ${(searchResults.categories.length > 0 || searchResults.subCategories.length > 0) ? "pt-1 border-t border-[#f0ebe3]" : "pt-3"}`}>
+                                                <p className="text-[10px] font-bold text-[#9e8f7e] uppercase mb-1">Products</p>
+                                                {searchLoading ? (
+                                                    <div className="flex justify-center py-2">
+                                                        <div className="w-4 h-4 border-2 border-[#645643] border-t-transparent rounded-full animate-spin" />
+                                                    </div>
+                                                ) : (
+                                                    searchResults.products.map((product) => (
+                                                        <Link key={product._id} href={`/product/${product.slug}`}
+                                                            onClick={() => { setShowResults(false); setSearchQuery(""); closeMobileMenu(); }}
+                                                            className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-[#f5f0ea]">
+                                                            <div className="w-8 h-8 rounded shrink-0 overflow-hidden bg-[#f0ebe3]">
+                                                                {product.thumbnail && <img src={product.thumbnail} className="w-full h-full object-cover" />}
+                                                            </div>
+                                                            <div className="min-w-0 flex-1">
+                                                                <p className="text-sm text-[#2d2926] truncate">{product.name}</p>
+                                                            </div>
+                                                        </Link>
+                                                    ))
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* Mobile Links */}
-                    <nav className="flex flex-col gap-5 text-base font-medium text-gray-800 uppercase tracking-wide">
+                    <nav className="flex flex-col gap-5 text-base font-medium text-gray-800 uppercase tracking-wide mt-2">
                         <Link href="/" onClick={closeMobileMenu}>Home</Link>
                         
                         {/* Mobile Products Accordion */}
@@ -423,16 +510,7 @@ const Header = () => {
                     </nav>
                 </div>
 
-                {/* Drawer Footer */}
-                <div className="p-6 border-t border-gray-200">
-                    <Link
-                        href="/request"
-                        onClick={closeMobileMenu}
-                        className="flex items-center justify-center gap-2 w-full bg-[#645643] text-white py-3.5 rounded-full text-[11px] font-bold tracking-widest hover:bg-[#4d4233] transition-colors"
-                    >
-                        REQUEST A QUOTE <FiArrowRight size={16} strokeWidth={2.5} />
-                    </Link>
-                </div>
+                {/* 2. Removed Request Quote Button from here */}
             </div>
 
         </header>

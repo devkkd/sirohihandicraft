@@ -92,7 +92,7 @@ export default function StoryPage() {
           
           {/* Image Placeholder (Left) */}
           <div className="w-full rounded-md order-2 lg:order-1 h-[250px] lg:h-[400px] overflow-hidden">
-          <img src="/images/story/Mask group (15).png" className="w-full h-full object-cover" />
+          <img src="/images/story/Mask group (15).jpg" className="w-full h-full object-cover" />
           </div>
 
           {/* Text (Right - Right Aligned on Desktop) */}
@@ -142,7 +142,7 @@ export default function StoryPage() {
 
           {/* Image Placeholder (Right) */}
           <div className="w-full rounded-md order-2 lg:order-1 h-[250px] lg:h-[400px] overflow-hidden">
-          <img src="/images/story/Mask group (16).png" className="w-full h-full object-cover" />
+          <img src="/images/story/Mask group (16).jpg" className="w-full h-full object-cover" />
           </div>
 
         </div>

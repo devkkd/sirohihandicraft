@@ -2,21 +2,27 @@
 
 import React from "react";
 import Link from "next/link";
-import { FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiArrowRight, FiTrash2 } from "react-icons/fi"; // Swapped FiCheck for FiTrash2
 import { useCart } from "@/context/CartContext";
 
 const ProductCard = ({ product }) => {
-  const { addToCart, items } = useCart();
+  // 1. Extracted removeFromCart from your context
+  const { addToCart, removeFromCart, items } = useCart();
   const isInCart = items.some((i) => i._id === product._id);
 
   const imageUrl = product?.thumbnail || product?.image || "/images/placeholder.jpg";
   const productName = product?.name || "Product Name";
   const productSku = product?.sku || "SH-XXX-00-00";
 
-  const handleAdd = (e) => {
+  // 2. Updated handler to toggle add/remove
+  const handleCartAction = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!isInCart) addToCart(product);
+    if (isInCart) {
+      removeFromCart(product._id);
+    } else {
+      addToCart(product);
+    }
   };
 
   return (
@@ -49,15 +55,19 @@ const ProductCard = ({ product }) => {
         {/* BUTTON always at bottom */}
         <div className="mt-2 md:mt-3">
           <button
-            onClick={handleAdd}
-            disabled={isInCart}
+            onClick={handleCartAction}
+            // 3. Removed the disabled attribute so it can be clicked to remove
             className={`flex items-center gap-1.5 px-3 py-2 md:px-6 md:py-3 rounded-full text-[10px] md:text-xs font-semibold tracking-wide transition-colors duration-300 whitespace-nowrap ${
               isInCart
-                ? "bg-[#f0ebe3] text-[#645643] cursor-default"
+                ? "bg-[#f0ebe3] hover:bg-[#e6ddcf] text-[#645643]" // Maintained your beige/brown theme
                 : "bg-[#645643] hover:bg-[#4d4233] text-white"
             }`}
           >
-            {isInCart ? <><FiCheck size={12} /> ADDED</> : <>ADD TO ENQUIRY <FiArrowRight size={12} strokeWidth={2.5} /></>}
+            {isInCart ? (
+              <>REMOVE <FiTrash2 size={12} /></> 
+            ) : (
+              <>ADD TO ENQUIRY <FiArrowRight size={12} strokeWidth={2.5} /></>
+            )}
           </button>
         </div>
       </div>
