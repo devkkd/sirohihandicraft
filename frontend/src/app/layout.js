@@ -23,7 +23,7 @@ export const metadata = {
     icon: "/favicon.png",
   },
   verification: {
-    google: "4Gk4jJ0QcJVd8H1hbp4wqVQMB8v97-rTtaOEo3LObFs",
+    google: "rWpvwpEvF8LxFqFBKeAId4eWh25GId99olLWTkXTzkI",
   },
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
     >
       <head>
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-F5SWCBB6YB"
+          src="https://www.googletagmanager.com/gtag/js?id=G-YJ120DRE5L"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-F5SWCBB6YB');
+            gtag('config', 'G-YJ120DRE5L');
           `}
         </Script>
       </head>
