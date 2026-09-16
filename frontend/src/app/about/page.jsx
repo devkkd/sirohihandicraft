@@ -1,12 +1,16 @@
 "use client";
 
+import Head from "next/head";
 import GetInTouch from "@/components/GetInTouch";
 import Globe from "@/components/Globe";
 import React from "react";
 
 export default function AboutPage() {
     return (
-        <main className="w-full bg-[#FFFDF9] min-h-screen pt-20 lg:pt-12 pb-24">
+      
+            
+
+            <main className="w-full bg-[#FFFDF9] min-h-screen pt-20 lg:pt-12 pb-24">
 
             {/* =========================================
           SECTION 1: HERO & ABOUT INFO
@@ -19,8 +23,7 @@ export default function AboutPage() {
                         About Us
                     </span>
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#645643] tracking-tight mb-8">
-                        SIROHI HANDICRAFT 
-                    </h1>
+Handicraft Manufacturer & Wholesale Home Decor Supplier                    </h1>
                     <p className="text-sm md:text-[15px] text-gray-800 font-medium mb-8">
                         Manufacturer & Exporter · Est. 1998 · Rajasthan, India
                     </p>
@@ -219,6 +222,7 @@ export default function AboutPage() {
             <Globe/>
             <GetInTouch/>
 
-        </main>
+               </main>
+       
     );
 }

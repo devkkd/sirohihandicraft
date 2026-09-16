@@ -1,5 +1,6 @@
 "use client";
 
+import Head from "next/head";
 import { useState, useEffect } from "react";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -36,6 +37,7 @@ export default function CollectionsPage() {
   };
 
   return (
+
     <main className="w-full bg-[#FFFDF9] min-h-screen pt-12 pb-24">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
 
@@ -45,8 +47,7 @@ export default function CollectionsPage() {
             All Collections
           </span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#4a4238] tracking-tight mb-6">
-            Our All Collection of Products
-          </h1>
+Wooden & Marble Kitchenware Manufacturer          </h1>
           <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
             Explore our complete range of handcrafted products. Thoughtfully designed for buyers with many tastes and styles.
           </p>
@@ -91,5 +92,6 @@ export default function CollectionsPage() {
 
       </div>
     </main>
+    
   );
 }

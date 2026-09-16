@@ -111,8 +111,8 @@ const Hero = () => {
             Est. 1998 • Rajasthan, India
           </p>
 
-          <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-[4rem] font-extrabold text-[#5c4f3d] mb-4 sm:mb-6 leading-[1.1] tracking-tight">
-           Built for Bulk , <br className="hidden md:block" /> Trusted by Buyers
+          <h1 className="text-1xl sm:text-3xl md:text-5xl lg:text-[3rem] font-extrabold text-[#5c4f3d] mb-4 sm:mb-6 leading-[1.1] tracking-tight">
+           Wooden & Marble Products <br className="hidden md:block" /> Manufacturer & Exporter
           </h1>
 
           <p className="text-xs sm:text-sm md:text-[15px] text-[#6b6154] max-w-md sm:max-w-2xl mb-6 sm:mb-10 leading-relaxed font-medium">

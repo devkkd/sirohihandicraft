@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
+export const metadata = {
+  title: "Vintage Wooden Home Decor Manufacturer | Sirohi Handicraft",
+  description:
+    "Explore vintage home interior products crafted from wood with timeless designs, traditional details and artisan craftsmanship for homes worldwide.",
+};
 
 export default function VintagePage() {
   return (
@@ -12,7 +17,7 @@ export default function VintagePage() {
       </span>
 
       <h1 className="text-3xl md:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-6 leading-[1.05]">
-        Sirohi Vintage
+        Vintage Home Interior Products
       </h1>
 
       <p className="text-sm md:text-[15px] text-[#6b6154] font-medium max-w-lg leading-relaxed mb-4">

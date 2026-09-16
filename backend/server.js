@@ -55,6 +55,7 @@ app.use("/api/upload", require("./src/routes/uploadRoutes"));
 app.use("/api/categories", require("./src/routes/categoryRoutes"));
 app.use("/api/subcategories", require("./src/routes/subCategoryRoutes"));
 app.use("/api/products", require("./src/routes/productRoutes"));
+app.use("/api/blogs", require("./src/routes/blogRoutes"));
 app.use("/api/inquiries", require("./src/routes/inquiryRoutes"));
 app.use("/api/customer-inquiries", require("./src/routes/customerInquiryRoutes"));
 app.use("/api/bulk-upload", require("./src/routes/bulkUploadRoutes"));
@@ -68,7 +69,7 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 const server = app.listen(PORT, () => {
   console.log(

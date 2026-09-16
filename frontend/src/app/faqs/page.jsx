@@ -86,7 +86,7 @@ export default function FaqsPage() {
             FAQ's
           </span>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#645643] tracking-tight">
-            Frequently Asked Questions
+          Wholesale Bulk Order FAQ & Export Terms
           </h1>
         </div>
 

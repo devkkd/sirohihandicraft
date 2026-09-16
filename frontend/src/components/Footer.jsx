@@ -38,6 +38,7 @@ const Footer = () => {
                 { label: "Certificates", href: "/certificates" },
                 { label: "FAQ's", href: "/faqs" },
                 { label: "Contact Us", href: "/contact" },
+                 { label: "Blogs", href: "/blog" },
               ].map(({ label, href }) => (
                 <Link key={href} href={href} className="text-xs text-[#e0dacd] hover:text-white transition-colors">
                   {label}

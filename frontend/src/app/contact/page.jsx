@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState } from "react";
 import { FiArrowRight, FiCheck } from "react-icons/fi";
 
@@ -36,6 +37,7 @@ export default function ContactPage() {
   };
 
   return (
+   
     <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-14 pb-24">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
 
@@ -45,7 +47,7 @@ export default function ContactPage() {
             CONTACT US
           </span>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-8">
-            We'd Be Glad To Hear From You
+          Contact Our Handicraft Manufacturer
           </h1>
           <div className="text-sm md:text-[15px] text-gray-700 max-w-4xl leading-relaxed font-medium flex flex-col gap-6">
             <p>
@@ -221,5 +223,6 @@ export default function ContactPage() {
 
       </div>
     </main>
+  
   );
 }

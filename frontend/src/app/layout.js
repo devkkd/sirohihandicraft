@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Sirohi Handicraft",
-  description: "Manufacturer and exporter of high-quality wooden and marble home décor and kitchenware, crafted in Rajasthan for global markets.",
+  title: "Wooden & Marble Products Manufacturer | Sirohi Handicraft",
+  description: "Sirohi Handicraft is a trusted wooden & marble products manufacturer and exporter from India, offering handcrafted home décor, kitchenware & bulk orders.",
   icons: {
     icon: "/favicon.png",
   },

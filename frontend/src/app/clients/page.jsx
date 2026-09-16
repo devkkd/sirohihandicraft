@@ -1,5 +1,6 @@
 "use client";
 
+
 import GetInTouch from "@/components/GetInTouch";
 import React from "react";
 
@@ -111,6 +112,7 @@ const TestimonialCard = ({ data }) => (
 export default function ClientsPage() {
     return (
         <>
+       
             <div className="bg-[#FFFDF9]">
                 <main className="w-full  pt-12 lg:pt-14 max-w-[1450px] mx-auto">
 
@@ -120,7 +122,7 @@ export default function ClientsPage() {
                             HAPPY CLIENTS
                         </span>
                         <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-6">
-                            What Our Partners Say
+                            Wholesale Home Decor Supplier & Client Testimonials
                         </h1>
                         <p className="text-sm md:text-[15px] text-[#2d2926] font-medium max-w-2xl">
                             A Full Testimonials Page Showcasing Feedback From International Buyers And Long-term Partners.

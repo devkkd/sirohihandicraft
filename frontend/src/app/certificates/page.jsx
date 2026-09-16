@@ -2,6 +2,11 @@ import GetInTouch from "@/components/GetInTouch";
 import Globe from "@/components/Globe";
 import React from "react";
 import { FiArrowRight } from "react-icons/fi";
+export const metadata = {
+  title: "FSC & SMETA Certified Manufacturer | Sirohi Handicraft",
+  description:
+    "Sirohi Handicraft is a certified handicraft manufacturer and exporter focused on responsible production, ethical sourcing and quality craftsmanship.",
+};
 
 const certificates = [
   {
@@ -59,7 +64,7 @@ export default function CertificatesPage() {
             CERTIFICATE
           </span>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-6">
-            Our Certification
+            Certified Handicraft Manufacturer & Exporter
           </h1>
           <p className= "flex flex-col gap-6 text-sm md:text-[15px] text-gray-800 font-medium max-w-4xl leading-relaxed">
             Industry-recognized certification that validates your skills, knowledge, and professional expertise.

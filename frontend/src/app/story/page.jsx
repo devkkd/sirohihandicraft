@@ -1,5 +1,6 @@
 "use client";
 
+
 import GetInTouch from "@/components/GetInTouch";
 import React from "react";
 
@@ -29,6 +30,8 @@ const journeyData = [
 export default function StoryPage() {
   return (
 <>
+     
+
     <main className="w-full bg-[#FFFDF9] min-h-screen pt-10 lg:pt-14">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         
@@ -38,8 +41,7 @@ export default function StoryPage() {
             OUR STORY
           </span>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#5c4f3d] tracking-tight mb-10">
-            Built Slowly, Built to Last
-          </h1>
+Traditional Craftsmanship Exporter Since 1998          </h1>
           <div className="flex flex-col gap-6 text-sm md:text-[15px] text-gray-800 font-medium max-w-4xl leading-relaxed">
             <p>
               Our Story Is Not A Dramatic One. There Was No Single Breakthrough Moment No Overnight Success. It's A Story Of Learning, Building Slowly, And Making Sure That Every Step Was On Solid Ground.
