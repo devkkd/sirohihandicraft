@@ -131,4 +131,4 @@ const sendCustomerInquiryEmail = async (inquiry) => {
   }
 };
 
-module.exports = { sendProductInquiryEmail, sendCustomerInquiryEmail };
+module.exports = { sendProductInquiryEmail, sendCustomerInquiryEmail, sendToAdmin, sendToCustomer };

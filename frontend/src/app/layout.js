@@ -5,6 +5,7 @@ import ConditionalHeader from "@/components/ConditionalHeader";
 import ConditionalFooter from "@/components/ConditionalFooter";
 import { ShopProvider } from "@/context/ShopContext";
 import { CartProvider } from "@/context/CartContext";
+import NewsletterPopup from "@/components/NewsletterPopup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,6 +54,7 @@ export default function RootLayout({ children }) {
             <ConditionalHeader />
             {children}
             <ConditionalFooter />
+            <NewsletterPopup />
           </CartProvider>
         </ShopProvider>
       </body>
