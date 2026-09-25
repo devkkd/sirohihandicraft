@@ -91,6 +91,8 @@ export default function BlogsPage() {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
 
+  const [contentMode, setContentMode] = useState("editor");
+
   const fileInputRef = useRef(null);
 
   // Ref for the Quill editor so we can extract final semantic HTML
@@ -311,12 +313,19 @@ export default function BlogsPage() {
         );
       }
 
-      // Always take the latest HTML directly from the editor.
-      // This is important for tables created by quill-table-better.
-      const finalContent =
-        editorRef.current?.getHTML?.() ||
-        form.content ||
-        "";
+      // Get content from correct mode
+      let finalContent = "";
+
+      if (contentMode === "html") {
+        // HTML mode: use directly from textarea
+        finalContent = form.content || "";
+      } else {
+        // Editor mode: get from Quill editor
+        finalContent =
+          editorRef.current?.getHTML?.() ||
+          form.content ||
+          "";
+      }
 
       const plainContent = finalContent
         .replace(/<[^>]*>/g, "")
@@ -1257,32 +1266,107 @@ export default function BlogsPage() {
 
                 <div className="border-t border-[#e8e0d5] pt-6">
                   <div className="mb-4">
-                    <h3 className="text-xs font-bold tracking-widest uppercase text-[#615236]">
-                      Blog Content
-                    </h3>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-7 h-7 rounded-lg bg-[#f0ebe3] flex items-center justify-center">
+                        <BookOpen
+                          size={13}
+                          className="text-[#645643]"
+                        />
+                      </div>
+                      <h3 className="text-xs font-bold tracking-widest uppercase text-[#615236]">
+                        Blog Content
+                      </h3>
+                    </div>
 
-                    <p className="text-[10px] text-[#9e8f7e] mt-1">
-                      Use the editor to create
-                      headings, paragraphs, lists,
-                      quotes and hyperlinks.
+                    <p className="text-[10px] text-[#9e8f7e]">
+                      Choose: Visual Editor or paste HTML (tables, links, bold, italic)
                     </p>
                   </div>
 
-                  <Field
-                    label="Content"
-                    required
-                  >
-                    <BlogEditor
-                      ref={editorRef}
-                      value={form.content}
-                      onChange={(value) =>
-                        set(
-                          "content",
-                          value
-                        )
-                      }
-                    />
-                  </Field>
+                  {/* MODE TOGGLE */}
+                  <div className="flex gap-2 mb-4">
+                    <button
+                      type="button"
+                      onClick={() => setContentMode("editor")}
+                      className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                        contentMode === "editor"
+                          ? "bg-[#645643] text-white"
+                          : "bg-[#f0ebe3] text-[#615236] hover:bg-[#e8e0d5]"
+                      }`}
+                    >
+                      Visual Editor
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setContentMode("html")}
+                      className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                        contentMode === "html"
+                          ? "bg-[#645643] text-white"
+                          : "bg-[#f0ebe3] text-[#615236] hover:bg-[#e8e0d5]"
+                      }`}
+                    >
+                      HTML Code
+                    </button>
+                  </div>
+
+                  {/* EDITOR MODE */}
+                  {contentMode === "editor" && (
+                    <Field
+                      label="Content"
+                      required
+                    >
+                      <BlogEditor
+                        ref={editorRef}
+                        value={form.content}
+                        onChange={(value) =>
+                          set(
+                            "content",
+                            value
+                          )
+                        }
+                      />
+                    </Field>
+                  )}
+
+                  {/* HTML MODE */}
+                  {contentMode === "html" && (
+                    <Field
+                      label="HTML Code"
+                      required
+                    >
+                      <textarea
+                        value={form.content}
+                        onChange={(e) =>
+                          set(
+                            "content",
+                            e.target.value
+                          )
+                        }
+                        placeholder={`<p>Paste HTML here (tables, links, formatting):</p>
+<table>
+  <thead>
+    <tr>
+      <th>Header 1</th>
+      <th>Header 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Data 1</td>
+      <td>Data 2</td>
+    </tr>
+  </tbody>
+</table>
+<p>Add links: <a href="https://example.com">Click here</a></p>
+<p><strong>Bold</strong> and <em>italic</em></p>`}
+                        rows={12}
+                        className={`${inputCls} resize-none font-mono text-xs`}
+                      />
+                      <p className="text-[10px] text-[#9e8f7e] mt-2">
+                        ✅ Supports: Tables, Links, Bold, Italic, Lists, Headings
+                      </p>
+                    </Field>
+                  )}
                 </div>
               </div>
             </form>

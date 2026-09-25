@@ -1387,14 +1387,26 @@ export default async function BlogDetailPage({
               border-bottom:
                 1px solid #D2C4B3;
 
+              min-width:
+                100px;
+
+              max-width:
+                100%;
+
               overflow-wrap:
                 break-word;
 
               word-break:
                 normal;
 
+              word-spacing:
+                normal;
+
               hyphens:
                 none;
+
+              white-space:
+                normal;
             }
 
             .blog-content table th:last-child {
@@ -1431,14 +1443,26 @@ export default async function BlogDetailPage({
               border-bottom:
                 1px solid #E0DACD;
 
+              min-width:
+                100px;
+
+              max-width:
+                100%;
+
               overflow-wrap:
                 break-word;
 
               word-break:
                 normal;
 
+              word-spacing:
+                normal;
+
               hyphens:
                 none;
+
+              white-space:
+                normal;
             }
 
             .blog-content table td:last-child {
