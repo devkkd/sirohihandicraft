@@ -7,7 +7,7 @@ import { Pencil, Trash2, Plus, X, Check, Search } from "lucide-react";
 const toSlug = (str) =>
   str.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-const empty = { title: "", description: "" };
+const empty = { title: "", description: "", metaTitle: "", metaDescription: "" };
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -40,7 +40,7 @@ export default function CategoriesPage() {
   useEffect(() => { fetchCategories(); }, []);
 
   const openAdd = () => { setForm(empty); setEditId(null); setError(""); setShowForm(true); };
-  const openEdit = (cat) => { setForm({ title: cat.title, description: cat.description || "" }); setEditId(cat._id); setError(""); setShowForm(true); };
+  const openEdit = (cat) => { setForm({ title: cat.title, description: cat.description || "", metaTitle: cat.metaTitle || "", metaDescription: cat.metaDescription || "" }); setEditId(cat._id); setError(""); setShowForm(true); };
   const closeForm = () => { setShowForm(false); setError(""); };
 
   const handleSubmit = async (e) => {
@@ -179,6 +179,33 @@ export default function CategoriesPage() {
                   rows={3}
                   className="border border-[#ddd5c8] rounded-xl px-4 py-2.5 text-sm text-[#3b2f1e] placeholder-[#c4b9ac] outline-none focus:border-[#645643] focus:ring-2 focus:ring-[#64564320] transition-all bg-white resize-none"
                 />
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-[#e8e0d5]">
+                <p className="text-[10px] font-bold tracking-widest text-[#615236] uppercase mb-3">SEO Meta Tags</p>
+
+                <div className="flex flex-col gap-1.5 mb-3">
+                  <label className="text-[10px] font-bold tracking-widest text-[#615236] uppercase">Meta Title</label>
+                  <input
+                    value={form.metaTitle}
+                    onChange={(e) => setForm({ ...form, metaTitle: e.target.value })}
+                    placeholder="Meta title for SEO..."
+                    className="border border-[#ddd5c8] rounded-xl px-4 py-2.5 text-sm text-[#3b2f1e] placeholder-[#c4b9ac] outline-none focus:border-[#645643] focus:ring-2 focus:ring-[#64564320] transition-all bg-white"
+                  />
+                  <p className="text-[9px] text-[#9e8f7e]">{form.metaTitle.length}/60 characters</p>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold tracking-widest text-[#615236] uppercase">Meta Description</label>
+                  <textarea
+                    value={form.metaDescription}
+                    onChange={(e) => setForm({ ...form, metaDescription: e.target.value })}
+                    placeholder="Meta description for SEO..."
+                    rows={2}
+                    className="border border-[#ddd5c8] rounded-xl px-4 py-2.5 text-sm text-[#3b2f1e] placeholder-[#c4b9ac] outline-none focus:border-[#645643] focus:ring-2 focus:ring-[#64564320] transition-all bg-white resize-none"
+                  />
+                  <p className="text-[9px] text-[#9e8f7e]">{form.metaDescription.length}/160 characters</p>
+                </div>
               </div>
 
               <div className="flex gap-3 mt-2">

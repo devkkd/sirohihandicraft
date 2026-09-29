@@ -8,6 +8,16 @@ const categorySchema = new mongoose.Schema(
     slug: { type: String, unique: true, lowercase: true, trim: true },
     title: { type: String, required: [true, "Category title is required"], trim: true },
     description: { type: String, trim: true },
+    metaTitle: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    metaDescription: {
+      type: String,
+      trim: true,
+      default: "",
+    },
   },
   { timestamps: true }
 );
