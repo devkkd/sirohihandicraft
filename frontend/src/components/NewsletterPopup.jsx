@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 
-const STORAGE_KEY = "sirohi_newsletter_seen";
-
 // 👇 Apni banner image ka path yahan update karo
 const BANNER_IMAGE = "/images/Sirohi.png";
 
@@ -13,15 +11,11 @@ export default function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const seen = localStorage.getItem(STORAGE_KEY);
-    if (!seen) {
-      const timer = setTimeout(() => setVisible(true), 1500);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => setVisible(true), 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   const dismiss = () => {
-    localStorage.setItem(STORAGE_KEY, "true");
     setVisible(false);
   };
 
