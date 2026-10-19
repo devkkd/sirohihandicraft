@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
             <ConditionalHeader />
             {children}
             <ConditionalFooter />
-            <NewsletterPopup />
+            {/* <NewsletterPopup /> */}
           </CartProvider>
         </ShopProvider>
       </body>
