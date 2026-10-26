@@ -99,9 +99,13 @@ Handicraft Manufacturer & Wholesale Home Decor Supplier                    </h1>
                   "/images/about/about1.jpg",
                   "/images/about/about2.jpg",
                   "/images/about/about3.jpg",
-                  "/images/about/about1.jpg",
+                  "/images/about/IMG_7753.jpg",
+                   "/images/about/IMG_7756.jpg",
+                  "/images/about/IMG_7754.jpg",
+                  "/images/about/IMG_7757.jpg",
+                 "/images/about/about1.jpg",
                   "/images/about/about2.jpg",
-                  "/images/about/about3.jpg",
+                   "/images/about/about3.jpg",
                 ].map((src, i) => (
                   <div key={i} className="h-[250px] md:h-[380px] lg:h-[450px] w-[400px] md:w-[600px] lg:w-[750px] shrink-0 overflow-hidden">
                     <img src={src} alt={`Sirohi ${i}`} className="w-full h-full object-cover object-center" />
