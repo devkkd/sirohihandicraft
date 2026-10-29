@@ -6,6 +6,10 @@ const images = [
   "/images/about/about1.jpg",
   "/images/about/about2.jpg",
   "/images/about/about3.jpg",
+   "/images/about/IMG_7753.jpg",
+   "/images/about/IMG_7756.jpg",
+   "/images/about/IMG_7754.jpg",
+   "/images/about/IMG_7757.jpg",
 ];
 
 const Whoweare = () => {
